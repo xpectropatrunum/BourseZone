@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/grp1">
+    <item android:id="@+id/account"
+        android:icon="@drawable/ic_round_person_24"
+        android:title="حساب کاربری"/>
+    <item android:id="@+id/purchase"
+        android:icon="@drawable/ic_round_shopping_cart_24"
+        android:title="اشتراک"/>
+    </group>
+    <group android:id="@+id/grp2">
+    <item android:id="@+id/reportproblem"
+        android:icon="@drawable/ic_round_report_problem_24"
+        android:title="گزارش مشکل"/>
+    <item android:id="@+id/comment"
+        android:icon="@drawable/ic_round_mail_24"
+        android:title= "انتقادات و پیشنهادات"/>
+    <item android:id="@+id/rateapp"
+        android:icon="@drawable/ic_round_star_24"
+        android:title="نظردهی به برنامه"/>
+    </group>
+
+</menu>

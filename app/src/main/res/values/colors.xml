@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#D23A01</color>
+    <color name="colorSecond">#FF5722</color>
+    <color name="colorSecondShadow">#D23A01</color>
+    <color name="colorAccent">#7ACFBE</color>
+    <color name="green">#30B536</color>
+    <color name="red">#FF0000</color>
+    <color name="blue">#3CC2FF</color>
+    <color name="grey">#919191</color>
+    <color name="lightgrey">#F4F4F4</color>
+    <color name="progressRed">#FF6D6D</color>
+    <color name="progressBlue">#6FD0FB</color>
+    <color name="progressRedDark">#FF3838</color>
+    <color name="progressBlueDark">#2CB7F6</color>
+    <color name="bgcolor">#3A2E2E</color>
+    <color name="tert">#55A5FF</color>
+    <color name="white">#80ffffff</color>
+    <color name="cardcolor">#62CEB8</color>
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="fr1">#FBC95C</color>
+    <color name="black">#000</color>
+    <color name="lightcard">#f7f8fd</color>
+    <color name="lightbg">#EEEEEE</color>
+
+    <color name="pureWhite">#ffffff</color>
+    <color name="colorThird">#52C857</color>
+    <color name="colorThirdShadow">#106DB6</color>
+
+
+
+    <!--Pallets-->
+    <color name="primary">#08BDBB</color>
+    <color name="secondary">#FE396B</color>
+    <!--Actions-->
+    <color name="text1">#252A34</color>
+    <color name="text2">#888888</color>
+    <!--Neutral-->
+
+    <color name="bg">#EEEEEE</color>
+
+    <color name="orangebt">#FF6F00</color>
+    <color name="greenbt">#00D107</color>
+</resources>

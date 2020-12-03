@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">فیلتر پلاس</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="price">قیمت</string>
+    <string name="volume">حجم</string>
+    <string name="count">تعداد</string>
+    <string name="Open">a</string>
+    <string name="Close">b</string>
+    <string name="bazaar_link">https://cafebazaar.ir/app/ir.sourcearena.filter</string>
+</resources>

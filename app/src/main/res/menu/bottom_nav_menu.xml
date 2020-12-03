@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/favorite"
+
+
+        android:icon="@drawable/ic_round_whatshot_24"
+        android:title="واچ لیست"/>
+
+    <item
+        android:id="@+id/filter"
+
+
+
+
+        android:icon="@drawable/ic_round_filter_list_24"
+        android:title="فیلتر" />
+
+
+    <item
+        android:id="@+id/search"
+
+
+
+        android:icon="@drawable/ic_round_search_24"
+        android:title="فیلتریاب" />
+    <item
+        android:id="@+id/news"
+
+
+
+
+        android:icon="@drawable/news_24"
+        android:title="اخبار" />
+
+
+    <item
+        android:id="@+id/home"
+
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="خانه" />
+
+
+
+
+</menu>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape>
+            <padding
+                android:bottom="2dp"
+                android:left="2dp"
+                android:right="0dp"
+                android:top="0dp" />
+
+            <solid android:color="#20000000" />
+            <corners android:radius="7dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <padding
+                android:bottom="2dp"
+                android:left="2dp"
+                android:right="0dp"
+                android:top="0dp" />
+
+            <solid android:color="@color/lightcard" />
+            <corners android:radius="7dp" />
+        </shape>
+    </item>
+</layer-list>

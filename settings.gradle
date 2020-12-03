@@ -1,0 +1,4 @@
+include ':library'
+include ':MPChartLib'
+include ':app'
+rootProject.name = "Filter+"
