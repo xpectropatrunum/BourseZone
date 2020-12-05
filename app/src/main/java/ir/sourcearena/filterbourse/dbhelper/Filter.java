@@ -1,19 +1,22 @@
 package ir.sourcearena.filterbourse.dbhelper;
 
 public class Filter {
-    int _id;
+    int _id, type;
     String _name;
     String _function;
     public Filter(){   }
-    public Filter(int id, String name, String _function){
+    public Filter(int id, String name, String _function,int type){
         this._id = id;
         this._name = name;
         this._function = _function;
+        this.type = type;
+
     }
 
-    public Filter(String name, String _function){
+    public Filter(String name, String _function,int type){
         this._name = name;
         this._function = _function;
+        this.type = type;
     }
     public int getID(){
         return this._id;
@@ -21,6 +24,13 @@ public class Filter {
 
     public void setID(int id){
         this._id = id;
+    }
+    public int getType(){
+        return this.type;
+    }
+
+    public void setType(int id){
+        this.type = type;
     }
 
     public String getName(){

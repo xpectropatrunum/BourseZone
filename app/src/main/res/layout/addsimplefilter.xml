@@ -153,9 +153,9 @@
                 android:id="@+id/constraintLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp">
+                android:layout_marginEnd="12dp">
 
                 <EditText
                     android:id="@+id/ed"
@@ -206,13 +206,16 @@
                 <mehdi.sakout.fancybuttons.FancyButton
                     android:id="@+id/btn_add_filter"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
 
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="4dp"
                     android:layout_marginBottom="2dp"
-                    android:padding="8dp"
+                    android:paddingLeft="30sp"
+                    android:paddingTop="4dp"
+                    android:paddingRight="30sp"
+                    android:paddingBottom="4dp"
 
                     app:layout_constraintBottom_toBottomOf="parent"
 
@@ -221,13 +224,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/filter_recycle"
                     app:layout_constraintVertical_bias="0.0"
-                    fancy:fb_borderColor="@color/primary"
+
+                    fancy:fb_borderColor="@color/colorSecond"
                     fancy:fb_borderWidth="2.5dp"
-                    fancy:fb_defaultColor="#00ffffff"
-                    fancy:fb_focusColor="#62ECE9"
-                    fancy:fb_radius="10dp"
+                    fancy:fb_defaultColor="#00000000"
+                    fancy:fb_focusColor="#FD8159"
+
+                    fancy:fb_radius="8dp"
                     fancy:fb_text="افزودن شرط"
-                    fancy:fb_textColor="@color/primary"
+                    fancy:fb_textColor="@color/colorSecond"
+
                     fancy:fb_textFont="iranyekanbold" />
 
                 <TextView
@@ -254,13 +260,16 @@
 
     <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/btn_submit"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="2dp"
-        android:padding="4dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="30sp"
+        android:paddingTop="5dp"
+        android:paddingRight="30sp"
+        android:paddingBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
@@ -278,5 +287,6 @@
         fancy:fb_textColor="@color/bg"
         fancy:fb_textFont="iranyekanbold"
         fancy:fb_textSize="16sp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

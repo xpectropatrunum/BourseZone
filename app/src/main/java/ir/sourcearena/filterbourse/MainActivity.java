@@ -69,7 +69,7 @@ import ir.sourcearena.filterbourse.ui.news.News;
 import ir.sourcearena.filterbourse.ui.watcher.Watchlist;
 import ir.sourcearena.filterbourse.filteryab.AddFilter;
 
-
+/*  tsetr */
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationBar spaceNavigationView;

@@ -17,6 +17,8 @@
             android:name=".FilterShowActivity"/>
         <activity
             android:name=".filteryab.simple.SimpleAdder"/>
+        <activity
+            android:name=".filteryab.advanced.AdvanceAdder"/>
 
         <activity
             android:name=".ui.news.activity.Reader"/>

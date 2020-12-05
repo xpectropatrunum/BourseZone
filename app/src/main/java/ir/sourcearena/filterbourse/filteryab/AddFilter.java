@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.labo.kaji.fragmentanimations.MoveAnimation;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnClickListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,7 +57,9 @@ import ir.sourcearena.filterbourse.dbhelper.Filter;
 import ir.sourcearena.filterbourse.dbhelper.Helper;
 import ir.sourcearena.filterbourse.filteryab.adapter.FilterUtils;
 import ir.sourcearena.filterbourse.filteryab.adapter.RecyclerAdapter;
+import ir.sourcearena.filterbourse.filteryab.advanced.AdvanceAdder;
 import ir.sourcearena.filterbourse.filteryab.simple.SimpleAdder;
+import ir.sourcearena.filterbourse.filteryab.simple.adapter.dialogAdapter;
 import ir.sourcearena.filterbourse.ui.LoadingView;
 import ir.sourcearena.filterbourse.ui.watcher.Utils;
 
@@ -157,15 +162,54 @@ public class AddFilter extends Fragment {
         }
         adapter = new RecyclerAdapter(getContext(), utils, new RecyclerAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(FilterUtils item, View im, TextView tv) {
+            public void onItemClick(final FilterUtils item, View im, TextView tv) {
 
-                int id = utils.indexOf(item);
+                final int id = utils.indexOf(item);
                 if (im.getId() == R.id.imageView5) {
 
-                    db.deleteFilter(item.getName());
-                    utils.remove(item);
 
-                    adapter.notifyItemRemoved(id);
+                    DialogPlus dialog = DialogPlus.newDialog(getContext()).setContentHolder(new dialogAdapter(R.layout.dialog_menu_filter, "",getLayoutInflater()))
+                            .setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(DialogPlus dialog, View view) {
+
+
+                                    if (view.getId() == R.id.btn_edit) {
+                                        Intent in = null;
+                                        Log.e("dd",db.getType(item.getName())+"");
+                                        if(db.getType(item.getName()) == 2){
+                                            in = new Intent(getContext(),AdvanceAdder.class);
+                                        }
+                                        else if(db.getType(item.getName()) == 1){
+                                            in = new Intent(getContext(),SimpleAdder.class);
+                                        }
+                                        dialog.dismiss();
+                                        getActivity().startActivity(in);
+                                    }
+                                    else if (view.getId() == R.id.btn_remove) {
+
+
+
+
+
+
+                                        db.deleteFilter(item.getName());
+                                        utils.remove(item);
+
+                                        adapter.notifyItemRemoved(id);
+                                        dialog.dismiss();
+
+                                    }
+                                }
+                            }).setGravity(Gravity.CENTER)
+                            .setExpanded(true)
+                            .create();
+
+
+
+                    dialog.show();
+
+
                 } else {
 
 
@@ -207,11 +251,16 @@ public class AddFilter extends Fragment {
             }
         });
         f2.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View view) {
-                //intent to advanced filter
+            public void onClick(View view) { if (fm.isExpanded()) {
+                Intent in = new Intent(getActivity(), AdvanceAdder.class);
+                startActivityForResult(in, 0);
+            }
+
             }
         });
+
     }
 
     @Override

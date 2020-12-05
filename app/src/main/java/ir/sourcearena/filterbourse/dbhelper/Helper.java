@@ -16,7 +16,7 @@ public class Helper extends SQLiteOpenHelper {
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_FUNCTION = "function";
-
+    private static final String KEY_TYPE = "type";
     public Helper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -26,7 +26,7 @@ public class Helper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_FUNCTION + " TEXT" + ")";
+                + KEY_FUNCTION + " TEXT, "  +KEY_TYPE + "  " +")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -43,7 +43,7 @@ public class Helper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, filter.getName()); // Contact Name
         values.put(KEY_FUNCTION, filter.getFunctionr()); // Contact Phone
-
+        values.put(KEY_TYPE, filter.getType()); // Contact Phone
         // Inserting Row
         db.insert(TABLE_CONTACTS, null, values);
         //2nd argument is String containing nullColumnHack
@@ -61,7 +61,7 @@ public class Helper extends SQLiteOpenHelper {
             cursor.moveToFirst();
 
         Filter contact = new Filter(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2));
+                cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)));
         // return contact
         return contact;
     }
@@ -81,6 +81,7 @@ public class Helper extends SQLiteOpenHelper {
                 contact.setID(Integer.parseInt(cursor.getString(0)));
                 contact.setName(cursor.getString(1));
                 contact.setFunction(cursor.getString(2));
+                contact.setType(cursor.getInt(3));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -102,6 +103,19 @@ public class Helper extends SQLiteOpenHelper {
           return true;
         }
         return false;
+    }
+    public int getType(String name){
+        List<Filter> contactList = new ArrayList<Filter>();
+        String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS+" WHERE name LIKE '"+name+"'";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            return cursor.getInt(3);
+        }
+        return 0;
     }
     // code to update the single contact
     public int updateContact(Filter contact) {

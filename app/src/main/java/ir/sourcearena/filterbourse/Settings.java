@@ -22,6 +22,7 @@ public class Settings {
     public static final String JSON_CODAL_TITLES = "https://sourcearena.ir/androidFilterApi/api.php?token=fpa&codal=";
     public static final String ALL_FILTERS = "https://sourcearena.ir/androidFilterApi/FilterApi.php?token=fpa&filter_method";
     public static final String JSON_INS_URL =  "https://sourcearena.ir/androidFilterApi/api.php?token=fpa&name=";
+    public static final String ADVANCED_FIELD = "https://sourcearena.ir/androidFilterApi/template/field.php";
     public static float CARD_FONT_SIZE = 14;
 
     public static String JSON_API_URL = "https://sourcearena.ir/androidFilterApi/FilterApi.php?token=fpa";

@@ -74,8 +74,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private void checkColor(TextView tv) {
         if((tv.getText().toString()).contains("مجاز")){
             tv.setTextColor(context.getResources().getColor(R.color.green));
-        }else{
+        }else if((tv.getText().toString()).contains("ممنوع")){
             tv.setTextColor(context.getResources().getColor(R.color.red));
+        }else{
+            tv.setTextColor(context.getResources().getColor(R.color.text2));
         }
     }
 
