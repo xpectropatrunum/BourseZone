@@ -32,7 +32,7 @@ public class FieldsUtil {
             new String[]{"trade_value", "ارزش معامله"},
             new String[]{"trade_volume", "حجم معامله"},
             new String[]{"buy_power", "قدرت خریدار"},
-
+            new String[]{"free_float", "شناوری"},
             new String[]{"sell_power", "قدرت فروشنده"},
 
     };

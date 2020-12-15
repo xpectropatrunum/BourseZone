@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.utils.Utils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,11 +43,11 @@ public class Fundamental extends Fragment {
         String append = getActivity().getIntent().getExtras().getString("title", "");
         task = new Fundamental.Request().execute(setting.JSON_FUNDAMENTAL + append);
         cd1 = root.findViewById(R.id.cardView2);
-        cd2 = root.findViewById(R.id.pro_card);
+
 
         return  loading.addLoadingBar(false);
     }
-    CardView cd1,cd2;
+    CardView cd1;
     @Override
     public void onPause() {
         super.onPause();
@@ -65,18 +66,14 @@ public class Fundamental extends Fragment {
         int[] vs = vh.views;
         String[] key = vh.keys;
         Log.e("e", data);
-        JSONObject jo = new JSONObject(data);
-
+        JSONObject jo = new JSONArray(data).getJSONObject(0);
         for (int i = 0; i < key.length; i++) {
             String text = jo.getString(key[i]);
             TextView tc = (root.findViewById(vs[i]));
             tc.setText(text);
 
         }
-        if(!jo.getString("rate").equals("")){
-
-            cd2.setVisibility(View.VISIBLE);
-        }
+        
         cd1.setVisibility(View.VISIBLE);
         loading.cancel();
 

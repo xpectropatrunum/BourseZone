@@ -2,6 +2,7 @@ package ir.sourcearena.filterbourse.ui.news;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -17,7 +18,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import ir.sourcearena.filterbourse.R;
@@ -25,11 +29,15 @@ import ir.sourcearena.filterbourse.R;
 public class ListAdapter extends ArrayAdapter<Utils> {
     private final Context context;
     private final  List<Utils> values;
+    SharedPreferences sp;
+    SharedPreferences.Editor ed;
 
     public ListAdapter(Context context, List<Utils> values) {
         super(context,R.layout.news_single,values);
         this.context = context;
         this.values = values;
+        sp = context.getSharedPreferences("news", Context.MODE_PRIVATE);
+        ed = sp.edit();
     }
 
     @Override
@@ -49,6 +57,12 @@ public class ListAdapter extends ArrayAdapter<Utils> {
 
         title.setText(pu.getItem(0));
         date.setText(pu.getItem(3));
+
+        if(position == 0) {
+            ed.putString("last", pu.getItem(0));
+            ed.apply();
+        }
+
 
 
         if(pu.getBmap() == null){

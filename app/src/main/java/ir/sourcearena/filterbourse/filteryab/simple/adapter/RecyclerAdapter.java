@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,6 +22,7 @@ import java.util.List;
 
 import ir.sourcearena.filterbourse.R;
 import ir.sourcearena.filterbourse.Settings;
+import ir.sourcearena.filterbourse.tools.ToastMaker;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 
@@ -164,7 +166,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.value.setText(pu.getVal() + "");
         holder.row.setText((position + 1) + "");
         last_pos = position;
-        holder.remove.setVisibility(position == 0 ? View.GONE : View.VISIBLE);
+        holder.remove.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
 
 
         holder.condition.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -214,18 +216,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             @Override
             public void afterTextChanged(Editable editable) {
                 String text = holder.value.getText().toString();
-                try {
-                    float val = Float.parseFloat(text);
 
+                        utils.get(last_pos).setVal(text);
 
-                    if(val != 0) {
-                        utils.get(last_pos).setVal(val);
-                    }
-
-
-                } catch (NumberFormatException | IllegalStateException e) {
-
-                }
 
             }
         });
@@ -247,7 +240,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public TextView row;
         public Spinner function;
         public EditText value;
-        public FancyButton remove;
+        public ImageView remove;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -267,7 +260,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (v.getId() == R.id.btn_remove_filter) {
+                    if (v.getId() == R.id.btn_remove_filter && utils.indexOf(item) !=0) {
                         listener.onItemClick(item);
                     }
 

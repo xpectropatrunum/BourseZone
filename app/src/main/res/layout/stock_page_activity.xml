@@ -26,8 +26,10 @@
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/contall"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
 
                 <TextView
@@ -606,6 +608,33 @@
                         android:padding="10dp">
 
                         <LinearLayout
+                            android:id="@+id/linearLayout56"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="3dp"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/ins_pb_con"
+                            app:layout_constraintStart_toStartOf="@+id/ins_pb_con"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0">
+
+                            <ImageView
+                                android:id="@+id/ins_close_loc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="3dp"
+                                android:layout_marginEnd="3dp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="@+id/ins_pb_con"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="@+id/ins_pb_con"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0"
+                                app:srcCompat="@drawable/ic_baseline_location_on_24" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
@@ -868,7 +897,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/ins_close_loc"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout56"
                             app:layout_constraintVertical_bias="0.0" />
 
                         <TextView
@@ -876,7 +905,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:layout_marginTop="5dp"
                             android:fontFamily="@font/iransansbold"
 
                             android:text="TextView"
@@ -884,14 +912,13 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/ins_finl_loc"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
                             app:layout_constraintVertical_bias="0.0" />
 
                         <TextView
                             android:id="@+id/ins_high"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
                             android:layout_marginEnd="10dp"
                             android:fontFamily="@font/iransansbold"
                             android:text="TextView"
@@ -899,20 +926,20 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="1.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/ins_finl_loc"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout6"
                             app:layout_constraintVertical_bias="0.0" />
 
                         <LinearLayout
                             android:id="@+id/ins_pb_con"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="10dp"
                             android:layout_marginStart="3dp"
                             android:layout_marginEnd="3dp"
                             android:orientation="horizontal"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/ins_close_loc"
+                            app:layout_constraintTop_toBottomOf="@+id/linearLayout56"
                             app:layout_constraintVertical_bias="0.0">
 
                             <ProgressBar
@@ -922,34 +949,6 @@
                                 android:layout_height="10dp"
                                 android:progress="100" />
                         </LinearLayout>
-
-                        <ImageView
-                            android:id="@+id/ins_close_loc"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="3dp"
-                            android:layout_marginEnd="3dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/ins_pb_con"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/ins_pb_con"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0"
-                            app:srcCompat="@drawable/ic_baseline_location_on_24" />
-
-                        <ImageView
-                            android:id="@+id/ins_finl_loc"
-                            android:layout_width="23dp"
-                            android:layout_height="25dp"
-                            android:layout_marginEnd="3dp"
-                            android:rotation="180"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="@+id/ins_pb_con"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="@+id/ins_pb_con"
-                            app:layout_constraintTop_toBottomOf="@+id/ins_progress"
-                            app:layout_constraintVertical_bias="0.0"
-                            app:srcCompat="@drawable/ic_baseline_location_on_24" />
 
                         <LinearLayout
                             android:id="@+id/linearLayout"
@@ -984,6 +983,7 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent">
 
+
                                 <TableRow
                                     android:id="@+id/tableRow12"
                                     android:layout_width="match_parent"
@@ -1012,7 +1012,7 @@
 
                                         android:background="@drawable/textborder"
                                         android:gravity="center"
-                                        android:text="@string/price"
+                                        android:text="قبمت"
                                         android:textColor="#000000" />
 
                                 </TableRow>
@@ -1027,7 +1027,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="000002447"
+                                        android:text="999"
                                         android:textColor="#000000"
                                         android:textStyle="bold" />
 
@@ -1045,7 +1045,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="@string/count"
+                                        android:text="000002447"
                                         android:textColor="#000000"
                                         android:textStyle="bold" />
 
@@ -1063,7 +1063,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="@string/price"
+                                        android:text="0"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1097,7 +1097,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="@string/price"
+                                        android:text="0"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1111,6 +1111,74 @@
 
                                     <TextView
                                         android:id="@+id/TextView403"
+
+                                        android:layout_weight="1"
+                                        android:background="@drawable/textborder3"
+                                        android:gravity="center"
+                                        android:text="@string/count"
+                                        android:textColor="#000000" />
+
+                                </TableRow>
+
+                                <TableRow
+                                    android:id="@+id/tableRow52"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:id="@+id/TextView501"
+
+                                        android:layout_weight="1"
+                                        android:background="@drawable/textborder3"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textColor="#000000" />
+
+                                    <TextView
+                                        android:id="@+id/TextView502"
+
+                                        android:layout_weight="1"
+                                        android:background="@drawable/textborder3"
+                                        android:gravity="center"
+                                        android:text="@string/volume"
+                                        android:textColor="#000000" />
+
+                                    <TextView
+                                        android:id="@+id/TextView503"
+
+                                        android:layout_weight="1"
+                                        android:background="@drawable/textborder3"
+                                        android:gravity="center"
+                                        android:text="@string/count"
+                                        android:textColor="#000000" />
+
+                                </TableRow>
+
+                                <TableRow
+                                    android:id="@+id/tableRow62"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:id="@+id/TextView601"
+
+                                        android:layout_weight="1"
+                                        android:background="@drawable/textborder3"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textColor="#000000" />
+
+                                    <TextView
+                                        android:id="@+id/TextView602"
+
+                                        android:layout_weight="1"
+                                        android:background="@drawable/textborder3"
+                                        android:gravity="center"
+                                        android:text="@string/volume"
+                                        android:textColor="#000000" />
+
+                                    <TextView
+                                        android:id="@+id/TextView603"
 
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
@@ -1142,7 +1210,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder2"
                                         android:gravity="center"
-                                        android:text="@string/price"
+                                        android:text="قیمت"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1194,7 +1262,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder4"
                                         android:gravity="center"
-                                        android:text="@string/count"
+                                        android:text="999"
                                         android:textColor="#000000"
                                         android:textStyle="bold" />
 
@@ -1213,7 +1281,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="@string/price"
+                                        android:text="0"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1247,7 +1315,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="@string/price"
+                                        android:text="0"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1268,9 +1336,98 @@
                                         android:text="@string/count"
                                         android:textColor="#000000" />
 
+
+                                </TableRow>
+
+                                <TableRow
+                                    android:id="@+id/tableRow51"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:id="@+id/TextView504"
+
+                                        android:layout_weight="1"
+                                        android:background="@drawable/textborder3"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textColor="#000000" />
+
+                                    <TextView
+                                        android:id="@+id/TextView505"
+
+                                        android:layout_weight="1"
+                                        android:background="@drawable/textborder3"
+                                        android:gravity="center"
+                                        android:text="@string/volume"
+                                        android:textColor="#000000" />
+
+                                    <TextView
+                                        android:id="@+id/TextView506"
+
+                                        android:layout_weight="1"
+                                        android:background="@drawable/textborder4"
+                                        android:gravity="center"
+                                        android:text="@string/count"
+                                        android:textColor="#000000" />
+
+                                </TableRow>
+
+                                <TableRow
+                                    android:id="@+id/tableRow61"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:id="@+id/TextView604"
+
+                                        android:layout_weight="1"
+                                        android:background="@drawable/textborder3"
+                                        android:gravity="center"
+                                        android:text="0"
+                                        android:textColor="#000000" />
+
+                                    <TextView
+                                        android:id="@+id/TextView605"
+
+                                        android:layout_weight="1"
+                                        android:background="@drawable/textborder3"
+                                        android:gravity="center"
+                                        android:text="@string/volume"
+                                        android:textColor="#000000" />
+
+                                    <TextView
+                                        android:id="@+id/TextView606"
+
+                                        android:layout_weight="1"
+                                        android:background="@drawable/textborder4"
+                                        android:gravity="center"
+                                        android:text="@string/count"
+                                        android:textColor="#000000" />
+
                                 </TableRow>
                             </TableLayout>
 
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout6"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintEnd_toEndOf="@+id/ins_pb_con"
+                            app:layout_constraintStart_toStartOf="@+id/ins_pb_con"
+                            app:layout_constraintTop_toBottomOf="@+id/ins_progress">
+
+                            <ImageView
+                                android:id="@+id/ins_finl_loc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="3dp"
+                                android:rotation="180"
+                                android:rotationY="180"
+                                android:tint="#611700"
+                                app:srcCompat="@drawable/ic_baseline_location_on_24" />
                         </LinearLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

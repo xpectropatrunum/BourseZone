@@ -1,5 +1,6 @@
 package ir.sourcearena.filterbourse.searchHelper;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcel;
@@ -31,12 +32,11 @@ import java.util.List;
 public class CustomSuggestionsAdapter extends SuggestionsAdapter<Namad, CustomSuggestionsAdapter.SuggestionHolder> {
     LayoutInflater inf = null;
     Context ctx;
-    Settings setting;
+
     public CustomSuggestionsAdapter(LayoutInflater inflater, Context ctx) {
         super(inflater);
         this.inf = inflater;
         this.ctx= ctx;
-        setting = new Settings();
     }
 
 
@@ -63,10 +63,10 @@ public class CustomSuggestionsAdapter extends SuggestionsAdapter<Namad, CustomSu
             @Override
             public void onClick(View view) {
                 Intent in = new Intent(ctx, NamadRouter.class);
-                in.putExtra(setting.TITLE_EXTRA,suggestions.get(position).getName());
-                clearSuggestions();
+                in.putExtra(Settings.TITLE_EXTRA,suggestions.get(position).getName());
 
-                ctx.startActivity(in);
+
+                ((Activity) ctx).startActivityForResult(in,10);
                 new AcTrans.Builder(ctx).performFade();
             }
         });

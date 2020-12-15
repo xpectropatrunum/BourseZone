@@ -6,18 +6,14 @@ public class Settings {
     public static final String JSON_NEWS = "https://sourcearena.ir/androidFilterApi/news/newsReader.php?p=";
 
 
-    public static final String JSON_INDEX_BOURSE = "https://sourcearena.ir/androidFilterApi/FilterApi.php?token=fpa&index=0";
-    public static final String JSON_INDEX_H = "https://sourcearena.ir/androidFilterApi/FilterApi.php?token=fpa&index=1";
-    public static final String JSON_Q_NUMBER = "https://sourcearena.ir/androidFilterApi/FilterApi.php?token=fpa&q_number";
     public static final String SERVER = "https://sourcearena.ir/";
     public static final String REPORT_BUG = "https://sourcearena.ir/androidFilterApi/comments/reportBug.php";
     public static final String LEAVE_COMMENT = "https://sourcearena.ir/androidFilterApi/comments/comment.php";
-    public static final String JSON_INDEX_FARABOURSE = "https://sourcearena.ir/androidFilterApi/FilterApi.php?token=fpa&index=2";
     public static final String JSON_STOCKHOLDER = "https://sourcearena.ir/androidFilterApi/api.php?token=fpa&stockholder=";
     public static final String JSON_TABLOU_KAHNI = "https://sourcearena.ir/androidFilterApi/FilterApi.php?token=fpa&tablou=";
     public static final String JSON_FUNDAMENTAL = "https://sourcearena.ir/androidFilterApi/FilterApi.php?token=fpa&funda=";
     public static final String JSON_ALL = "https://sourcearena.ir/androidFilterApi/FilterApi.php?token=fpa&dideban=";
-    public static final String JSON_TECHNICAL = "https://sourcearena.ir/androidFilterApi/FilterApi.php?token=fpa&technical=";
+    public static final String JSON_TECHNICAL = "https://sourcearena.ir/androidFilterApi/tech/all.php?name=";
     public static final String JSON_CANDLE = "https://sourcearena.ir/androidFilterApi/api.php?token=fpa&days=60&name=";
     public static final String JSON_CODAL_TITLES = "https://sourcearena.ir/androidFilterApi/api.php?token=fpa&codal=";
     public static final String ALL_FILTERS = "https://sourcearena.ir/androidFilterApi/FilterApi.php?token=fpa&filter_method";

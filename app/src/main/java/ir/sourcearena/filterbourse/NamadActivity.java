@@ -1,5 +1,7 @@
 package ir.sourcearena.filterbourse;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.AsyncTask;
@@ -53,12 +55,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
+import ir.sourcearena.filterbourse.tools.NetworkChecker;
 import ir.sourcearena.filterbourse.ui.HomeFragment.Home;
 import ir.sourcearena.filterbourse.ui.LoadingView;
 import ir.sourcearena.filterbourse.ui.TableHelper;
+import ir.sourcearena.filterbourse.ui.watcher.Watchlist;
 
 public class NamadActivity extends Fragment {
 
@@ -72,6 +77,7 @@ public class NamadActivity extends Fragment {
     View v1, v2, v3, v4;
     LinearLayout pb_con;
     View root;
+    AsyncTask task;
 
     public static NamadActivity newInstance() {
 
@@ -156,7 +162,7 @@ public class NamadActivity extends Fragment {
         loc2 = root.findViewById(R.id.ins_finl_loc);
     }
 
-    int w, w2;
+    int w, w2 = 0;
 
     private void progressConf() {
         v1 = root.findViewById(R.id.view);
@@ -171,8 +177,9 @@ public class NamadActivity extends Fragment {
             public boolean onPreDraw() {
                 if (pc.getViewTreeObserver().isAlive())
                     pc.getViewTreeObserver().removeOnPreDrawListener(this);
-
-                w = pc.getWidth();
+                if(w == 0) {
+                    w = pc.getWidth();
+                }
                 setPadding();
                 return true;
             }
@@ -184,7 +191,10 @@ public class NamadActivity extends Fragment {
                 if (v1.getViewTreeObserver().isAlive()) {
                     v1.getViewTreeObserver().removeOnPreDrawListener(this);
 
-                    w2 = v1.getWidth();
+                    if(w2 == 0){
+                        w2 = v1.getWidth();
+                    }
+
 
                     viewSize();
                 }
@@ -217,18 +227,23 @@ public class NamadActivity extends Fragment {
                 0,
                 (int) (w * right_p) + 10,
                 0);
-        loc.setPadding(
-                (int) (w * left_c) ,
-                0,
-                0,
-                0);
-        Log.e("oad", (int) (w * left_c_final)+"");
-        Log.e("oad", (int) (w * left_c)+"");
-        loc2.setPadding(
-                (int) (w * left_c_final) ,
-                0,
-                0,
-                0);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins((int) (w * left_c_final), 0, 0, 0);
+       loc2.setLayoutParams(params);
+
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params2.setMargins((int) (w * left_c), 0, 0, 0);
+        loc.setLayoutParams(params2);
+
+
+
 
 
     }
@@ -245,38 +260,61 @@ public class NamadActivity extends Fragment {
     }
 
     String title;
-    AsyncTask task2;
 
+
+    AsyncTask task2;
     private void getData() {
 
         title = getActivity().getIntent().getExtras().getString(Settings.TITLE_EXTRA, "");
         if (task == null) {
-            newThread(Settings.JSON_CANDLE + title);
-            newThread(Settings.JSON_INS_URL + title);
+           task = new Request().execute(Settings.JSON_CANDLE + title);
+            task2 =new Request().execute(Settings.JSON_INS_URL + title);
 
+
+            Calendar cal = Calendar.getInstance();
+            if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY || cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+
+            } else {
+                final Handler handler = new Handler();
+
+                final Runnable r = new Runnable() {
+                    public void run() {
+                        if(permiteed) {
+                            Log.e("per2", permiteed + "");
+                            if (new NetworkChecker(getContext()).isNetworkAvailable()) {
+                              task =   new Request().execute(Settings.JSON_INS_URL + title);
+                            }
+                            handler.postDelayed(this, 5000);
+                        }
+                    }
+                };
+
+                handler.postDelayed(r, 15000);
+            }
         }
 
 
     }
-    int po = 0;
-    void newThread(final String url) {
 
-
-        HandlerThread handlerThread = new HandlerThread("TesHandlerThread" + po++);
-        handlerThread.start();
-        Looper looper = handlerThread.getLooper();
-        Handler handler = new Handler(looper);
-        handler.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                new Request().execute(url);
-            }
-        });
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        permiteed = false;
+        if(task != null)
+        {
+            task.cancel(true);
+        }
+         if(task2 != null)
+        {
+            task2.cancel(true);
+        }
+        SharedPreferences s = getActivity().getSharedPreferences("per", Context.MODE_PRIVATE);
+        s.edit().putBoolean("permitted",true).apply();
     }
+
+    boolean permiteed = true;
+    int po = 0;
+
 
     public void setCandle(String result) throws JSONException {
 
@@ -337,6 +375,7 @@ public class NamadActivity extends Fragment {
     double co_b, co_s, real_s, real_b;
 
     public void ParseJSon(final String data) throws JSONException, NullPointerException {
+
         new Thread(new Runnable() {
 
 
@@ -383,7 +422,7 @@ public class NamadActivity extends Fragment {
 
 
                             }
-                        } catch (JSONException e) {
+                        } catch (JSONException |NumberFormatException e) {
                             e.printStackTrace();
                         }
                     }
@@ -480,7 +519,7 @@ public class NamadActivity extends Fragment {
                             }
                             tv.setText(put);
                             int l = i + 1;
-                            if (i < 18) {
+                            if (i < 30) {
                                 if (l > 6) {
                                     l -= 6;
                                 }
@@ -499,6 +538,8 @@ public class NamadActivity extends Fragment {
                         center.setVisibility(View.VISIBLE);
                         dc.setVisibility(View.VISIBLE);
                         uc.setVisibility(View.VISIBLE);
+                        ConstraintLayout cl = root.findViewById(R.id.contall);
+                        cl.setVisibility(View.VISIBLE);
                         progressConf();
                         loading.cancel();
 
@@ -510,7 +551,7 @@ public class NamadActivity extends Fragment {
     }
 
 
-    AsyncTask task;
+
 
     @Override
     public void onPause() {
@@ -539,7 +580,7 @@ public class NamadActivity extends Fragment {
             }
             if (text.contains("مجاز")) {
                 tv.setTextColor(getResources().getColor(R.color.green));
-            } else if (text.contains("متوقف"))
+            } else if (text.contains("ممنوع"))
                 tv.setTextColor(getResources().getColor(R.color.red));
         }
         if (text.contains("%")) {

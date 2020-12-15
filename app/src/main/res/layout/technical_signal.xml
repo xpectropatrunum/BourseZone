@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/base"
+    android:layoutDirection="ltr"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ind_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="18dp"
+                    android:fontFamily="@font/iranyekanextraold"
+                    android:shadowColor="@color/text2"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1.25"
+                    android:text="وضعیت اندیکاتور ها"
+                    android:textColor="@color/text1"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/cardView8"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView8"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shadow_home"
+                    app:cardBackgroundColor="#ffffff"
+
+                    app:cardCornerRadius="13pt"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView22"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <TextView
+                            android:id="@+id/sell_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/iransansmedium"
+                            android:text="0"
+
+                            android:textColor="@color/red"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/textView28"
+                            app:layout_constraintStart_toStartOf="@+id/textView28"
+                            app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+                        <ImageView
+                            android:id="@+id/imageView7"
+                            android:layout_width="0dp"
+                            android:layout_height="150sp"
+                            android:cropToPadding="false"
+                            android:scaleType="fitXY"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0"
+                            app:srcCompat="@drawable/signal_vector" />
+
+                        <ImageView
+                            android:id="@+id/imageView8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+                            app:layout_constraintEnd_toEndOf="@+id/imageView7"
+                            app:layout_constraintStart_toStartOf="@+id/imageView7"
+                            app:layout_constraintTop_toTopOf="@+id/imageView7"
+                            app:layout_constraintVertical_bias="1.0"
+                            app:srcCompat="@drawable/pointer" />
+
+                        <TextView
+                            android:id="@+id/textView26"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:layout_marginEnd="10dp"
+                            android:text="خرید"
+                            app:layout_constraintEnd_toEndOf="@+id/imageView7"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="@+id/imageView7"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+
+                        <TextView
+                            android:id="@+id/textView27"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="7dp"
+                            android:text="خنثی"
+                            app:layout_constraintEnd_toEndOf="@+id/imageView7"
+                            app:layout_constraintStart_toStartOf="@+id/imageView7"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+
+                        <TextView
+                            android:id="@+id/neu_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/iransansmedium"
+                            android:text="0"
+                            android:textColor="@color/text2"
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/textView27"
+                            app:layout_constraintStart_toStartOf="@+id/textView27"
+                            app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+                        <TextView
+                            android:id="@+id/textView28"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="7dp"
+                            android:text="فروش"
+                            app:layout_constraintEnd_toEndOf="@+id/imageView7"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/imageView7"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+
+                        <TextView
+                            android:id="@+id/buy_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/iransansmedium"
+                            android:text="0"
+                            android:textColor="#0070A3"
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/textView26"
+                            app:layout_constraintStart_toStartOf="@+id/textView26"
+                            app:layout_constraintTop_toBottomOf="@+id/textView26" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/tech_patern"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="18dp"
+                    android:fontFamily="@font/iranyekanextraold"
+                    android:shadowColor="@color/text2"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1.25"
+                    android:text="الگوهای کندل شناسی"
+                    android:textColor="@color/text1"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/cardView9"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView9"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shadow_home"
+                    app:cardBackgroundColor="#ffffff"
+
+                    app:cardCornerRadius="13pt"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView23"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/paterns"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView32"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <mehdi.sakout.fancybuttons.FancyButton
+                            android:id="@+id/show_more"
+                            android:layout_width="wrap_content"
+
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginBottom="2dp"
+                            android:paddingLeft="7sp"
+                            android:paddingTop="4dp"
+                            android:paddingRight="7sp"
+
+                            android:paddingBottom="4dp"
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/textView32"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/paterns"
+
+
+                            app:layout_constraintVertical_bias="0.0"
+                            fancy:fb_borderWidth="0dp"
+                            fancy:fb_defaultColor="#00000000"
+
+                            fancy:fb_focusColor="#B5B5B5"
+                            fancy:fb_text="نمایش همه"
+
+                            fancy:fb_textColor="@color/text2"
+                            fancy:fb_textFont="iranyekanbold" />
+
+
+                        <TextView
+                            android:id="@+id/textView32"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="7dp"
+                            android:fontFamily="@font/iransansmedium"
+                            android:text="الگوهای موجود:"
+                            app:layout_constraintEnd_toEndOf="@+id/paterns"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="@+id/paterns"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/all_ind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="18dp"
+                    android:fontFamily="@font/iranyekanextraold"
+                    android:shadowColor="@color/text2"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="1.25"
+                    android:text="اندیکاتور ها"
+                    android:textColor="@color/text1"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/cardView10"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView10"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shadow_home"
+                    app:cardBackgroundColor="#ffffff"
+
+                    app:cardCornerRadius="13pt"
+                    app:cardElevation="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView24"
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/indicators"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,17 +7,21 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.orhanobut.dialogplus.DialogPlus;
@@ -47,22 +51,189 @@ public class SimpleAdder extends AppCompatActivity {
     RecyclerView rv;
     EditText ed;
     Helper db;
+    int EDITMODE = 0;
     List<AddSegments> utils;
+    SpinKitView loading ;
+    List<String> sp1,sp2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addsimplefilter);
-
-        declareRecycler();
+        loading = findViewById(R.id.spin_kit);
+        if(getIntent().getExtras() != null){
+            EDITMODE = 1;
+        }
         declareButton();
-        Submit();
+        utils = new ArrayList<>();
+        if(getIntent().getExtras() != null){
+            ed.setEnabled(false);
+            loadSaved(getIntent().getExtras().getString("name"),getIntent().getExtras().getString("cond"));
+        }
+
+
         initiateDB();
         setTileActionbar();
+        list();
 
 
 
+
+
+        declareRecycler();
+        Submit();
+    }
+
+    private void list() {
+        sp1 = new ArrayList<>();
+        sp1.add("تعداد معاملات");
+        sp1.add("حجم معاملات");
+        sp1.add("ارزش معاملات");
+        sp1.add("قیمت دیروز");
+        sp1.add("اولین قیمت");
+        sp1.add("کمترین قیمت");
+        sp1.add("بیشترین قیمت");
+        sp1.add("آخرین قیمت");
+        sp1.add("تغییر آخرین قیمت");
+        sp1.add("درصد تغییر آخرین قیمت");
+        sp1.add("قیمت پایانی");
+        sp1.add("تغییر قیمت پایانی");
+        sp1.add("درصد تغییر قیمت پایانی");
+        sp1.add("eps");
+        sp1.add("p/e");
+        sp1.add("آستانه مجاز پایین");
+        sp1.add("آستانه مجاز بالا");
+        sp1.add("تعداد سهام");
+        sp1.add("ارزش بازار");
+        sp1.add("قیمت خرید - سطر اول");
+        sp1.add("تعداد خریدار - سطر اول");
+        sp1.add("حجم خرید- سطر اول");
+        sp1.add("قیمت فروش - سطر اول");
+        sp1.add("تعداد فروشنده - سطر اول");
+        sp1.add("حجم فروش- سطر اول");
+        sp1.add("قیمت خرید - سطر دوم");
+        sp1.add("تعداد خریدار - سطر دوم");
+        sp1.add("حجم خرید- سطر دوم");
+        sp1.add("قیمت فروش - سطر دوم");
+        sp1.add("تعداد فروشنده - سطر دوم");
+        sp1.add("حجم فروش- سطر دوم");
+        sp1.add("قیمت خرید - سطر سوم");
+        sp1.add("تعداد خریدار - سطر سوم");
+        sp1.add("حجم خرید- سطر سوم");
+        sp1.add("قیمت فروش - سطر سوم");
+        sp1.add("تعداد فروشنده - سطر سوم");
+        sp1.add("حجم فروش- سطر سوم");
+        sp1.add("حجم مبنا");
+        sp1.add("تعداد خریدار حقیقی");
+        sp1.add("تعداد خریدار حقوقی");
+        sp1.add("حجم خرید حقیقی");
+        sp1.add("حجم خرید حقوقی");
+        sp1.add("تعداد فروشنده حقیقی");
+        sp1.add("تعداد فروشنده حقوقی");
+        sp1.add("حجم فروش حقیقی");
+        sp1.add("حجم فروش حقوقی");
+
+        sp2 = new ArrayList<>();
+        sp2.add("برابر");
+        sp2.add("بزرگتر مساوی");
+        sp2.add("کوچکتر مساوی");
+        sp2.add("بزرگتر");
+        sp2.add("کوچکتر");
+    }
+
+    private void loadSaved(String name, String cond) {
+        utils=new ArrayList<>();
+        ed.setText(name);
+        Log.e("ss",cond);
+        if(cond.contains("&&")){
+            String[] c = cond.split("&&");
+            for(int i =0; i<c.length; i++){
+                utils.add(parse(c[i]));
+            }
+        }else{
+            utils.add(parse(cond));
+        }
+
+        
+
+        
+    }
+   AddSegments parse(String t){
+        String one, two, split = "";
+        int a,b;
+        if(t.contains("==")){
+           one =  t.split("==")[0];
+           split = "==";
+           findSP1(one);
+           findSP2(split);
+           two =  t.split("==")[1];
+           return new AddSegments(  findSP1(one),  findSP2(split),(two));
+        }
+        else if(t.contains("<=")){
+            one =  t.split("<=")[0];
+            split = "<=";
+            findSP1(one);
+            findSP2(split);
+            two =  t.split("<=")[1];
+            return new AddSegments(  findSP1(one),  findSP2(split),(two));
+        }else if(t.contains("!=")){
+            one =  t.split("!=")[0];
+            split = "!=";
+            findSP1(one);
+            findSP2(split);
+            two =  t.split("!=")[1];
+            return new AddSegments(  findSP1(one),  findSP2(split),(two));
+        }
+        else if(t.contains(">=")){
+            one =  t.split(">=")[0];
+            split = ">=";
+            findSP1(one);
+            findSP2(split);
+            two =  t.split(">=")[1];
+            return new AddSegments(  findSP1(one),  findSP2(split),(two));
+        }
+        else if(t.contains(">")){
+            one =  t.split(">")[0];
+            split = ">";
+            findSP1(one);
+            findSP2(split);
+            two =  t.split(">")[1];
+            return new AddSegments(  findSP1(one),  findSP2(split),(two));
+        }else if(t.contains("<")){
+            one =  t.split("<")[0];
+            split = "<";
+            findSP1(one);
+            findSP2(split);
+            two =  t.split("<")[1];
+            return new AddSegments(  findSP1(one),  findSP2(split),(two));
+        }
+        return null;
+        
+    }
+    int findSP1(String o){
+        String[] f = new FilterFieldHelper().conditions;
+       
+        for(int i =0; i<f.length; i++){
+            if(f[i].equals(o)) {
+                return i;
+            }
+        }
+
+        return  0;
 
     }
+    int findSP2(String o){
+        String[] f = new FilterFieldHelper().function;
+        for(int i =0; i<f.length; i++){
+            if(f[i].equals(o)) {
+                return i;
+            }
+        }
+
+        return  0;
+
+    }
+
+
     int p = 0;
     private void setTileActionbar() {
 
@@ -76,6 +247,13 @@ public class SimpleAdder extends AppCompatActivity {
                     animation(tit, 10000, Techniques.Tada,false);
                 }
 
+            }
+        });
+        ImageView back = findViewById(R.id.imageView3);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
@@ -102,16 +280,28 @@ public class SimpleAdder extends AppCompatActivity {
     public String SaveData(){
         FilterFieldHelper helper = new FilterFieldHelper();
         String out = "";
+        Float f = 0f;
+
 
         for(int i = 0; i < utils.size(); i++){
+            try {
+                f = Float.parseFloat(utils.get(i).getVal());
+            }catch (NumberFormatException | IllegalStateException r){
+                new ToastMaker(getBaseContext(),"خطا در تجزیه فیلتر ورودی ها را کنترل کنید");
+                return "";
+            }
+
             out += helper.conditions[utils.get(i).getSp1()] + helper.function[utils.get(i).getSp2()] + utils.get(i).getVal() + ((i == utils.size()-1) ? "":"&&");
         }
        return out;
     }
     public void addFilterToRecycler(){
 
-        utils.add(new AddSegments(0,0,0));
-        adapter.notifyItemInserted(utils.size()-1);
+
+            utils.add(new AddSegments(0,0,"0"));
+            adapter.notifyItemInserted(utils.size()-1);
+
+
 
     }
     public void hideKeyboard() {
@@ -140,44 +330,56 @@ public class SimpleAdder extends AppCompatActivity {
                 final String name =ed.getText().toString();
                 if(!name.equals("")){
 
-                    if(!db.checkExists(name)) {
+                    if(db.checkExists(name) == (EDITMODE == 1)) {
 
                         try {
 
+                            loading.setVisibility(View.VISIBLE);
+                            submit.setText("");
                             AsyncHttpClient client = new AsyncHttpClient();
                             JSONObject obj = new JSONObject();
 
+                            String data = SaveData();
                             obj.put("token", "fpa");
-                            obj.put("condition", SaveData());
+                            if(!data.equals("")) {
 
-                            StringEntity entity = new StringEntity(obj.toString());
 
-                            client.post(getApplicationContext(), "http://sourcearena.ir/api/filter.php", entity, "application/json", new TextHttpResponseHandler() {
+                                obj.put("condition", data);
 
-                                @Override
-                                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                                    Log.d("LoginActivity", "Failed");
-                                    Log.d("LoginActivity", "body " + responseString);
-                                }
+                                StringEntity entity = new StringEntity(obj.toString());
 
-                                @Override
-                                public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                                client.post(getApplicationContext(), "http://sourcearena.ir/api/filter.php", entity, "application/json", new TextHttpResponseHandler() {
 
-                                    try {
-                                        JSONObject respObj = new JSONObject(responseString);
-                                        int size = respObj.getInt("count");
-                                        String condition = respObj.getString("calculate");
-                                        hideKeyboard();
-                                        showCount(size);
-                                        SimpleAdder.this.name = name;
-                                        SimpleAdder.this.condition = condition;
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
+                                    @Override
+                                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                                        loading.setVisibility(View.GONE);
+                                        submit.setText("ثبت");
+                                        Log.d("LoginActivity", "body " + responseString);
                                     }
-                                }
-                            });
+
+                                    @Override
+                                    public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                                        loading.setVisibility(View.GONE);
+                                        submit.setText("ثبت");
+                                        try {
+                                            JSONObject respObj = new JSONObject(responseString);
+                                            int size = respObj.getInt("count");
+                                            String condition = respObj.getString("calculate");
+                                            hideKeyboard();
+                                            showCount(size);
+                                            SimpleAdder.this.name = name;
+                                            SimpleAdder.this.condition = condition;
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                            }else{
+                                loading.setVisibility(View.GONE);
+                                submit.setText("ثبت");
+                            }
                         } catch (Exception ex) {
-                            Log.d("LoginActivity", "Getting Exception " + ex.toString());
+                            new ToastMaker(getApplicationContext(),"خطا در تجزیه فیلتر ورودی ها را کنترل کنید");
                         }
 
                     }else{
@@ -221,7 +423,9 @@ public class SimpleAdder extends AppCompatActivity {
     }
 
     void showCount(int size){
-        DialogPlus dialog = DialogPlus.newDialog(this).setContentHolder(new dialogAdapter(R.layout.dialog_filter_add, size+"",getLayoutInflater()))
+
+
+    DialogPlus dialog = DialogPlus.newDialog(this).setContentHolder(new dialogAdapter(R.layout.dialog_filter_add, size+"",getLayoutInflater()))
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(DialogPlus dialog, View view) {
@@ -232,7 +436,12 @@ public class SimpleAdder extends AppCompatActivity {
                         }
                         else if (view.getId() == R.id.btn_add_filter) {
 
-                            db.addFilter(new Filter(name, condition,1));
+                            if(EDITMODE == 1){
+                                db.editFilter(name,condition);
+                            }else{
+                                db.addFilter(new Filter(name, condition,1));
+                            }
+
                             Intent intent = getIntent();
                             intent.putExtra("added", true);
                             setResult(RESULT_OK, intent);
@@ -243,8 +452,10 @@ public class SimpleAdder extends AppCompatActivity {
                         }
                     }
                 }).setGravity(Gravity.CENTER)
-                .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
+                .setExpanded(false)
+
                 .create();
+
 
 
         TextView tv = dialog.getHolderView().findViewById(R.id.textView17);
@@ -262,8 +473,10 @@ public class SimpleAdder extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getBaseContext());
         rv.setLayoutManager(layoutManager);
 
-        utils = new ArrayList<>();
-        utils.add(new AddSegments(0,0,0));
+        if(EDITMODE == 0){
+            utils.add(new AddSegments(0,0,"0"));
+
+        }
 
 
 

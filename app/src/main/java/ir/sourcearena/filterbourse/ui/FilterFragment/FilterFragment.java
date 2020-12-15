@@ -60,11 +60,11 @@ public class FilterFragment extends Fragment {
 
         simpleGrid.setSelector(new ColorDrawable(Color.TRANSPARENT));
         ref = (PullRefreshLayout) root.findViewById(R.id.refresher);
-        ref.setRefreshStyle(PullRefreshLayout.STYLE_RING);
+        ref.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
         ref.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                connect(Settings.ALL_FILTERS);;
+                connect(Settings.ALL_FILTERS);
             }
         });
         return root;

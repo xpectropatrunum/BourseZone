@@ -6,148 +6,162 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView24"
+
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="?android:attr/selectableItemBackground"
-        app:cardCornerRadius="7dp"
-        app:cardElevation="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="15dp"
+        android:fontFamily="@font/iransansbold"
+        android:text="توجه"
+        android:textColor="@color/text1"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <LinearLayout
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout11"
+        app:layout_constraintVertical_bias="1.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="10dp">
 
-                <TextView
-                    android:id="@+id/textView19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="آیا از ثبت آن اطمینان دارید؟"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView17" />
+                android:paddingLeft="18dp"
+                android:paddingTop="10dp"
+                android:paddingRight="18dp"
+                android:paddingBottom="10dp"
 
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="فیلتر شما دارای"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_add_filter"
 
-                <TextView
-                    android:id="@+id/textView17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="TextView"
-                    android:textColor="@color/secondary"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView12"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                fancy:fb_borderColor="#00000000"
+                fancy:fb_borderWidth="2.5dp"
+                fancy:fb_defaultColor="#00000000"
 
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                fancy:fb_focusColor="#959595"
 
-                    android:layout_marginEnd="5dp"
-                    android:text="نماد است."
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/textView17"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                fancy:fb_text="ویرایش"
+                fancy:fb_textColor="@color/text2"
+                fancy:fb_textFont="iranyekanbold" />
 
-            <LinearLayout
-                android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="2"
-                android:orientation="horizontal">
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_add_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                android:layout_marginStart="10dp"
 
-                    <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/btn_cancel"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:paddingLeft="18dp"
+                android:paddingTop="10dp"
+                android:paddingRight="18dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                fancy:fb_borderColor="#00FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="#00FF1100"
+                fancy:fb_focusColor="#2A5E2C"
+                fancy:fb_text="ثبت"
+                fancy:fb_textColor="#4CAF50">
 
-                        android:layout_marginStart="20dp"
+            </mehdi.sakout.fancybuttons.FancyButton>
 
-                        android:layout_marginEnd="20dp"
-                        android:padding="8dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        fancy:fb_borderColor="#FFFFFF"
-                        fancy:fb_borderWidth="1dp"
-                        fancy:fb_defaultColor="#FFC107"
-                        fancy:fb_focusColor="#D68000"
-                        fancy:fb_radius="10dp"
-                        fancy:fb_text="ویرایش"
-                        fancy:fb_textColor="@color/pureWhite" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout11"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView24"
+        app:layout_constraintVertical_bias="0.0">
 
-                    <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/btn_add_filter"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="آیا از ثبت آن اطمینان دارید؟"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
-                        android:layout_marginStart="20dp"
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="فیلتر شما دارای"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-                        android:layout_marginEnd="20dp"
-                        android:padding="8dp"
-                        app:fb_text="اضافه کن"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        fancy:fb_borderColor="#FFFFFF"
-                        fancy:fb_borderWidth="1dp"
-                        fancy:fb_defaultColor="@color/primary"
-                        fancy:fb_focusColor="#079A98"
-                        fancy:fb_radius="10dp"
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:text="TextView"
+            android:textColor="@color/secondary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView12"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-                        fancy:fb_textColor="@color/pureWhite" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </LinearLayout>
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
 
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+            android:layout_marginEnd="5dp"
+            android:text="نماد است."
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView17"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

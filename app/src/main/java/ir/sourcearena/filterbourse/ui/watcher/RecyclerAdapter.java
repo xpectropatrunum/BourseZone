@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +47,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return viewHolder;
     }
     Utils pu;
+    protected AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
+    protected AlphaAnimation fadeOut = new AlphaAnimation( 1.0f , 0.0f ) ;
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         setting = new Settings();
@@ -54,15 +58,32 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.name.setText(pu.getName());
         holder.full_name.setText(pu.getFName());
         holder.state.setText(pu.getState());
+
+
+
+
+
+
+        fadeOut.setDuration(1000);
+        fadeOut.setFillAfter(true);
+
+        fadeIn.setDuration(1000);
+        fadeIn.setFillAfter(true);
+
+        if( !holder.price.equals(pu.getPrice())) {
+            holder.price.startAnimation(fadeOut);
+            holder.price.startAnimation(fadeIn);
+        }
+
+        if( !holder.percent.equals(pu.getPercent())) {
+            holder.percent.startAnimation(fadeOut);
+
+            holder.percent.startAnimation(fadeIn);
+        }
         holder.price.setText(pu.getPrice());
-        holder.change.setText(pu.getChange());
+
         holder.percent.setText(pu.getPercent());
 
-        //holder.full_name.setTextSize(setting.CARD_FONT_SIZE+2);
-
-
-
-        checkPercent(holder.change);
         checkPercent(holder.percent);
         checkColor(holder.state);
 
@@ -119,7 +140,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public TextView name;
         public TextView state;
         public TextView price;
-        public TextView change;
+
         public TextView percent;
 
 
@@ -130,7 +151,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             name = (TextView) itemView.findViewById(R.id.favorite_name);
             state = (TextView) itemView.findViewById(R.id.favorite_state);
             price = (TextView) itemView.findViewById(R.id.favorite_price);
-            change = (TextView) itemView.findViewById(R.id.favorite_change);
+
             percent = (TextView) itemView.findViewById(R.id.favorite_percent);
 
 

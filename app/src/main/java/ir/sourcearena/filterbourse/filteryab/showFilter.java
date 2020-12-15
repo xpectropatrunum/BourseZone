@@ -29,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,8 +131,10 @@ public class showFilter extends Fragment {
         utils = new ArrayList<>();
         for(int i= 0; i< ja.length(); i++){
             JSONObject obj = ja.getJSONObject(i);
+            DecimalFormat formatter = new DecimalFormat("#,###,###");
+            String yourFormattedString = formatter.format(Float.parseFloat(obj.getString("close_price")));
             utils.add(new Utils((i + 1) + ". " + obj.getString("name"), obj.getString("full_name"),
-                    obj.getString("market"),  obj.getString("close_price"), obj.getString("close_price_change"), obj.getString("close_price_change_percent")+"%"));
+                    obj.getString("market"), yourFormattedString , obj.getString("close_price_change"), obj.getString("close_price_change_percent")+"%"));
 
         }
 

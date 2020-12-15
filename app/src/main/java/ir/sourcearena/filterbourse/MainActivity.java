@@ -2,6 +2,9 @@ package ir.sourcearena.filterbourse;
 
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +38,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.ashokvarma.bottomnavigation.TextBadgeItem;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.navigation.NavigationView;
@@ -76,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
 
     CustomSuggestionsAdapter customSuggestionsAdapter;
     ConstraintLayout drawer;
+    SharedPreferences sp;
+    SharedPreferences.Editor ed;
 
 
     @Override
@@ -83,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        sp = getSharedPreferences("news", Context.MODE_PRIVATE);
+        ed = sp.edit();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         customSuggestionsAdapter = new CustomSuggestionsAdapter(getLayoutInflater(), MainActivity.this);
 
@@ -96,6 +104,21 @@ public class MainActivity extends AppCompatActivity {
         pager_load();
         animation(appname, 10000, Techniques.Tada,true);
         drawer();
+    }
+
+    @Override
+    protected void onPause() {
+
+        super.onPause();
+        SharedPreferences s = getSharedPreferences("per", Context.MODE_PRIVATE);
+        s.edit().putBoolean("permitted",false).apply();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences s = getSharedPreferences("per", Context.MODE_PRIVATE);
+        s.edit().putBoolean("permitted",true).apply();
     }
 
     public void hideKeyboard() {
@@ -298,8 +321,20 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+    TextBadgeItem numberBadgeItem;
 
     private void pager_load() {
+
+        int cc = sp.getInt("cc",20);
+        if(cc != 0){
+            numberBadgeItem = new TextBadgeItem()
+                    .setBorderWidth(4)
+                    .setBorderColorResource(R.color.red)
+                    .setBackgroundColorResource(R.color.red)
+                    .setText(cc+"")
+                    .setHideOnSelect(true);
+        }
+
         spaceNavigationView = findViewById(R.id.bottom_menu);
         pager = (ViewPager) findViewById(R.id.viewPager);
         final MyPagerAdapter mp = new MyPagerAdapter(getSupportFragmentManager());
@@ -309,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
                 .addItem(new BottomNavigationItem(R.drawable.eye_50, "دیده بان"))
                 .addItem(new BottomNavigationItem(R.drawable.whatshot_50, "فیلتر داغ"))
                 .addItem(new BottomNavigationItem(R.drawable.analysis_50, "فیلتریاب"))
-                .addItem(new BottomNavigationItem(R.drawable.news_24, "اخبار"))
+                .addItem(new BottomNavigationItem(R.drawable.news_24, "اخبار").setBadgeItem(numberBadgeItem))
                 .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, "خانه"))
                 .setBarBackgroundColor(R.color.secondary)
 
@@ -324,6 +359,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(int position) {
                 pager.setCurrentItem(4 - position);
+                if(position == 3){
+                    ed.putInt("cc",0);
+                    ed.apply();
+                    numberBadgeItem = null;
+                }
             }
 
             @Override
@@ -367,6 +407,7 @@ public class MainActivity extends AppCompatActivity {
                     case 1:
                         appname.setText("اخبار بورس");
                         animation(appname,500,Techniques.FadeIn,false);
+
                         break;
                     case 0:
                         appname.setText("بورس در یک نگاه");
@@ -517,6 +558,16 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             return 5;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+      
+        Log.e("e",resultCode+"");
+        if(requestCode == 10){
+            searchBar.closeSearch();
         }
     }
 

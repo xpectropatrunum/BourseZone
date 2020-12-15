@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.orhanobut.dialogplus.DialogPlus;
@@ -39,6 +41,7 @@ public class AdvanceAdder extends AppCompatActivity {
     FancyButton addFilter, submit;
 
     EditText ed,ed2;
+    int EDITMODE = 0;
     Helper db;
 
     @Override
@@ -46,16 +49,29 @@ public class AdvanceAdder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addadvancedfilter);
 
+        loading = findViewById(R.id.spin_kit);
 
         declareButton();
         Submit();
         initiateDB();
         setTileActionbar();
 
+        if(getIntent().getExtras() != null){
+            ed.setEnabled(false);
+            EDITMODE = 1;
+            loadSaved(getIntent().getExtras().getString("name"),getIntent().getExtras().getString("cond"));
+        }
+
 
 
 
     }
+
+    private void loadSaved(String name, String cond) {
+        ed.setText(name);
+        ed2.setText(cond);
+    }
+
     int p = 0;
     private void setTileActionbar() {
 
@@ -72,6 +88,14 @@ public class AdvanceAdder extends AppCompatActivity {
             }
         });
 
+        ImageView back = findViewById(R.id.imageView3);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         tit.setText("فیلترنویسی حرفه ای");
     }
     private void initiateDB() {
@@ -84,6 +108,7 @@ public class AdvanceAdder extends AppCompatActivity {
         submit = findViewById(R.id.btn_submit);
         addFilter = findViewById(R.id.btn_show);
         addFilter.setCustomTextFont(R.font.iranyekanmedium);
+        submit.setTextSize(16);
         submit.setCustomTextFont(R.font.iranyekanmedium);
         addFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +130,7 @@ public class AdvanceAdder extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    SpinKitView loading ;
     String name, condition;
     public void Submit(){
         submit.setOnClickListener(new View.OnClickListener() {
@@ -114,10 +140,12 @@ public class AdvanceAdder extends AppCompatActivity {
                 final String filter =ed2.getText().toString();
                 if(!name.equals("")){
 
-                    if(!db.checkExists(name)) {
+                    if(db.checkExists(name) == (EDITMODE == 1)) {
                         if(!filter.equals("")){
                         try {
 
+                            loading.setVisibility(View.VISIBLE);
+                            submit.setText("");
                             AsyncHttpClient client = new AsyncHttpClient();
                             JSONObject obj = new JSONObject();
 
@@ -130,13 +158,15 @@ public class AdvanceAdder extends AppCompatActivity {
 
                                 @Override
                                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
+                                    loading.setVisibility(View.GONE);
+                                    submit.setText("ثبت");
                                     Log.d("LoginActivity", "body " + responseString);
                                 }
 
                                 @Override
                                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
-
+                                    loading.setVisibility(View.GONE);
+                                    submit.setText("ثبت");
                                     try {
                                         JSONObject respObj = new JSONObject(responseString);
                                         int size = respObj.getInt("count");
@@ -146,6 +176,7 @@ public class AdvanceAdder extends AppCompatActivity {
                                         AdvanceAdder.this.condition = filter;
                                     } catch (JSONException e) {
                                         e.printStackTrace();
+                                        new ToastMaker(getApplicationContext(),"خطا در تجزیه فیتر");
                                     }
                                 }
                             });
@@ -239,7 +270,12 @@ public class AdvanceAdder extends AppCompatActivity {
                         }
                         else if (view.getId() == R.id.btn_add_filter) {
 
-                            db.addFilter(new Filter(name, condition,1));
+                            if(EDITMODE == 1){
+                                db.editFilter(name,condition);
+                            }else{
+                                db.addFilter(new Filter(name, condition,2));
+                            }
+
                             Intent intent = getIntent();
                             intent.putExtra("added", true);
                             setResult(RESULT_OK, intent);
@@ -250,7 +286,7 @@ public class AdvanceAdder extends AppCompatActivity {
                         }
                     }
                 }).setGravity(Gravity.CENTER)
-                .setExpanded(true)
+                .setExpanded(false)
                 .create();
 
 

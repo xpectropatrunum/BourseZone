@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:backgroundTintMode="add"
+
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="5dp"
@@ -122,10 +122,43 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_navigation_constraint" />
+        app:layout_constraintTop_toBottomOf="@+id/top_navigation_constraint" >
+
+    </com.duolingo.open.rtlviewpager.RtlViewPager>
 
 
-    <com.gauravk.bubblenavigation.BubbleNavigationConstraintView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/network_cont"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewPager2">
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="70sp"
+            android:layout_height="70sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/network_error" />
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="اینترنت دستگاه را روشن کنید"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView6"
+            app:layout_constraintVertical_bias="0.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.gauravk.bubblenavigation.BubbleNavigationLinearView
         android:id="@+id/top_navigation_constraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -134,13 +167,86 @@
         android:layoutDirection="ltr"
 
         android:padding="8dp"
-        app:bnc_mode="packed"
+        app:bnc_mode="inside"
         app:chainUseRtl="true"
         app:layout_constraintBottom_toTopOf="@+id/viewPager2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/actionbar"
         app:layout_constraintVertical_bias="0.75">
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/b_nazer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            app:bt_active="false"
+            app:bt_colorActive="@color/green"
+            app:bt_colorInactive="@color/grey"
+            app:bt_icon="@drawable/ic_round_visibility_24"
+            app:bt_padding="9dp"
+            app:bt_title="پیام ناظر"
+            app:bt_titlePadding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/b_codal"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/b_codal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            app:bt_active="false"
+            app:bt_colorActive="@color/orangebt"
+            app:bt_colorInactive="@color/grey"
+            app:bt_icon="@drawable/ic_round_find_in_page_24"
+            app:bt_padding="9dp"
+            app:bt_title="کدال"
+            app:bt_titlePadding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/b_funda"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </com.gauravk.bubblenavigation.BubbleToggleView>
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/b_funda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            app:bt_active="false"
+            app:bt_colorActive="@color/progressBlueDark"
+            app:bt_colorInactive="@color/grey"
+            app:bt_icon="@drawable/co_ic"
+            app:bt_padding="9dp"
+            app:bt_title="بنیادی"
+            app:bt_titlePadding="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/b_tech"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/b_tech"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            app:bt_active="false"
+            app:bt_colorActive="@color/red"
+            app:bt_colorInactive="@color/grey"
+            app:bt_icon="@drawable/ic_round_bar_chart_24"
+            app:bt_padding="9dp"
+            app:bt_title="تکنیکال"
+            app:bt_titlePadding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/b_overall"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/b_overall"
@@ -159,77 +265,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/b_tech"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            app:bt_active="true"
-            app:bt_colorActive="@color/red"
-            app:bt_colorInactive="@color/grey"
-            app:bt_icon="@drawable/ic_round_bar_chart_24"
-            app:bt_padding="9dp"
-            app:bt_title="تکنیکال"
-            app:bt_titlePadding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/b_overall"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/b_funda"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            app:bt_active="true"
-            app:bt_colorActive="@color/progressBlueDark"
-            app:bt_colorInactive="@color/grey"
-            app:bt_icon="@drawable/co_ic"
-            app:bt_padding="5dp"
-            app:bt_title="بنیادی"
-            app:bt_titlePadding="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/b_tech"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/b_codal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            app:bt_active="true"
-            app:bt_colorActive="@color/orangebt"
-            app:bt_colorInactive="@color/grey"
-            app:bt_icon="@drawable/ic_round_find_in_page_24"
-            app:bt_padding="9dp"            app:bt_title="کدال"
-            app:bt_titlePadding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/b_funda"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/b_nazer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            app:bt_active="true"
-            app:bt_colorActive="@color/green"
-            app:bt_colorInactive="@color/grey"
-            app:bt_icon="@drawable/ic_round_visibility_24"
-            app:bt_padding="9dp"            app:bt_title="پیام ناظر"
-            app:bt_titlePadding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/b_codal"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </com.gauravk.bubblenavigation.BubbleNavigationConstraintView>
+    </com.gauravk.bubblenavigation.BubbleNavigationLinearView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

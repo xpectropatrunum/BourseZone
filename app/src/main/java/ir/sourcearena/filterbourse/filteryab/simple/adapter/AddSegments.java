@@ -4,9 +4,9 @@ public class AddSegments {
 
 
     int sp1, sp2;
-    float val;
+    String val;
 
-    public AddSegments(int sp1, int sp2, float val) {
+    public AddSegments(int sp1, int sp2, String val) {
         this.sp1 = sp1;
         this.sp2 = sp2;
         this.val = val;
@@ -20,10 +20,10 @@ public class AddSegments {
         return sp2;
     }
 
-    public float getVal() {
+    public String getVal() {
         return val;
     }
-    public void setVal(float val) {
+    public void setVal(String val) {
         this.val = val;
     }
     public void setSp1(int sp1) {

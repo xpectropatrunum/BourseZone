@@ -1,16 +1,21 @@
 package ir.sourcearena.filterbourse;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
@@ -22,20 +27,35 @@ import androidx.viewpager.widget.ViewPager;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
+import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
 
+
+import java.util.Calendar;
 
 import ir.sourcearena.filterbourse.fundamental.java.Fundamental;
 import ir.sourcearena.filterbourse.stockholder.stockholder;
 import ir.sourcearena.filterbourse.technical.Technical;
+import ir.sourcearena.filterbourse.tools.NetworkChecker;
 
-public class NamadRouter extends AppCompatActivity {
+public class NamadRouter extends AppCompatActivity  {
 
 
-    BubbleNavigationConstraintView bb;
+    BubbleNavigationLinearView bb;
     ViewPager pager;
 
+    @Override
+    protected void onPause() {
+        super.onPause();
 
+    }
+    boolean ok = false;
+    boolean permiteed = true;
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        permiteed = false;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +70,52 @@ public class NamadRouter extends AppCompatActivity {
          bb = findViewById(R.id.top_navigation_constraint);
 
          bb.setTypeface(ResourcesCompat.getFont(this, (R.font.iranyekanmedium)));
-       pager.setAdapter(mp);
+
+        final Handler handler = new Handler();
+        final ConstraintLayout cl = findViewById(R.id.network_cont);
+        if(!ok) {
+            if (new NetworkChecker(NamadRouter.this).isNetworkAvailable()) {
+
+                cl.setVisibility(View.GONE);
+                ok = true;
+                pager.setAdapter(mp);
+            } else {
+                cl.setVisibility(View.VISIBLE);
+            }
+            
+        }
+
+            final Runnable r = new Runnable() {
+                public void run() {
+
+                    if (!ok) {
+                        if (new NetworkChecker(NamadRouter.this).isNetworkAvailable()) {
+
+                            cl.setVisibility(View.GONE);
+                            ok = true;
+                            pager.setAdapter(mp);
+                        } else {
+                            cl.setVisibility(View.VISIBLE);
+                        }
+                        handler.postDelayed(this, 1500);
+                    }
+
+
+                }
+            };
+
+            handler.postDelayed(r, 1500);
+
+
+
+
+
+
         int limit = (mp.getCount() > 1 ? mp.getCount() - 1 : 1);
         bb.setNavigationChangeListener(new BubbleNavigationChangeListener() {
             @Override
             public void onNavigationChanged(View view, int position) {
-                pager.setCurrentItem(position,true);
+                pager.setCurrentItem(4-position,true);
             }
         });
 
@@ -72,11 +132,12 @@ public class NamadRouter extends AppCompatActivity {
             }
 
             public void onPageSelected(int position) {
-                bb.setCurrentActiveItem(position);
+                bb.setCurrentActiveItem(4-position);
             }
         });
 
     }
+
 
 
     boolean state = false;
@@ -187,6 +248,8 @@ public class NamadRouter extends AppCompatActivity {
         });
 
     }
+
+
     private class MyPagerAdapter extends FragmentPagerAdapter {
         private FragmentManager fragmentManager;
 
@@ -210,10 +273,11 @@ public class NamadRouter extends AppCompatActivity {
                         return new Nazer();
                     case 3:
                         return new Codal();
+                    case 1:
+                        return new Technical();
                     case 2:
                         return new Fundamental();
-                    case 1:
-                        return new stockholder();
+
                     case 0:
                         return new NamadActivity();
 

@@ -1,6 +1,8 @@
 package ir.sourcearena.filterbourse.ui.news;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -51,14 +53,19 @@ public class News extends Fragment {
     LoadingView loading;
     View root;
     int page = 1;
+    SharedPreferences sp;
+    SharedPreferences.Editor ed;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        sp = getActivity().getSharedPreferences("news", Context.MODE_PRIVATE);
+        ed = sp.edit();
         utils = new ArrayList<>();
         root = inflater.inflate(R.layout.a_page_news, container, false);
         loading = new LoadingView(inflater,root,getActivity());
         lv = root.findViewById(R.id.news_List);
         ref = root.findViewById(R.id.refresher);
-        ref.setRefreshStyle(PullRefreshLayout.STYLE_RING);
+        ref.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
         scrollLoading = root.findViewById(R.id.spin_kit__);
        newThread();
 
@@ -94,6 +101,7 @@ public class News extends Fragment {
 
 
     ListAdapter cs;
+    int c = 0;
     private int preLast;
 
     List<Utils> utils;
@@ -103,11 +111,14 @@ public class News extends Fragment {
 
 
 
-
             ref.setRefreshing(false);
 
             JSONArray arr = new JSONArray(data);
             for (int i = 0; i < arr.length(); i++) {
+                if(arr.getJSONObject(i).getString("title").equals(sp.getString("last",""))){
+                    ed.putInt("cc",i);
+                    ed.apply();
+                }
                 utils.add(new Utils(arr.getJSONObject(i).getString("title"),
                         arr.getJSONObject(i).getString("text")
                 ,

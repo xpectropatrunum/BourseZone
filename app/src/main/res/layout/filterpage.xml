@@ -63,33 +63,49 @@
             fab:fab_title="فیلتر نویسی پیشرفته" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/refresher"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/user_filters"
-        android:layout_width="0dp"
-        android:paddingTop="5dp"
-        android:layout_height="0dp"
-        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/no_user_filter_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="هیچ فیلتری وجود ندارد."
-        android:fontFamily="@font/iransanslight"
-        android:textSize="14sp"
-        android:textColor="@color/text2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/user_filters"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
+                android:paddingTop="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/no_user_filter_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/iransanslight"
+                android:text="هیچ فیلتری وجود ندارد."
+                android:textColor="@color/text2"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.baoyz.widget.PullRefreshLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -49,6 +49,14 @@ public class Helper extends SQLiteOpenHelper {
         //2nd argument is String containing nullColumnHack
         db.close(); // Closing database connection
     }
+    public void editFilter(String name,String cond) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String edit = "UPDATE " +TABLE_CONTACTS+
+                "    SET "+KEY_FUNCTION+" = '"+cond +"'"+
+                "    WHERE " +
+               KEY_NAME +" ='"+name+"'";
+        db.execSQL(edit);
+    }
 
     // code to get the single contact
     Filter getFunction(int id) {
@@ -116,6 +124,19 @@ public class Helper extends SQLiteOpenHelper {
             return cursor.getInt(3);
         }
         return 0;
+    }
+    public String getFunction(String name){
+        List<Filter> contactList = new ArrayList<Filter>();
+        String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS+" WHERE name LIKE '"+name+"'";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            return cursor.getString(2);
+        }
+        return "";
     }
     // code to update the single contact
     public int updateContact(Filter contact) {

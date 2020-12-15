@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import ir.sourcearena.filterbourse.R;
 
 import com.orhanobut.dialogplus.DialogPlus;
@@ -24,18 +26,18 @@ public class dialogAdapter extends ViewHolder {
     private Context context;
     private String utils;
     Settings setting;
+    DialogPlus dp;
 
 
-    public dialogAdapter(int viewResourceId, final String text, final LayoutInflater inf) {
+
+    public dialogAdapter( int viewResourceId, final String text, final LayoutInflater inf) {
         super(viewResourceId);
 
-        /*this.getInflatedView().findViewById(R.id.remove_watchlist_dia).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        this.dp =dp;
 
 
-            }
-        });*/
+
+
     }
 
 

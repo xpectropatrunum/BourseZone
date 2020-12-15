@@ -35,6 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
+                android:layout_marginEnd="5dp"
                 android:fontFamily="@font/iransanslight"
                 android:text="TextView"
                 android:textAlignment="center"
@@ -106,8 +107,8 @@
 
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/custom_field_6"
-                app:layout_constraintStart_toEndOf="@+id/custom_field_4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/custom_field_6"
                 app:layout_constraintVertical_bias="0.0" />
 

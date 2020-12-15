@@ -93,7 +93,7 @@ public class Home extends Fragment {
         customCarouselView.setIndicatorGravity(Gravity.TOP);
         refresh();
         ref = (PullRefreshLayout) root.findViewById(R.id.refresher);
-        ref.setRefreshStyle(PullRefreshLayout.STYLE_RING);
+        ref.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
         ref.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

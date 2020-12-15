@@ -9,7 +9,7 @@ public class ViewHelper {
             R.id.f_aa,
             R.id.f_bb,
             R.id.f_cc,
-            R.id.pro
+
     };
     public static String[] keys = new String[]{
             "eps",
@@ -18,6 +18,6 @@ public class ViewHelper {
             "a",
             "b",
             "c",
-            "rate"
+
     };
 }

@@ -32,17 +32,18 @@
 
             <TextView
                 android:id="@+id/favorite_price"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="7dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/iransansmedium"
                 android:text="5610"
+                android:textColor="@color/text2"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/favorite_percent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
@@ -70,41 +71,26 @@
                 android:layout_marginBottom="5dp"
                 android:fontFamily="@font/iransansmedium"
                 android:text="باز"
-                android:textSize="12dp"
+                android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/favorite_fullname"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/favorite_price"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/favorite_change"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/iransansmedium"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/favorite_price"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/favorite_name"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/favorite_percent"
-                android:layout_width="60dp"
+                android:layout_width="45sp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/iransansmedium"
-                android:text="TextView"
+                android:text="-4.99%"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/favorite_name"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/favorite_change"
+                app:layout_constraintStart_toStartOf="@+id/favorite_state"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
@@ -121,7 +107,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/favorite_state"
+                app:layout_constraintTop_toBottomOf="@+id/favorite_percent"
                 app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

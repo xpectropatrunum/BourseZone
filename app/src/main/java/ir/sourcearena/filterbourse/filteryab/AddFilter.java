@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import androidx.transition.TransitionInflater;
 
 import com.anychart.AnyChartView;
 import com.anychart.charts.Cartesian;
+import com.baoyz.widget.PullRefreshLayout;
 import com.getbase.floatingactionbutton.AddFloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.labo.kaji.fragmentanimations.MoveAnimation;
@@ -71,19 +73,29 @@ public class AddFilter extends Fragment {
     LoadingView loading;
     List<FilterUtils> utils = new ArrayList<>();
     Bundle save;
+    PullRefreshLayout ref;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         root = inflater.inflate(R.layout.filterpage, container, false);
         loading = new LoadingView(inflater, root, getActivity());
-
+        ref = (PullRefreshLayout) root.findViewById(R.id.refresher);
+        ref.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
 
 
         FlotiongActions();
         initiateDB();
         readFromDB();
         List<Filter> filters = db.getAllFilters();
+
+
+        ref.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                readFromDB();
+            }
+        });
         if (filters.size() == 0) {
             return root;
         }
@@ -123,6 +135,8 @@ public class AddFilter extends Fragment {
     String names = "";
 
     private void readFromDB() {
+        conds = "";
+        names = "";
         List<Filter> filters = db.getAllFilters();
 
 
@@ -136,9 +150,9 @@ public class AddFilter extends Fragment {
         if (filters.size() == 0) {
             loading.cancel();
 
-        } else {
-            newThread(names, conds, "https://sourcearena.ir/androidFilterApi/userfilter/filterlist.php");
         }
+            newThread(names, conds, "https://sourcearena.ir/androidFilterApi/userfilter/filterlist.php");
+
 
     }
 
@@ -151,6 +165,8 @@ public class AddFilter extends Fragment {
 
     private void RecyclerView() {
         loading.cancel();
+        ref.setRefreshing(false);
+        Log.e("d","u");
         RecyclerView rv = root.findViewById(R.id.user_filters);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(layoutManager);
@@ -169,41 +185,47 @@ public class AddFilter extends Fragment {
 
 
                     DialogPlus dialog = DialogPlus.newDialog(getContext()).setContentHolder(new dialogAdapter(R.layout.dialog_menu_filter, "",getLayoutInflater()))
-                            .setOnClickListener(new OnClickListener() {
-                                @Override
-                                public void onClick(DialogPlus dialog, View view) {
+                           .setGravity(Gravity.CENTER)
+                            .setExpanded(false)
+                            .setFooter(R.layout.dia_foot).setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(DialogPlus dialog, View view) {
 
 
-                                    if (view.getId() == R.id.btn_edit) {
-                                        Intent in = null;
-                                        Log.e("dd",db.getType(item.getName())+"");
-                                        if(db.getType(item.getName()) == 2){
-                                            in = new Intent(getContext(),AdvanceAdder.class);
-                                        }
-                                        else if(db.getType(item.getName()) == 1){
-                                            in = new Intent(getContext(),SimpleAdder.class);
-                                        }
-                                        dialog.dismiss();
-                                        getActivity().startActivity(in);
-                                    }
-                                    else if (view.getId() == R.id.btn_remove) {
+                            if (view.getId() == R.id.btn_edit) {
+                                Intent in = null;
 
-
-
-
-
-
-                                        db.deleteFilter(item.getName());
-                                        utils.remove(item);
-
-                                        adapter.notifyItemRemoved(id);
-                                        dialog.dismiss();
-
-                                    }
+                                if(db.getType(item.getName()) == 2){
+                                    in = new Intent(getContext(),AdvanceAdder.class);
                                 }
-                            }).setGravity(Gravity.CENTER)
-                            .setExpanded(true)
+                                else if(db.getType(item.getName()) == 1){
+                                    in = new Intent(getContext(),SimpleAdder.class);
+                                }
+                                dialog.dismiss();
+                                in.putExtra("name",item.getName());
+                                in.putExtra("cond",db.getFunction(item.getName()));
+
+                                getActivity().startActivityForResult(in, 0);
+
+                            }
+                            else if (view.getId() == R.id.btn_remove) {
+
+
+
+
+
+
+                                db.deleteFilter(item.getName());
+                                utils.remove(item);
+
+                                adapter.notifyItemRemoved(id);
+                                dialog.dismiss();
+
+                            }
+                        }
+                    })
                             .create();
+
 
 
 
@@ -230,6 +252,7 @@ public class AddFilter extends Fragment {
             }
         });
         loading.cancel();
+
 
         rv.setAdapter(adapter);
     }
@@ -389,6 +412,7 @@ public class AddFilter extends Fragment {
     }
 
     private void success(String result) {
+        utils = new ArrayList<>();
         try {
             js = new ArrayList<>();
 
@@ -404,6 +428,7 @@ public class AddFilter extends Fragment {
                 name = name_[i];
                 utils.add(new FilterUtils(name, count));
             }
+
 
             getActivity().runOnUiThread(new Runnable() {
                 @Override

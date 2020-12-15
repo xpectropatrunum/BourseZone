@@ -5,26 +5,28 @@
     android:id="@+id/base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lightbg"
-    android:layoutDirection="locale"
-    android:textDirection="rtl">
+    android:background="@color/bg"
+    android:layoutDirection="ltr">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/shadow"
-        android:elevation="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
 
-        android:visibility="gone"
-        app:cardCornerRadius="7dp"
+        android:background="@drawable/shadow"
+
+        android:visibility="visible"
+        app:cardBackgroundColor="#ffffff"
+        app:cardCornerRadius="13pt"
+
+        app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView29"
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,13 +37,12 @@
                 android:id="@+id/f_aa"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layoutDirection="rtl"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="5dp"
                 android:text="TextView"
+                android:textDirection="rtl"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tkh_trade_volume_header"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tkh_trade_volume_header"
@@ -54,8 +55,9 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:text="eps"
-                android:textColor="@color/grey"
-                android:textStyle="bold"
+                android:textColor="@color/text2"
+                android:fontFamily="@font/iransansmedium"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -67,9 +69,9 @@
                 android:id="@+id/divider6"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="10dp"
                 android:background="?android:attr/listDivider"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -82,9 +84,9 @@
                 android:id="@+id/divider9"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="10dp"
                 android:background="?android:attr/listDivider"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -97,9 +99,9 @@
                 android:id="@+id/divider8"
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="10dp"
                 android:background="?android:attr/listDivider"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -115,8 +117,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:text="P/E"
-                android:textColor="@color/grey"
-                android:textStyle="bold"
+                android:textColor="@color/text2"
+                android:fontFamily="@font/iransansmedium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -126,14 +128,14 @@
 
             <TextView
                 android:id="@+id/f_bb"
-                android:layout_width="367dp"
-                android:layout_height="26dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="5dp"
                 android:text="TextView"
+                android:textDirection="rtl"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tkh_co"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tkh_co"
@@ -145,9 +147,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
-                android:text="ttm"
-                android:textColor="@color/grey"
-                android:textStyle="bold"
+                android:text="TTM"
+                android:textColor="@color/text2"
+                android:fontFamily="@font/iransansmedium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -159,13 +161,12 @@
                 android:id="@+id/f_cc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="7dp"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tkh_trade_header"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tkh_trade_header"
@@ -195,9 +196,11 @@
                     <TextView
                         android:id="@+id/f_ttm"
                         android:layout_width="match_parent"
+                        android:textColor="@color/text2"
+                        android:fontFamily="@font/iransansmedium"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="ttm" />
+                        android:text="TTM" />
 
                     <TextView
                         android:id="@+id/f_ttm_1"
@@ -218,6 +221,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:textColor="@color/text2"
+                        android:fontFamily="@font/iransansmedium"
                         android:text="P/E" />
 
                     <TextView
@@ -237,6 +242,8 @@
 
                     <TextView
                         android:id="@+id/f_eps"
+                        android:textColor="@color/text2"
+                        android:fontFamily="@font/iransansmedium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -254,59 +261,23 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/pro_card"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView29"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/shadow"
-        android:elevation="0dp"
-
-        android:visibility="gone"
-        app:cardCornerRadius="7dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="18dp"
+        android:fontFamily="@font/iranyekanextraold"
+        android:shadowColor="@color/text2"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1.25"
+        android:text="سود و زیان"
+        android:textColor="@color/text1"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/cardView2"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2"
-        app:layout_constraintVertical_bias="0.0">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
-                android:text="تولید و فروش"
-                android:textColor="@color/grey"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/pro"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
-                app:layout_constraintVertical_bias="0.0" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
