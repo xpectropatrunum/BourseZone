@@ -196,6 +196,7 @@ public class stockholder extends Fragment {
             if(pos != 0){
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                textView.setTextDirection(View.TEXT_DIRECTION_LTR);
             }else{    textView.setTextDirection(View.TEXT_DIRECTION_RTL);
                 textView.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                 textView.setGravity(Gravity.RIGHT);

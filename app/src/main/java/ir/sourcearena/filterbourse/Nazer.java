@@ -58,10 +58,7 @@ public class Nazer extends Fragment {
     public void ParseJSon(String data) throws JSONException {
         utils = new ArrayList<>();
         JSONArray jA = new JSONArray(data);
-        if (jA.length() == 0) {
-            TextView tc = (root.findViewById(R.id.tnazer));
-            tc.setText("پیامی وجود ندارد");
-        }
+
         for (int i = 0; i < jA.length(); i++) {
             JSONObject obj = jA.getJSONObject(i);
             Log.e("d", obj.getString("time"));

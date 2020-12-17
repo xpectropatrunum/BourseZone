@@ -1,6 +1,11 @@
 package ir.sourcearena.filterbourse.ui.watcher;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +13,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -19,7 +25,7 @@ import ir.sourcearena.filterbourse.Settings;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
     private Context context;
-    private List<Utils> utils;
+    private List<Utils> utils,old;
     Settings setting;
     OnItemClickListener listener;
     OnItemLongClickListener mlistener;
@@ -33,8 +39,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         void onItemLongClick(Utils item);
     }
-    public RecyclerAdapter(Context context, List utils, OnItemClickListener listener, OnItemLongClickListener mlistener) {
+    public RecyclerAdapter(Context context,  List old,List utils, OnItemClickListener listener, OnItemLongClickListener mlistener) {
         this.context = context;
+        this.old = old;
+
         this.utils = utils;
         this.mlistener = mlistener;
         this.listener = listener;
@@ -46,11 +54,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
-    Utils pu;
+    Utils pu,ol;
+    int a,b = 0;
     protected AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
     protected AlphaAnimation fadeOut = new AlphaAnimation( 1.0f , 0.0f ) ;
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         setting = new Settings();
         holder.itemView.setTag(utils.get(position));
 
@@ -69,16 +78,140 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         fadeIn.setDuration(1000);
         fadeIn.setFillAfter(true);
+        if(old != null) {
+            try {
+                ol = old.get(position);
 
-        if( !holder.price.equals(pu.getPrice())) {
-            holder.price.startAnimation(fadeOut);
-            holder.price.startAnimation(fadeIn);
-        }
+                if (!ol.getPrice().equals(pu.getPrice())) {
+                    b = 0 ;
+                    if(Integer.parseInt(ol.getPrice().replace(",","")) > Integer.parseInt(pu.getPrice().replace(",",""))){
 
-        if( !holder.percent.equals(pu.getPercent())) {
-            holder.percent.startAnimation(fadeOut);
+                        int colorFrom = Color.parseColor("#0000ff00");
+                        int colorTo =  Color.parseColor("#50ff0000");
+                        final ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+                        colorAnimation.setDuration(1000);
+                        colorAnimation.setRepeatCount(0);
+                        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 
-            holder.percent.startAnimation(fadeIn);
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animator) {
+                                    holder.price.setBackgroundColor((int) animator.getAnimatedValue());
+
+
+
+                            }
+
+
+                        });
+
+                        colorAnimation.addListener(new AnimatorListenerAdapter()
+                        {
+                            @Override
+                            public void onAnimationEnd(Animator animation)
+                            {
+                                holder.price.setBackgroundColor(Color.parseColor("#00000000"));
+                            }
+                        });
+                        colorAnimation.start();
+                    } else if(Integer.parseInt(ol.getPrice().replace(",","")) < Integer.parseInt(pu.getPrice().replace(",",""))){
+                        int colorFrom = Color.parseColor("#0000ff00");
+                        int colorTo =  Color.parseColor("#5000ff00");
+                        final ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+                        colorAnimation.setDuration(1000);
+                        colorAnimation.setRepeatCount(0);
+                        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animator) {
+
+                                    holder.price.setBackgroundColor((int) animator.getAnimatedValue());
+
+
+                            }
+
+
+                        });
+
+                        colorAnimation.addListener(new AnimatorListenerAdapter()
+                        {
+                            @Override
+                            public void onAnimationEnd(Animator animation)
+                            {
+
+                                holder.price.setBackgroundColor(Color.parseColor("#00000000"));
+                            }
+                        });
+                        colorAnimation.start();
+
+
+
+                    }
+
+                }
+
+                if (!ol.getPercent().equals(pu.getPercent())) {
+                    if(Float.parseFloat(ol.getPercent().replace("%","")) > Float.parseFloat(pu.getPercent().replace("%",""))){
+
+                        int colorFrom = Color.parseColor("#0000ff00");
+                        int colorTo =  Color.parseColor("#50ff0000");
+                        final ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+                        colorAnimation.setDuration(1000);
+                        colorAnimation.setRepeatCount(0);
+                        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animator) {
+                                holder.percent.setBackgroundColor((int) animator.getAnimatedValue());
+
+                            }
+
+
+                        });
+
+                        colorAnimation.addListener(new AnimatorListenerAdapter()
+                        {
+                            @Override
+                            public void onAnimationEnd(Animator animation)
+                            {
+                                holder.percent.setBackgroundColor(Color.parseColor("#00000000"));
+                            }
+                        });
+                        colorAnimation.start();
+                    } else if(Float.parseFloat(ol.getPercent().replace("%","")) < Float.parseFloat(pu.getPercent().replace("%",""))){
+                        int colorFrom = Color.parseColor("#0000ff00");
+                        int colorTo =  Color.parseColor("#5000ff00");
+                        final ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
+                        colorAnimation.setDuration(1000);
+                        colorAnimation.setRepeatCount(0);
+                        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                            @Override
+                            public void onAnimationUpdate(ValueAnimator animator) {
+                                holder.percent.setBackgroundColor((int) animator.getAnimatedValue());
+
+                            }
+
+
+                        });
+
+                        colorAnimation.addListener(new AnimatorListenerAdapter()
+                        {
+                            @Override
+                            public void onAnimationEnd(Animator animation)
+                            {
+                                holder.percent.setBackgroundColor(Color.parseColor("#00000000"));
+                            }
+                        });
+                        colorAnimation.start();
+
+
+                        //  holder.price.setBackgroundColor(Color.parseColor("#5000ff00"));
+                    }
+
+                }
+            }catch (IndexOutOfBoundsException e){
+
+            }
         }
         holder.price.setText(pu.getPrice());
 

@@ -166,7 +166,6 @@ public class AddFilter extends Fragment {
     private void RecyclerView() {
         loading.cancel();
         ref.setRefreshing(false);
-        Log.e("d","u");
         RecyclerView rv = root.findViewById(R.id.user_filters);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(layoutManager);

@@ -41,4 +41,6 @@
 
     <color name="orangebt">#FF6F00</color>
     <color name="greenbt">#00D107</color>
+    <color name="tab_unselected">#C3C3C3</color>
+    <color name="tab_selected">#E6E6E6</color>
 </resources>

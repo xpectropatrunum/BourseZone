@@ -1,5 +1,7 @@
 package ir.sourcearena.filterbourse.ui.news.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -45,7 +47,8 @@ public class Reader extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        SharedPreferences s = getSharedPreferences("per", Context.MODE_PRIVATE);
+        s.edit().putBoolean("permitted",false).apply();
         View root = getLayoutInflater().inflate(R.layout.news_reader, null);
 
         lv = new LoadingView(getLayoutInflater(),root,this);

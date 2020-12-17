@@ -105,7 +105,7 @@ public class showFilter extends Fragment {
         rv.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
         rv.setLayoutManager(layoutManager);
-        mAdapter = new RecyclerAdapter(getContext(), utils, new RecyclerAdapter.OnItemClickListener() {
+        mAdapter = new RecyclerAdapter(getContext(), null,utils, new RecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Utils item) {
                 String dl = " \\(";

@@ -285,6 +285,7 @@ public class NamadActivity extends Fragment {
                               task =   new Request().execute(Settings.JSON_INS_URL + title);
                             }
                             handler.postDelayed(this, 5000);
+
                         }
                     }
                 };
@@ -308,8 +309,7 @@ public class NamadActivity extends Fragment {
         {
             task2.cancel(true);
         }
-        SharedPreferences s = getActivity().getSharedPreferences("per", Context.MODE_PRIVATE);
-        s.edit().putBoolean("permitted",true).apply();
+
     }
 
     boolean permiteed = true;
@@ -424,6 +424,8 @@ public class NamadActivity extends Fragment {
                             }
                         } catch (JSONException |NumberFormatException e) {
                             e.printStackTrace();
+                            co_b = 0;
+                            co_s = 0;
                         }
                     }
 
@@ -465,7 +467,11 @@ public class NamadActivity extends Fragment {
                     @Override
                     public void run() {
                         double a = real_b / (real_b + co_b);
-                        double b = real_s / (real_s + co_s);
+                        double b = real_s / (real_s + co_b);
+                        if(real_b == 0 && co_b == 0 && co_s==0 && real_s ==0 ){
+                            w2 = 0;
+                            v1.setVisibility(View.INVISIBLE);
+                        }
 
 
                         LinearLayout.LayoutParams cl4 = new LinearLayout.LayoutParams((int) (w2 * (1 - b)), 50);

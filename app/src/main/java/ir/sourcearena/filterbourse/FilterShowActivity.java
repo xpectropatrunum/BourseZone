@@ -1,6 +1,8 @@
 package ir.sourcearena.filterbourse;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -67,7 +69,8 @@ public class FilterShowActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View root = getLayoutInflater().inflate(R.layout.filter_lists, null);
-
+        SharedPreferences s = getSharedPreferences("per", Context.MODE_PRIVATE);
+        s.edit().putBoolean("permitted",false).apply();
         loading = new LoadingView(getLayoutInflater(),root,this);
         setContentView(loading.addLoadingBar(false));
 

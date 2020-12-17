@@ -8,8 +8,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -21,6 +25,8 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 
@@ -29,14 +35,31 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.gauravk.bubblenavigation.BubbleNavigationConstraintView;
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
 import com.gauravk.bubblenavigation.listener.BubbleNavigationChangeListener;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnClickListener;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Set;
 
 import ir.sourcearena.filterbourse.fundamental.java.Fundamental;
 import ir.sourcearena.filterbourse.stockholder.stockholder;
 import ir.sourcearena.filterbourse.technical.Technical;
 import ir.sourcearena.filterbourse.tools.NetworkChecker;
+import ir.sourcearena.filterbourse.tools.ToastMaker;
+import ir.sourcearena.filterbourse.ui.LoadingView;
+import ir.sourcearena.filterbourse.ui.dialog.adapter;
 
 public class NamadRouter extends AppCompatActivity  {
 
@@ -171,7 +194,103 @@ public class NamadRouter extends AppCompatActivity  {
 
 
     }
+    private class Request extends AsyncTask<String, Void, String> {
 
+        StringBuffer stringBuffer;
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+
+
+                URL url = new URL(params[0]);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("GET");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+                httpURLConnection.setRequestProperty("Accept", "application/json");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.connect();
+
+
+                DataOutputStream outputStream = new DataOutputStream(httpURLConnection.getOutputStream());
+
+
+                int code = httpURLConnection.getResponseCode();
+                if (code == 200) {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+
+                    stringBuffer = new StringBuffer();
+                    String line;
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuffer.append(line);
+                    }
+
+
+                }
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+            }
+            return stringBuffer.toString();
+
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (isChangingConfigurations()) {
+                onDestroy();
+            } else {
+                try {
+                    ParseJSon(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }
+    }
+
+    Settings setting;
+    RecyclerView recyclerView;
+    RecyclerView.Adapter mAdapter;
+    RecyclerView.LayoutManager layoutManager;
+    List<FilterUtils> utils;
+
+
+    public void ParseJSon(String data) throws JSONException {
+
+        utils = new ArrayList<>();
+        JSONArray jA = new JSONArray(data);
+
+        if (jA.length() == 0) {
+
+        }else{
+            nazer.setVisibility(View.VISIBLE);
+        }
+        for (int i = 0; i < jA.length(); i++) {
+            JSONObject obj = jA.getJSONObject(i);
+            Log.e("d", obj.getString("time"));
+            utils.add(new FilterUtils("", "",
+                    obj.getString("head"), obj.getString("time"), obj.getString("text"), "", "", "", "cfn3"));
+        }
+
+
+
+
+
+
+
+
+
+    }
+     ImageView nazer;
     public void actionbar(){
         final SharedPreferences sp = getSharedPreferences("favorite", Context.MODE_PRIVATE);
         final String name = getIntent().getExtras().getString(Settings.TITLE_EXTRA);
@@ -198,50 +317,94 @@ public class NamadRouter extends AppCompatActivity  {
                 finish();
             }
         });
-
-
+       nazer = findViewById(R.id.nazer);
+        new Request().execute(setting.JSON_INSPECT_TITLES + getIntent().getExtras().getString(Settings.TITLE_EXTRA));
 
         toggle = sp.getBoolean(name,false);
         final ImageView v = findViewById(R.id.favorite_action);
 
-        if(toggle){
-            id = R.drawable.ic_baseline_favorite_24;
-            idc = R.drawable.ic_round_favorite_border_24;
-            state = false;
+        nazer.setVisibility(View.GONE);
+        nazer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogPlus dialog = DialogPlus.newDialog(NamadRouter.this)
+                        .setContentHolder(new adapter(R.layout.frag_nazer, "", NamadRouter.this))
 
-        }else{
-            id = R.drawable.ic_round_favorite_border_24;
-            idc = R.drawable.ic_baseline_favorite_24;
-            state = true;
-        }
+                        .setExpanded(false)
+                        .setGravity(Gravity.CENTER)
+                        .create();
+                dialog.show();
+                RecyclerView rv = dialog.getHolderView().findViewById(R.id.nazer_cycle);
+                layoutManager = new LinearLayoutManager(NamadRouter.this) {
+                    @Override
+                    public boolean canScrollVertically() {
 
-        v.setImageDrawable(ResourcesCompat.getDrawable(getResources(),id,null));
+                        return false;
+                    }
+                };
+                mAdapter = new NazerAdapter(NamadRouter.this, utils);
+                rv.setLayoutManager(layoutManager);
+
+                rv.setAdapter(mAdapter);
+
+            }
+        });
+
+
+
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sp.edit().putBoolean(name,state).apply();
-                toggle = sp.getBoolean(name,false);
-                if(toggle){
-                    String currentList = sp.getString("favorite_list","");
-                    sp.edit().putString("favorite_list",currentList+","+name).apply();
-                    id = R.drawable.ic_baseline_favorite_24;
-                    idc = R.drawable.ic_round_favorite_border_24;
-                    state = false;
 
-                }else{
-                    String currentList = sp.getString("favorite_list","");
+                final DialogPlus dialog = DialogPlus.newDialog(NamadRouter.this)
+                        .setContentHolder(new adapter(R.layout.dialog_add_watcher, "", NamadRouter.this))
+                        .setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(DialogPlus dialog, View view) {
 
-                    id = R.drawable.ic_round_favorite_border_24;
-                    idc = R.drawable.ic_baseline_favorite_24;
-                    sp.edit().putString("favorite_list",currentList.replace(","+name,"")).apply();
-                    state = true;
-                }
+
+                                if (view.getId() == R.id.card_delete) {
+
+                                }
+                            }
+                        })
+                        .setExpanded(false)
+                        .setGravity(Gravity.CENTER)
+                        .create();
+                dialog.show();
 
                     YoYo.with(Techniques.Pulse)
                             .duration(1000)
                             .playOn(view);
+                final SharedPreferences e = getSharedPreferences("watchers",Context.MODE_PRIVATE);
+                String n = e.getString("cat_names","پیشفرض;");
 
-                v.setImageDrawable(ResourcesCompat.getDrawable(getResources(),id,null));
+                final String name = getIntent().getExtras().getString(Settings.TITLE_EXTRA);
+
+                final String[] nA = n.split(";");
+                    ListView lv = dialog.getHolderView().findViewById(R.id.add_watcher_list);
+                    lv.setAdapter(new ArrayAdapter(NamadRouter.this,R.layout.list_add, R.id.watcher_name, nA));
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            String n = e.getString("d"+nA[i],"");
+                            if(n.contains(name)){
+                                new ToastMaker(getBaseContext(), "این نماد در دیده بان مورد نظر موجود است");
+                            }else {
+                                if (e.edit().putString("d"+nA[i], n + name+ ";" ).commit()) {
+                                    new ToastMaker(getBaseContext(), "اضافه شد");
+                                    Log.e("dd", nA[i]);
+
+                                } else {
+                                    new ToastMaker(getBaseContext(), "خطایی رخ داد");
+
+                                }
+                            }
+                            dialog.dismiss();
+                        }
+                    });
+
+
 
 
             }
@@ -270,9 +433,9 @@ public class NamadRouter extends AppCompatActivity  {
             } else {
                 switch (pos) {
                     case 4:
-                        return new Nazer();
-                    case 3:
                         return new Codal();
+                    case 3:
+                        return new stockholder();
                     case 1:
                         return new Technical();
                     case 2:

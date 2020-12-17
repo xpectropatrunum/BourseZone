@@ -34,7 +34,6 @@ public class NetworkChecker {
             httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
             httpURLConnection.setDoInput(true);
             httpURLConnection.connect();
-            httpURLConnection.connect();
 
             if (httpURLConnection.getResponseCode() == 200) {
                 return true;
