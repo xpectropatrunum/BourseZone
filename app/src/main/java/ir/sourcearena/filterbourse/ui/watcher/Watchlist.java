@@ -167,6 +167,7 @@ public class Watchlist extends Fragment {
 
             final Runnable r = new Runnable() {
                 public void run() {
+                    loadWatchers();
                     String n = e.getString("cat_names","");
 
                     String c = "";
@@ -387,11 +388,9 @@ public class Watchlist extends Fragment {
             }
         });
 
-        if(starti ==1){
-            ra.notifyDataSetChanged();
-        }else{
+
             rv.setAdapter(ra);
-        }
+
         starti = 1 ;
 
 
