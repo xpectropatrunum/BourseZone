@@ -16,6 +16,9 @@ public class GetUser {
     public String getUsername(){
         return s.getString("username","");
     }
+    public boolean isLoged(){
+        return !s.getString("username","").equals("");
+    }
     public boolean isPremium(){
         return s.getBoolean("premium",false);
     }

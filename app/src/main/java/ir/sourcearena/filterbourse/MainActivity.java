@@ -30,6 +30,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -52,6 +53,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -64,6 +66,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import ir.sourcearena.filterbourse.Account.Login;
 import ir.sourcearena.filterbourse.searchHelper.CustomSuggestionsAdapter;
 import ir.sourcearena.filterbourse.searchHelper.Namad;
 import ir.sourcearena.filterbourse.tools.GetUser;
@@ -74,6 +77,7 @@ import ir.sourcearena.filterbourse.ui.dialog.adapter;
 import ir.sourcearena.filterbourse.ui.news.News;
 import ir.sourcearena.filterbourse.ui.watcher.Watchlist;
 import ir.sourcearena.filterbourse.filteryab.AddFilter;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 /*  tsetr */
 
@@ -176,12 +180,21 @@ public class MainActivity extends AppCompatActivity {
 
         dl.addDrawerListener(t);
         t.syncState();
+        nv = (NavigationView) findViewById(R.id.nv);
+        View headerView = nv.getHeaderView(0);
 
-
-
+        user = new GetUser(MainActivity.this);
+        final TextView username = (TextView) headerView.findViewById(R.id.textView3);
         drawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                user = new GetUser(MainActivity.this);
+                if(user.isLoged()){
+                    nv.getMenu().getItem(1).setTitle("خروج");
+                }else{
+                    nv.getMenu().getItem(1).setTitle("ورود");
+                }
+                username.setText(user.getName()+"\n"+user.getUsername());
                 boolean s = dl.isOpen();
                 if (s) {
                     dl.closeDrawers();
@@ -190,14 +203,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        user = new GetUser(MainActivity.this);
 
 
-        nv = (NavigationView) findViewById(R.id.nv);
-        View headerView = nv.getHeaderView(0);
-        TextView username = (TextView) headerView.findViewById(R.id.textView3);
+
+
         username.setText(user.getName()+"\n"+user.getUsername());
         username.setTextSize(14);
+
+
 
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -272,6 +285,54 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.rateapp:
                         putCommnet();
                         break;
+                    case R.id.login:
+                        if(user.isLoged()){
+
+                        dialog = DialogPlus.newDialog(MainActivity.this)
+                                .setContentHolder(new adapter(R.layout.dialog_is_not_premium, "", MainActivity.this))
+                                .setOnClickListener(new OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogPlus dialog, View view) {
+
+
+
+                                            if (view.getId() == R.id.btn_cancel) {
+
+                                                dialog.dismiss();
+
+                                            } else if (view.getId() == R.id.btn_add_filter) {
+
+                                                user.putPremium(false);
+                                                user.putName("مهمان");
+                                                user.putUsername("");
+                                                user.putTime(0f);
+                                                dialog.dismiss();
+
+
+
+                                        }
+                                    }
+                                }).setGravity(Gravity.CENTER)
+                                .setExpanded(true)
+                                .create();
+                        dialog.show();
+
+                            TextView tv = dialog.getHolderView().findViewById(R.id.textView19);
+                            TextView tv2 = dialog.getHolderView().findViewById(R.id.textView24);
+                            tv2.setText("اخطار");
+                            tv.setText("آیا می خواهید از حساب خود خارج شوید؟");
+                            FancyButton exit = dialog.getHolderView().findViewById(R.id.btn_add_filter);
+                            int red = ResourcesCompat.getColor(getResources(), R.color.red, null);
+                            exit.setTextColor(red);
+                            exit.setText("خروج");
+                            exit.setFocusBackgroundColor(red);
+                            exit.setBackgroundColor(red);
+
+                }else{
+                    startActivity(new Intent(getBaseContext(), Login.class));
+
+                }
+                    break;
                     default:
                         return false;
                 }
