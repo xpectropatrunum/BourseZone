@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         sp = getSharedPreferences("news", Context.MODE_PRIVATE);
         ed = sp.edit();
@@ -100,8 +102,13 @@ public class MainActivity extends AppCompatActivity {
 
         new Request().execute(Settings.JSON_SEARCH);
         actionbar();
+  try {
+      pager_load();
 
-        pager_load();
+        } catch (NullPointerException d){
+
+  }
+
         animation(appname, 10000, Techniques.Tada,true);
         drawer();
     }
@@ -185,12 +192,12 @@ public class MainActivity extends AppCompatActivity {
         });
         user = new GetUser(MainActivity.this);
 
-        user.putName("امیر");
 
         nv = (NavigationView) findViewById(R.id.nv);
         View headerView = nv.getHeaderView(0);
         TextView username = (TextView) headerView.findViewById(R.id.textView3);
-        username.setText(user.getName());
+        username.setText(user.getName()+"\n"+user.getUsername());
+        username.setTextSize(14);
 
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -262,6 +269,9 @@ public class MainActivity extends AppCompatActivity {
                         dialog.show();
 
                         break;
+                    case R.id.rateapp:
+                        putCommnet();
+                        break;
                     default:
                         return false;
                 }
@@ -320,6 +330,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         return true;
+    }
+    public void putCommnet(){
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setData(Uri.parse("bazaar://details?id=" + getResources().getString(R.string.packagename)));
+        intent.setPackage("com.farsitel.bazaar");
+        startActivity(intent);
     }
     TextBadgeItem numberBadgeItem;
 
@@ -576,8 +592,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
+            Intent startMain = new Intent(Intent.ACTION_MAIN);
+            startMain.addCategory(Intent.CATEGORY_HOME);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            startActivity(startMain);
         }
 
         this.doubleBackToExitPressedOnce = true;

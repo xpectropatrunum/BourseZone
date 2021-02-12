@@ -61,7 +61,7 @@ public class stockholder extends Fragment {
 
         list = new ArrayList<>();
         String name = getActivity().getIntent().getExtras().getString("title", "");
-        task = new Request().execute(Settings.JSON_STOCKHOLDER + name);
+        task = new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_STOCKHOLDER + name);
         initializeTableView();
         return loading.addLoadingBar(false);
     }

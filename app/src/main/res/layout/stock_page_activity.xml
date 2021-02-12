@@ -5,6 +5,7 @@
     android:id="@+id/base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_rowWeight="1"
     android:background="@color/bg"
     android:layoutDirection="ltr"
     android:visibility="visible"
@@ -154,7 +155,7 @@
                     android:layout_marginTop="5dp"
 
                     android:layout_marginEnd="15dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardBackgroundColor="#ffffff"
 
                     app:cardCornerRadius="13pt"
@@ -987,7 +988,8 @@
                                 <TableRow
                                     android:id="@+id/tableRow12"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
 
                                     <TextView
                                         android:id="@+id/TextView101"
@@ -1008,11 +1010,11 @@
 
                                     <TextView
                                         android:id="@+id/TextView103"
-                                        android:layout_weight="1"
 
+                                        android:layout_weight="1"
                                         android:background="@drawable/textborder"
                                         android:gravity="center"
-                                        android:text="قبمت"
+                                        android:text="@string/price"
                                         android:textColor="#000000" />
 
                                 </TableRow>
@@ -1020,32 +1022,36 @@
                                 <TableRow
                                     android:id="@+id/tableRow22"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
 
                                     <TextView
                                         android:id="@+id/TextView201"
+                                        android:layout_column="0"
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="999"
+                                        android:text="1"
                                         android:textColor="#000000"
                                         android:textStyle="bold" />
 
                                     <TextView
                                         android:id="@+id/TextView202"
+                                        android:layout_column="1"
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="159785"
+                                        android:text="1"
                                         android:textColor="#000000"
                                         android:textStyle="bold" />
 
                                     <TextView
                                         android:id="@+id/TextView203"
+                                        android:layout_column="2"
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="000002447"
+                                        android:text="1"
                                         android:textColor="#000000"
                                         android:textStyle="bold" />
 
@@ -1055,29 +1061,33 @@
                                     android:id="@+id/tableRow32"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:layout_weight="1"
                                     android:background="#CCC">
 
                                     <TextView
                                         android:id="@+id/TextView301"
 
+                                        android:layout_column="0"
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="0"
+                                        android:text="1"
                                         android:textColor="#000000" />
 
                                     <TextView
                                         android:id="@+id/TextView302"
 
+                                        android:layout_column="1"
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="200025"
+                                        android:text="1"
                                         android:textColor="#000000" />
 
                                     <TextView
                                         android:id="@+id/TextView303"
 
+                                        android:layout_column="2"
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
@@ -1089,15 +1099,17 @@
                                 <TableRow
                                     android:id="@+id/tableRow42"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
 
                                     <TextView
                                         android:id="@+id/TextView401"
 
+                                        android:layout_column="0"
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="0"
+                                        android:text="1"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1106,87 +1118,21 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="@string/volume"
+                                        android:text="1"
                                         android:textColor="#000000" />
 
                                     <TextView
                                         android:id="@+id/TextView403"
 
+                                        android:layout_column="2"
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="@string/count"
+                                        android:text="1"
                                         android:textColor="#000000" />
 
                                 </TableRow>
 
-                                <TableRow
-                                    android:id="@+id/tableRow52"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
-
-                                    <TextView
-                                        android:id="@+id/TextView501"
-
-                                        android:layout_weight="1"
-                                        android:background="@drawable/textborder3"
-                                        android:gravity="center"
-                                        android:text="0"
-                                        android:textColor="#000000" />
-
-                                    <TextView
-                                        android:id="@+id/TextView502"
-
-                                        android:layout_weight="1"
-                                        android:background="@drawable/textborder3"
-                                        android:gravity="center"
-                                        android:text="@string/volume"
-                                        android:textColor="#000000" />
-
-                                    <TextView
-                                        android:id="@+id/TextView503"
-
-                                        android:layout_weight="1"
-                                        android:background="@drawable/textborder3"
-                                        android:gravity="center"
-                                        android:text="@string/count"
-                                        android:textColor="#000000" />
-
-                                </TableRow>
-
-                                <TableRow
-                                    android:id="@+id/tableRow62"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
-
-                                    <TextView
-                                        android:id="@+id/TextView601"
-
-                                        android:layout_weight="1"
-                                        android:background="@drawable/textborder3"
-                                        android:gravity="center"
-                                        android:text="0"
-                                        android:textColor="#000000" />
-
-                                    <TextView
-                                        android:id="@+id/TextView602"
-
-                                        android:layout_weight="1"
-                                        android:background="@drawable/textborder3"
-                                        android:gravity="center"
-                                        android:text="@string/volume"
-                                        android:textColor="#000000" />
-
-                                    <TextView
-                                        android:id="@+id/TextView603"
-
-                                        android:layout_weight="1"
-                                        android:background="@drawable/textborder3"
-                                        android:gravity="center"
-                                        android:text="@string/count"
-                                        android:textColor="#000000" />
-
-                                </TableRow>
                             </TableLayout>
 
                             <TableLayout
@@ -1202,7 +1148,8 @@
                                 <TableRow
                                     android:id="@+id/tableRow1"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
 
                                     <TextView
                                         android:id="@+id/TextView104"
@@ -1236,14 +1183,15 @@
                                 <TableRow
                                     android:id="@+id/tableRow2"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
 
                                     <TextView
                                         android:id="@+id/TextView204"
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="000002447"
+                                        android:text="0002447"
                                         android:textColor="#000000"
                                         android:textStyle="bold" />
 
@@ -1273,6 +1221,7 @@
 
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
+                                    android:layout_weight="1"
                                     android:background="#CCC">
 
                                     <TextView
@@ -1281,7 +1230,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="0"
+                                        android:text="0002447"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1290,7 +1239,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="200025"
+                                        android:text="159785"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1299,7 +1248,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder4"
                                         android:gravity="center"
-                                        android:text="1"
+                                        android:text="999"
                                         android:textColor="#000000" />
 
                                 </TableRow>
@@ -1307,7 +1256,8 @@
                                 <TableRow
                                     android:id="@+id/tableRow4"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1">
 
                                     <TextView
                                         android:id="@+id/TextView404"
@@ -1315,7 +1265,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="0"
+                                        android:text="0002447"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1324,7 +1274,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="@string/volume"
+                                        android:text="159785"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1339,73 +1289,6 @@
 
                                 </TableRow>
 
-                                <TableRow
-                                    android:id="@+id/tableRow51"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
-
-                                    <TextView
-                                        android:id="@+id/TextView504"
-
-                                        android:layout_weight="1"
-                                        android:background="@drawable/textborder3"
-                                        android:gravity="center"
-                                        android:text="0"
-                                        android:textColor="#000000" />
-
-                                    <TextView
-                                        android:id="@+id/TextView505"
-
-                                        android:layout_weight="1"
-                                        android:background="@drawable/textborder3"
-                                        android:gravity="center"
-                                        android:text="@string/volume"
-                                        android:textColor="#000000" />
-
-                                    <TextView
-                                        android:id="@+id/TextView506"
-
-                                        android:layout_weight="1"
-                                        android:background="@drawable/textborder4"
-                                        android:gravity="center"
-                                        android:text="@string/count"
-                                        android:textColor="#000000" />
-
-                                </TableRow>
-
-                                <TableRow
-                                    android:id="@+id/tableRow61"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
-
-                                    <TextView
-                                        android:id="@+id/TextView604"
-
-                                        android:layout_weight="1"
-                                        android:background="@drawable/textborder3"
-                                        android:gravity="center"
-                                        android:text="0"
-                                        android:textColor="#000000" />
-
-                                    <TextView
-                                        android:id="@+id/TextView605"
-
-                                        android:layout_weight="1"
-                                        android:background="@drawable/textborder3"
-                                        android:gravity="center"
-                                        android:text="@string/volume"
-                                        android:textColor="#000000" />
-
-                                    <TextView
-                                        android:id="@+id/TextView606"
-
-                                        android:layout_weight="1"
-                                        android:background="@drawable/textborder4"
-                                        android:gravity="center"
-                                        android:text="@string/count"
-                                        android:textColor="#000000" />
-
-                                </TableRow>
                             </TableLayout>
 
                         </LinearLayout>

@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ import ir.sourcearena.filterbourse.MainActivity;
 import ir.sourcearena.filterbourse.NamadRouter;
 import ir.sourcearena.filterbourse.R;
 import ir.sourcearena.filterbourse.Settings;
+import ir.sourcearena.filterbourse.filteryab.simple.adapter.dialogAdapter;
 import ir.sourcearena.filterbourse.tools.NetworkChecker;
 import ir.sourcearena.filterbourse.tools.ToastMaker;
 import ir.sourcearena.filterbourse.ui.LoadingView;
@@ -223,14 +225,25 @@ public class specificWatcher extends Fragment {
             @Override
             public void onItemLongClick(final Utils items) {
 
-                DialogPlus dialog = DialogPlus.newDialog(getActivity())
-                        .setContentHolder(new adapter(R.layout.dialog_dideban, items.getFName(), getActivity()))
-                        .setOnClickListener(new OnClickListener() {
+                DialogPlus dialog = DialogPlus.newDialog(getContext()).setContentHolder(new dialogAdapter(R.layout.dialog_menu_filter, "",getLayoutInflater()))
+                        .setGravity(Gravity.CENTER)
+                        .setExpanded(false)
+                        .setFooter(R.layout.dia_foot).setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(DialogPlus dialog, View view) {
 
 
-                                if (view.getId() == R.id.card_delete) {
+                                if (view.getId() == R.id.btn_edit) {
+                                    Intent in = null;
+
+                                    dialog.dismiss();
+
+                                    getActivity().startActivityForResult(in, 0);
+
+                                }
+                                else if (view.getId() == R.id.btn_remove) {
+
+
 
                                     final SharedPreferences sp = getActivity().getSharedPreferences("favorite", Context.MODE_PRIVATE);
                                     String currentList = sp.getString("favorite_list", "");
@@ -238,16 +251,19 @@ public class specificWatcher extends Fragment {
                                     sp.edit().putBoolean(items.getName(), false).apply();
                                     utils.remove(items);
 
-                                    ra.notifyDataSetChanged();
-                                    rv.setLayoutManager(layoutManager);
-                                    rv.setAdapter(ra);
+                                    ra.notifyItemRemoved(utils.indexOf(items));
+
 
                                     dialog.dismiss();
+
                                 }
                             }
                         })
-                        .setExpanded(false)
                         .create();
+
+
+
+
                 dialog.show();
 
 

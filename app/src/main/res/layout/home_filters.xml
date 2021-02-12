@@ -363,6 +363,7 @@
             android:shadowColor="@color/text2"
             android:shadowDx="1"
             android:shadowDy="1"
+
             android:shadowRadius="1.25"
             android:text="بیشترین افزایش مالکیت حقوقی"
             android:textColor="@color/text1"

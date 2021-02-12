@@ -63,7 +63,7 @@ public class Technical extends Fragment {
         loading = new LoadingView(inflater,root,getActivity());
 
         String append = getActivity().getIntent().getExtras().getString(Settings.TITLE_EXTRA, "");
-        new Request().execute(Settings.JSON_TECHNICAL+append);
+        new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_TECHNICAL+append);
 
 
 

@@ -267,8 +267,8 @@ public class NamadActivity extends Fragment {
 
         title = getActivity().getIntent().getExtras().getString(Settings.TITLE_EXTRA, "");
         if (task == null) {
-           task = new Request().execute(Settings.JSON_CANDLE + title);
-            task2 =new Request().execute(Settings.JSON_INS_URL + title);
+           task = new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_CANDLE + title);
+            task2 =new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_INS_URL + title);
 
 
             Calendar cal = Calendar.getInstance();
@@ -282,7 +282,7 @@ public class NamadActivity extends Fragment {
                         if(permiteed) {
                             Log.e("per2", permiteed + "");
                             if (new NetworkChecker(getContext()).isNetworkAvailable()) {
-                              task =   new Request().execute(Settings.JSON_INS_URL + title);
+                              task =   new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_INS_URL + title);
                             }
                             handler.postDelayed(this, 5000);
 
@@ -525,7 +525,7 @@ public class NamadActivity extends Fragment {
                             }
                             tv.setText(put);
                             int l = i + 1;
-                            if (i < 30) {
+                            if (i < 18) {
                                 if (l > 6) {
                                     l -= 6;
                                 }

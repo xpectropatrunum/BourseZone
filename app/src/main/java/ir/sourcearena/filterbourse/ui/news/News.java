@@ -77,7 +77,7 @@ public class News extends Fragment {
             public void onRefresh() {
 
                 utils = new ArrayList<>();
-                new Request().execute(Settings.JSON_NEWS+1);
+                new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_NEWS+1);
             }
         });
 
@@ -180,7 +180,8 @@ public class News extends Fragment {
                                                                    page++;
                                                                    scrollLoading.setVisibility(View.VISIBLE);
 
-                                                                   new Request().execute(Settings.JSON_NEWS +  page);
+                                                                   new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+                                                                           Settings.JSON_NEWS +  page);
                                                                }
 
                                                            }
@@ -219,7 +220,7 @@ public class News extends Fragment {
             public void run() {
 
 
-                        new Request().execute(Settings.JSON_NEWS+1);
+                        new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_NEWS+1);
 
 
             }
@@ -292,12 +293,15 @@ public class News extends Fragment {
 
                 try {
                     ParseJSon(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } catch (JSONException | NullPointerException d) {
+                    d.printStackTrace();
+
                     ref.setRefreshing(false);
+                    try {
+                        Toast.makeText(getContext(), "خطا در بارگذاری اخبار", Toast.LENGTH_LONG).show();
+                    } catch (NullPointerException u ) {
 
-                    Toast.makeText(getContext(),"خطا در بارگذاری اخبار",Toast.LENGTH_LONG).show();
-
+                    }
                 }
 
 

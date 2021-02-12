@@ -1,6 +1,7 @@
 package ir.sourcearena.filterbourse.ui.news.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,6 +25,8 @@ import androidx.core.content.res.ResourcesCompat;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.appbar.AppBarLayout;
+
+import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -92,24 +95,40 @@ public class Reader extends AppCompatActivity {
 
 
     }
+    public void share_new(String text) {
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        String shareBody = text+ "\n" + "اپلیکیشن " + getResources().getString(R.string.app_name) + " " + getResources().getString(R.string.bazaar_link);
+        intent.setType("text/plain");
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "خبر");
+        intent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(intent, "اشتراک گذاری خبر"));
+    }
 
     private void PUT() {
 
         new setImage().execute(getIntent().getExtras().getString("news_pic"));
 
-        String responseString = getIntent().getExtras().getString("news_text");
+        final String responseString = getIntent().getExtras().getString("news_text");
         web.getSettings().setJavaScriptEnabled(true);
         title.setText(getIntent().getExtras().getString("news_title"));
         date.setText(getIntent().getExtras().getString("news_date"));
         web.loadDataWithBaseURL("", responseString, "text/html; charset=utf-8", "UTF-8", "");
 
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                share_new(getIntent().getExtras().getString("news_title") +"\n"+ Jsoup.parse(responseString).text());
+            }
+        });
+
     }
 
-
+    ImageView share;
     private void ActionBar_() {
 
         TextView title = findViewById(R.id.app_name);
         ImageView back = findViewById(R.id.imageView3);
+        share = findViewById(R.id.share_icon);
         title.setText("اخبار");
         back.setOnClickListener(new View.OnClickListener() {
             @Override

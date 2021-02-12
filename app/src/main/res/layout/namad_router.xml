@@ -104,6 +104,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="5dp"
+                android:tint="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="@+id/drawer_opener"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -121,6 +122,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="5dp"
+                android:tint="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="@+id/drawer_opener"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -245,24 +247,6 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-        <com.gauravk.bubblenavigation.BubbleToggleView
-            android:id="@+id/b_tech"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            app:bt_active="false"
-            app:bt_colorActive="@color/red"
-            app:bt_colorInactive="@color/grey"
-            app:bt_icon="@drawable/ic_round_bar_chart_24"
-            app:bt_padding="9dp"
-            app:bt_title="تکنیکال"
-            app:bt_titlePadding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/b_overall"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
 
 
         <com.gauravk.bubblenavigation.BubbleToggleView

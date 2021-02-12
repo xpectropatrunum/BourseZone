@@ -2,7 +2,9 @@ package ir.sourcearena.filterbourse.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -11,20 +13,28 @@ import com.viksaa.sssplash.lib.cnst.Flags;
 import com.viksaa.sssplash.lib.model.ConfigSplash;
 
 import id.voela.actrans.AcTrans;
+import ir.sourcearena.filterbourse.Account.Login;
 import ir.sourcearena.filterbourse.Constants;
 import ir.sourcearena.filterbourse.MainActivity;
 import ir.sourcearena.filterbourse.R;
 
+import ir.sourcearena.filterbourse.tools.GetUser;
 import ir.sourcearena.filterbourse.tools.NetworkChecker;
 
 public class Splash extends AwesomeSplash {
 
     //DO NOT OVERRIDE onCreate()!
     //if you need to start some services do it in initSplash()!
-
+    SharedPreferences sp;
+    boolean first;
 
     @Override
     public void initSplash(ConfigSplash configSplash) {
+
+        GetUser gu = new GetUser(getApplicationContext());
+
+        first = gu.getFirst();
+        Log.e("f",first+"");
 
         configSplash.setBackgroundColor(R.color.primary); //any color you want form colors.xml
         configSplash.setAnimCircularRevealDuration(500); //int ms
@@ -65,9 +75,14 @@ public class Splash extends AwesomeSplash {
         NetworkChecker nt = new NetworkChecker(Splash.this);
         if(nt.isNetworkAvailable()) {
         if(nt.isServerAvailable()) {
-
-            startActivity(new Intent(this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+            if(!first){
+                startActivity(new Intent(this, Login.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+            }else{
+                startActivity(new Intent(this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+            }
             new AcTrans.Builder(this).performFade();
+
+
         }else{
             refresh();
             Toast.makeText(getApplicationContext(),"خطا در اتصال به سرور لطفا بعدا تلاش کنید",Toast.LENGTH_LONG).show();
@@ -96,8 +111,13 @@ public class Splash extends AwesomeSplash {
                 NetworkChecker nt = new NetworkChecker(Splash.this);
                 if(nt.isNetworkAvailable() && nt.isServerAvailable() && ctx != null) {
                     handler.removeCallbacks(r);
-                    startActivity(new Intent(Splash.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |  Intent.FLAG_ACTIVITY_NEW_TASK));
+                    if(!first){
+                        startActivity(new Intent(ctx, Login.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                    }else{
+                        startActivity(new Intent(ctx, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                    }
                     new AcTrans.Builder(ctx).performFade();
+
                     ctx = null;
                 }
 

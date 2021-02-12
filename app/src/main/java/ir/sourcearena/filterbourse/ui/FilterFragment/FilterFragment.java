@@ -5,11 +5,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,6 +19,8 @@ import androidx.fragment.app.Fragment;
 import com.baoyz.widget.PullRefreshLayout;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnClickListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,25 +28,18 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ir.sourcearena.filterbourse.Account.Purchase;
 import cz.msebera.android.httpclient.Header;
 import ir.sourcearena.filterbourse.FilterShowActivity;
 import ir.sourcearena.filterbourse.R;
 import ir.sourcearena.filterbourse.Settings;
+import ir.sourcearena.filterbourse.tools.GetUser;
+import ir.sourcearena.filterbourse.ui.dialog.adapter;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 public class FilterFragment extends Fragment {
 
 
-    String[] titles = new String[]{"ورود پول",
-            "خروج پول",
-            "سرانه خرید حقیقی",
-            "سرانه فروش حقیقی",
-            "سرانه خرید حقوقی",
-            "سرانه فروش حقوقی",
-            "ارزش صف فروش",
-            "حجم صف فروش",
-            "ارزش صف خرید",
-            "حجم صف خرید"
-    };
 
     GridView simpleGrid;
     CustomAdapter customAdapter;
@@ -135,10 +132,51 @@ public class FilterFragment extends Fragment {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     String appendix = methods.get(i);
                     String title = titless.get(i);
-                    Intent in = new Intent(getContext(), FilterShowActivity.class);
-                    in.putExtra("appendix", appendix);
-                    in.putExtra("title", title);
-                    startActivity(in);
+                    if(i < 14){
+                        Intent in = new Intent(getContext(), FilterShowActivity.class);
+                        in.putExtra("appendix", appendix);
+                        in.putExtra("title", title);
+                        startActivity(in);
+                    }else {
+                        if (new GetUser(getContext()).isPremium()) {
+                            Intent in = new Intent(getContext(), FilterShowActivity.class);
+                            in.putExtra("appendix", appendix);
+                            in.putExtra("title", title);
+                            startActivity(in);
+                        } else {
+
+                                            final DialogPlus dialog = DialogPlus.newDialog(getActivity())
+                                                    .setContentHolder(new adapter(R.layout.dialog_is_not_premium, "", getActivity()))
+                                                    .setOnClickListener(new OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogPlus dialog, View view) {
+                                                            if(view.getId() == R.id.btn_cancel)
+                                                            {
+                                                                dialog.dismiss();
+                                                            }
+
+                                                        }
+                                                    })
+                                                    .setGravity(Gravity.CENTER)
+                                                    .setExpanded(false)
+                                                    .create();
+                                            dialog.show();
+                                            TextView tv = dialog.getHolderView().findViewById(R.id.textView19);
+                                            tv.setText("برای مشاهده فیلتر های پیشرفته اکانت خود را ارتقا دهید");
+                            FancyButton buy = dialog.getHolderView().findViewById(R.id.btn_add_filter);
+                            buy.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent in = new Intent(getContext(), Purchase.class);
+
+                                    startActivity(in);
+                                }
+                            });
+
+
+                        }
+                    }
+
                 }
             });
             ref.setRefreshing(false);
@@ -165,8 +203,8 @@ public class FilterFragment extends Fragment {
                         ParseJSon(responseString);
 
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    } catch (JSONException | NullPointerException d) {
+                        d.printStackTrace();
                     }
                 }
             });

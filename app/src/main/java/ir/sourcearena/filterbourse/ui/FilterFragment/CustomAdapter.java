@@ -2,6 +2,7 @@ package ir.sourcearena.filterbourse.ui.FilterFragment;
 
 import ir.sourcearena.filterbourse.R;
 import ir.sourcearena.filterbourse.Settings;
+import ir.sourcearena.filterbourse.tools.GetUser;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 import android.app.Activity;
@@ -28,12 +29,14 @@ public class CustomAdapter extends BaseAdapter {
     List<String> titles;
 
     LayoutInflater inflter;
+    GetUser gu;
 
     public CustomAdapter(Context context, List<String> titles) {
         this.context = context;
 
         this.titles = titles;
         inflter = (LayoutInflater.from(context));
+        this.gu = new GetUser(context);
     }
 
 
@@ -66,8 +69,22 @@ public class CustomAdapter extends BaseAdapter {
         int width = displayMetrics.widthPixels;
         FancyButton fb = view.findViewById(R.id.btn_preview);
 
+        int grey = ResourcesCompat.getColor(context.getResources(),R.color.grey,null);
         fb.setCustomTextFont(R.font.iranyekanmedium);
-        fb.setText(titles.get(i));
+        if(gu.isPremium()){
+            fb.setText(titles.get(i));
+        }else{
+            if(i < 14){
+                fb.setText(titles.get(i));
+            }else{
+                fb.setText(titles.get(i)+" \uD83D\uDD12");
+                fb.setTextColor(grey);
+                fb.setBorderColor(grey);
+                fb.setFocusBackgroundColor(grey);
+            }
+        }
+
+
 
 
         return view;

@@ -11,11 +11,9 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -25,7 +23,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.baoyz.widget.PullRefreshLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
@@ -39,14 +36,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
+import ir.sourcearena.filterbourse.Account.Purchase;
 import id.voela.actrans.AcTrans;
-import ir.sourcearena.filterbourse.MainActivity;
 import ir.sourcearena.filterbourse.NamadRouter;
 import ir.sourcearena.filterbourse.R;
 import ir.sourcearena.filterbourse.Settings;
+import ir.sourcearena.filterbourse.filteryab.simple.adapter.dialogAdapter;
+import ir.sourcearena.filterbourse.tools.GetUser;
 import ir.sourcearena.filterbourse.tools.NetworkChecker;
 import ir.sourcearena.filterbourse.tools.ToastMaker;
 import ir.sourcearena.filterbourse.ui.LoadingView;
@@ -81,7 +79,7 @@ public class Watchlist extends Fragment {
 
         root = inflater.inflate(R.layout.watcher, container, false);
         loading = new LoadingView(inflater, root,getActivity());
-
+        tl = root.findViewById(R.id.tabLayout);
         emp = root.findViewById(R.id.empty_list);
         SharedPreferences el = getActivity().getSharedPreferences("watchers",Context.MODE_PRIVATE);
         String nm = el.getString("cat_names","");
@@ -94,10 +92,41 @@ public class Watchlist extends Fragment {
         add_watcher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                add_title();
+                if( new GetUser(getContext()).isPremium() ){
+                    add_title();
+                }else{
+                    final DialogPlus dialog = DialogPlus.newDialog(getActivity())
+                            .setContentHolder(new adapter(R.layout.dialog_is_not_premium, "", getActivity()))
+                            .setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(DialogPlus dialog, View view) {
+                                    if(view.getId() == R.id.btn_cancel)
+                                    {
+                                        dialog.dismiss();
+                                    }
+
+
+                                }
+                            })
+                            .setGravity(Gravity.CENTER)
+                            .setExpanded(false)
+                            .create();
+                    dialog.show();
+                    TextView tv = dialog.getHolderView().findViewById(R.id.textView19);
+                    tv.setText("برای دیده بان جدید نیاز به اشتراک دارید");
+                    FancyButton buy = dialog.getHolderView().findViewById(R.id.btn_add_filter);
+                    buy.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent in = new Intent(getContext(), Purchase.class);
+
+                            startActivity(in);
+                        }
+                    });
+                }
             }
         });
-        tl = root.findViewById(R.id.tabLayout);
+
         final SharedPreferences e = getActivity().getSharedPreferences("watchers", Context.MODE_PRIVATE);
         String[] no = e.getString("cat_names", "").split(";");
         for(int i=0; i < no.length; i++){
@@ -105,7 +134,6 @@ public class Watchlist extends Fragment {
                 tl.addTab(tl.newTab().setText(no[i]));
             }
         }
-
 
 
         tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -133,6 +161,7 @@ public class Watchlist extends Fragment {
 
                 }
             }
+
         });
 
 
@@ -194,7 +223,7 @@ public class Watchlist extends Fragment {
 
                                 Log.e("per", permitted + "");
                                 if (new NetworkChecker(getContext()).isNetworkAvailable()) {
-                                    task = new Request().execute(Settings.JSON_ALL + finalC);
+                                    task = new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_ALL + finalC);
                                 }
 
                             }
@@ -205,15 +234,15 @@ public class Watchlist extends Fragment {
                     try {
                         Log.e("refresh","ok");
                         addToList(wu.get(tl.getSelectedTabPosition()));
-                    } catch (JSONException jsonException) {
+                    } catch (JSONException | IndexOutOfBoundsException jsonException) {
                         jsonException.printStackTrace();
                     }
-                    handler.postDelayed(this, 5000);
+                    handler.postDelayed(this, 20000);
                 }
 
             };
 
-            handler.postDelayed(r, 5000);
+            handler.postDelayed(r, 20000);
 
 
 
@@ -283,27 +312,36 @@ public class Watchlist extends Fragment {
         wu = new ArrayList<>();
 
         rv = root.findViewById(R.id.favorite_recycler);
+        SharedPreferences e = null;
+        try {
+            e = getActivity().getSharedPreferences("watchers", Context.MODE_PRIVATE);
+            String n = e.getString("cat_names","");
+            String[] c = null;
+            int len = 0;
+            String[] nA = n.split(";");
+            for(int i = 0; i < nA.length; i++){
 
-        SharedPreferences e = getActivity().getSharedPreferences("watchers",Context.MODE_PRIVATE);
-        String n = e.getString("cat_names","");
+                if(!nA[i].equals("")){
+                    c = e.getString("d"+nA[i],"").split(";");
 
-
-
-
-        String[] c = null;
-        int len = 0;
-        String[] nA = n.split(";");
-        for(int i = 0; i < nA.length; i++){
-
-            if(!nA[i].equals("")){
-                c = e.getString("d"+nA[i],"").split(";");
-
-                len = e.getString("d"+nA[i],"").equals("") ? 0:c.length;
+                    len = e.getString("d"+nA[i],"").equals("") ? 0:c.length;
 
 
-                wu.add(new WUtils(nA[i],len+""));
+                    wu.add(new WUtils(nA[i],len+""));
+                }
             }
+
+
+        } catch (NullPointerException d){
+
         }
+
+
+
+
+
+
+
 
     }
 
@@ -357,40 +395,76 @@ public class Watchlist extends Fragment {
             @Override
             public void onItemLongClick(final Utils items) {
 
-                DialogPlus dialog = DialogPlus.newDialog(getActivity())
-                        .setContentHolder(new adapter(R.layout.dialog_dideban, items.getFName(), getActivity()))
-                        .setOnClickListener(new OnClickListener() {
+                DialogPlus dialog = DialogPlus.newDialog(getContext()).setContentHolder(new dialogAdapter(R.layout.dialog_menu_filter, "",getLayoutInflater()))
+                        .setGravity(Gravity.CENTER)
+                        .setExpanded(false)
+                        .setFooter(R.layout.dia_foot).setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(DialogPlus dialog, View view) {
 
 
-                                if (view.getId() == R.id.card_delete) {
+                                if (view.getId() == R.id.btn_edit) {
 
+
+                                    dialog.dismiss();
+
+                                    
+
+                                }
+                                else if (view.getId() == R.id.btn_remove) {
+
+
+
+                                    final SharedPreferences e = getContext().getSharedPreferences("watchers",Context.MODE_PRIVATE);
+                                    String n = e.getString("cat_names","پیشفرض;");
+                                    final String[] nA = n.split(";");
+
+                                    e.edit().putString("d"+nA[tl.getSelectedTabPosition()], e.getString("d"+nA[tl.getSelectedTabPosition()],"").replace(items.getName(),"") ).commit();
                                     final SharedPreferences sp = getActivity().getSharedPreferences("favorite", Context.MODE_PRIVATE);
-                                    String currentList = sp.getString("favorite_list", "");
-                                    sp.edit().putString("favorite_list", currentList.replace("," + items.getName(), "")).apply();
                                     sp.edit().putBoolean(items.getName(), false).apply();
                                     utils.remove(items);
 
-                                    ra.notifyDataSetChanged();
-                                    rv.setLayoutManager(layoutManager);
-                                    rv.setAdapter(ra);
+                                    ra.notifyItemRemoved(utils.indexOf(items));
+
 
                                     dialog.dismiss();
+
                                 }
                             }
                         })
-                        .setExpanded(false)
                         .create();
-                dialog.show();
 
+
+
+                FancyButton f = dialog.getFooterView().findViewById(R.id.btn_edit);
+                f.setText("انصراف");
+                dialog.show();
 
             }
         });
 
 
             rv.setAdapter(ra);
+            tl.addTab(tl.newTab().setText("dd"));
+        tl.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                final DialogPlus dialog = DialogPlus.newDialog(getActivity())
+                        .setContentHolder(new adapter(R.layout.dialog_add_new_wathcer, "", getActivity()))
+                        .setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(DialogPlus dialog, View view) {
 
+
+                            }
+                        })
+                        .setGravity(Gravity.CENTER)
+                        .setExpanded(false)
+                        .create();
+                dialog.show();
+                return true;
+            }
+        });
         starti = 1 ;
 
 
@@ -426,7 +500,7 @@ public class Watchlist extends Fragment {
             public void run() {
 
 
-                        task = new Request().execute(Settings.JSON_ALL + c);
+                        task = new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_ALL + c);
 
 
             }
@@ -483,32 +557,8 @@ public class Watchlist extends Fragment {
                 @Override
                 public void onItemLongClick(final Utils items) {
 
-                    DialogPlus dialog = DialogPlus.newDialog(getActivity())
-                            .setContentHolder(new adapter(R.layout.dialog_dideban, items.getFName(), getActivity()))
-                            .setOnClickListener(new OnClickListener() {
-                                @Override
-                                public void onClick(DialogPlus dialog, View view) {
 
 
-                                    if (view.getId() == R.id.card_delete) {
-
-                                        final SharedPreferences sp = getActivity().getSharedPreferences("favorite", Context.MODE_PRIVATE);
-                                        String currentList = sp.getString("favorite_list", "");
-                                        sp.edit().putString("favorite_list", currentList.replace("," + items.getName(), "")).apply();
-                                        sp.edit().putBoolean(items.getName(), false).apply();
-                                        utils.remove(items);
-
-                                        ra.notifyDataSetChanged();
-                                        rv.setLayoutManager(layoutManager);
-                                        rv.setAdapter(ra);
-
-                                        dialog.dismiss();
-                                    }
-                                }
-                            })
-                            .setExpanded(false)
-                            .create();
-                    dialog.show();
 
 
                 }
@@ -549,6 +599,8 @@ public class Watchlist extends Fragment {
         protected String doInBackground(String... params) {
             stringBuffer = null;
             try {
+
+
 
 
 
@@ -598,6 +650,7 @@ public class Watchlist extends Fragment {
         protected void onPostExecute(final String result) {
 
 
+
             if (!result.equals("")) {
 
 
@@ -610,8 +663,10 @@ public class Watchlist extends Fragment {
                     try {
 
                         addToList(new WUtils("پیشفرض",""));
-                    } catch (JSONException jsonException) {
-                        jsonException.printStackTrace();
+                    } catch (JSONException   | NullPointerException d){
+
+
+                        d.printStackTrace();
                     }
                     start = 1;
                 }

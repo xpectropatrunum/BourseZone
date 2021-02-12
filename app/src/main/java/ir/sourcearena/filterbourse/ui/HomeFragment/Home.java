@@ -290,8 +290,9 @@ public class Home extends Fragment {
 
                 try {
                     alllArrayParse(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+               } catch (JSONException | NullPointerException d) {
+                        d.printStackTrace();
+
                 }
 
 
@@ -302,7 +303,7 @@ public class Home extends Fragment {
 
     void prepareAll() {
 
-        new Request().execute("https://sourcearena.ir/androidFilterApi/first_page_app/app.php");
+        new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,"https://sourcearena.ir/androidFilterApi/first_page_app/app.php");
 
 
     }
@@ -763,13 +764,18 @@ public class Home extends Fragment {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        cv.setChart(c);
+                try{
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            cv.setChart(c);
 
-                    }
-                });
+                        }
+                    });
+                } catch ( NullPointerException d) {
+                }
+
+
             }
         });
 

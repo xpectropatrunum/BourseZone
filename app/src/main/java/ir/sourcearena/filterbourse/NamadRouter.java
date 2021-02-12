@@ -138,7 +138,7 @@ public class NamadRouter extends AppCompatActivity  {
         bb.setNavigationChangeListener(new BubbleNavigationChangeListener() {
             @Override
             public void onNavigationChanged(View view, int position) {
-                pager.setCurrentItem(4-position,true);
+                pager.setCurrentItem(3-position,true);
             }
         });
 
@@ -155,7 +155,7 @@ public class NamadRouter extends AppCompatActivity  {
             }
 
             public void onPageSelected(int position) {
-                bb.setCurrentActiveItem(4-position);
+                bb.setCurrentActiveItem(3-position);
             }
         });
 
@@ -363,9 +363,6 @@ public class NamadRouter extends AppCompatActivity  {
                             public void onClick(DialogPlus dialog, View view) {
 
 
-                                if (view.getId() == R.id.card_delete) {
-
-                                }
                             }
                         })
                         .setExpanded(false)
@@ -432,13 +429,12 @@ public class NamadRouter extends AppCompatActivity  {
                 return fragment;
             } else {
                 switch (pos) {
-                    case 4:
-                        return new Codal();
                     case 3:
-                        return new stockholder();
-                    case 1:
-                        return new Technical();
+                        return new Codal();
                     case 2:
+                        return new stockholder();
+
+                    case 1:
                         return new Fundamental();
 
                     case 0:
@@ -454,7 +450,7 @@ public class NamadRouter extends AppCompatActivity  {
 
         @Override
         public int getCount() {
-            return 5;
+            return 4;
         }
     }
 }

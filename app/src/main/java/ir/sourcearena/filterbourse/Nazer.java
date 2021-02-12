@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ir.sourcearena.filterbourse.ui.LoadingView;
+import ir.sourcearena.filterbourse.ui.watcher.Watchlist;
 
 public class Nazer extends Fragment {
     View root;
@@ -50,7 +51,7 @@ public class Nazer extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         String append = getActivity().getIntent().getExtras().getString(Settings.TITLE_EXTRA, "");
 
-        task = new Nazer.Request().execute(setting.JSON_INSPECT_TITLES + append);
+        task = new Nazer.Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,setting.JSON_INSPECT_TITLES + append);
 
         return loading.addLoadingBar(false);
     }

@@ -399,9 +399,12 @@ public class AddFilter extends Fragment {
 
             if (!result.equals("")) {
 
-             
+                try{
+                    success(result);
+                } catch (NullPointerException e){
 
-                success(result);
+                }
+
 
 
             }

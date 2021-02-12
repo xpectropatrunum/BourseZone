@@ -48,7 +48,7 @@ public class Codal extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         String append = getActivity().getIntent().getExtras().getString("title", "");
 
-        task = new Codal.Request().execute(setting.JSON_CODAL_TITLES + append);
+        task = new Codal.Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,setting.JSON_CODAL_TITLES + append);
 
         return loading.addLoadingBar(false);
     }
