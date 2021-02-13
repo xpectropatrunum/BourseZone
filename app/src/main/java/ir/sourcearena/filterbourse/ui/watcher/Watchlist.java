@@ -445,26 +445,7 @@ public class Watchlist extends Fragment {
 
 
             rv.setAdapter(ra);
-            tl.addTab(tl.newTab().setText("dd"));
-        tl.getChildAt(0).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                final DialogPlus dialog = DialogPlus.newDialog(getActivity())
-                        .setContentHolder(new adapter(R.layout.dialog_add_new_wathcer, "", getActivity()))
-                        .setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(DialogPlus dialog, View view) {
 
-
-                            }
-                        })
-                        .setGravity(Gravity.CENTER)
-                        .setExpanded(false)
-                        .create();
-                dialog.show();
-                return true;
-            }
-        });
         starti = 1 ;
 
 
