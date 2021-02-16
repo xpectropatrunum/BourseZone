@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="ir.sourcearena.filterbourse.ui.FilterFragment.FilterFragment"
+        android:name="ir.sourcearena.boursezone.ui.FilterFragment.FilterFragment"
         android:label="@string/title_home"
         tools:layout="@layout/a_page_appfilter" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="ir.sourcearena.filterbourse.ui.HomeFragment.DashboardFragment"
+        android:name="ir.sourcearena.boursezone.ui.HomeFragment.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/a_page_home" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="ir.sourcearena.filterbourse.ui.watcher.Watchlist"
+        android:name="ir.sourcearena.boursezone.ui.watcher.Watchlist"
         android:label="@string/title_notifications"
         tools:layout="@layout/watcher" />
 </navigation>

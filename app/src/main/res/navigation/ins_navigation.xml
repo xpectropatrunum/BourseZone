@@ -6,26 +6,26 @@
     app:startDestination="@+id/nav_overall">
     <fragment
         android:id="@+id/nav_overall"
-        android:name="ir.sourcearena.filterbourse.NamadActivity"
+        android:name="ir.sourcearena.boursezone.NamadActivity"
         tools:layout="@layout/stock_page_activity" />
 
     <fragment
         android:id="@+id/nav_tablou"
-        android:name="ir.sourcearena.filterbourse.tablou.Tabloukhani"
+        android:name="ir.sourcearena.boursezone.tablou.Tabloukhani"
         tools:layout="@layout/tabloukhani" />
 
     <fragment
         android:id="@+id/nav_codal"
-        android:name="ir.sourcearena.filterbourse.Codal"
+        android:name="ir.sourcearena.boursezone.Codal"
         tools:layout="@layout/frag_codal" />
 
     <fragment
         android:id="@+id/nav_inspector"
-        android:name="ir.sourcearena.filterbourse.Nazer"
+        android:name="ir.sourcearena.boursezone.Nazer"
         tools:layout="@layout/frag_nazer" />
     <fragment
         android:id="@+id/nav_funda"
-        android:name="ir.sourcearena.filterbourse.fundamental.java.Fundamental"
+        android:name="ir.sourcearena.boursezone.fundamental.java.Fundamental"
         tools:layout="@layout/fundamental" />
 
 
