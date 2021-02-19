@@ -9,28 +9,19 @@
     android:background="@color/bg"
     tools:context=".ui.watcher.Watchlist" >
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layoutDirection="ltr"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/add_watcher"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabIndicatorGravity="bottom">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/favorite_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:layoutDirection="rtl"
-                android:paddingTop="10dp"
-                android:paddingBottom="15dp" />
-        </LinearLayout>
-    </ScrollView>
+
+    </com.google.android.material.tabs.TabLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/add_watcher"
@@ -39,8 +30,10 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tabLayout">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageView10"
@@ -56,30 +49,55 @@
             app:tint="@color/primary" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="0dp"
-        android:layoutDirection="ltr"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/add_watcher"
-        app:layout_constraintTop_toTopOf="parent"
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/refresher"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
 
-        app:tabIndicatorGravity="bottom">
-
-
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <TextView
-        android:id="@+id/empty_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="نمادی وجود ندارد"
-        android:textColor="@color/text2"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/add_watcher">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/favorite_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:layoutDirection="rtl"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="15dp" />
+                </LinearLayout>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/empty_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="نمادی وجود ندارد"
+                android:textColor="@color/text2"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.baoyz.widget.PullRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

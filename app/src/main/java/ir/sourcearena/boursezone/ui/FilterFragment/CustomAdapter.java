@@ -23,13 +23,15 @@ public class CustomAdapter extends BaseAdapter {
 
     LayoutInflater inflter;
     GetUser gu;
+    int max_;
 
-    public CustomAdapter(Context context, List<String> titles) {
+    public CustomAdapter(Context context, List<String> titles,int max_) {
         this.context = context;
 
         this.titles = titles;
         inflter = (LayoutInflater.from(context));
         this.gu = new GetUser(context);
+        this.max_ = max_;
     }
 
 
@@ -67,7 +69,7 @@ public class CustomAdapter extends BaseAdapter {
         if(gu.isPremium()){
             fb.setText(titles.get(i));
         }else{
-            if(i < 14){
+            if(i < max_){
                 fb.setText(titles.get(i));
             }else{
                 fb.setText(titles.get(i)+" \uD83D\uDD12");

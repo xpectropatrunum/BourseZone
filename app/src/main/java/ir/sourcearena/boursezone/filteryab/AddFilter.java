@@ -39,16 +39,21 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import ir.sourcearena.boursezone.Account.Login;
+import ir.sourcearena.boursezone.Account.Purchase.Purchase;
 import ir.sourcearena.boursezone.dbhelper.Filter;
 import ir.sourcearena.boursezone.filteryab.adapter.FilterUtils;
 import ir.sourcearena.boursezone.filteryab.adapter.RecyclerAdapter;
 import ir.sourcearena.boursezone.filteryab.advanced.AdvanceAdder;
 import ir.sourcearena.boursezone.filteryab.simple.SimpleAdder;
 import ir.sourcearena.boursezone.filteryab.simple.adapter.dialogAdapter;
+import ir.sourcearena.boursezone.tools.GetUser;
 import ir.sourcearena.boursezone.ui.LoadingView;
+import ir.sourcearena.boursezone.ui.dialog.adapter;
 import ir.sourcearena.boursezone.ui.watcher.Utils;
 import ir.sourcearena.boursezone.R;
 import ir.sourcearena.boursezone.dbhelper.Helper;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 public class AddFilter extends Fragment {
 
@@ -245,6 +250,7 @@ public class AddFilter extends Fragment {
         final FloatingActionsMenu fm = root.findViewById(R.id.right_labels);
         AddFloatingActionButton f1 = root.findViewById(R.id.add_simple);
         AddFloatingActionButton f2 = root.findViewById(R.id.add_advanced);
+
         f1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -261,8 +267,47 @@ public class AddFilter extends Fragment {
 
             @Override
             public void onClick(View view) { if (fm.isExpanded()) {
-                Intent in = new Intent(getActivity(), AdvanceAdder.class);
-                startActivityForResult(in, 0);
+                if(new GetUser(getContext()).isPremium()){
+                    Intent in = new Intent(getActivity(), AdvanceAdder.class);
+                    startActivityForResult(in, 0);
+                }else{
+                    final DialogPlus dialog = DialogPlus.newDialog(getActivity())
+                            .setContentHolder(new adapter(R.layout.dialog_is_not_premium, "", getActivity()))
+                            .setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(DialogPlus dialog, View view) {
+                                    if(view.getId() == R.id.btn_cancel)
+                                    {
+                                        dialog.dismiss();
+                                    }
+
+
+                                }
+                            })
+                            .setGravity(Gravity.CENTER)
+                            .setExpanded(false)
+                            .create();
+                    dialog.show();
+                    TextView tv = dialog.getHolderView().findViewById(R.id.textView19);
+                    tv.setText("برای دیده بان جدید نیاز به اشتراک دارید");
+                    FancyButton buy = dialog.getHolderView().findViewById(R.id.btn_add_filter);
+                    buy.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent in ;
+                            if(new GetUser(getContext()).isLoged()){
+                                in = new Intent(getContext(), Purchase.class);
+                            }else{
+                                in = new Intent(getContext(), Login.class);
+                            }
+
+
+
+                            startActivity(in);
+                        }
+                    });
+                }
+
             }
 
             }

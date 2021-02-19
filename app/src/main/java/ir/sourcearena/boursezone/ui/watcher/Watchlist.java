@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnClickListener;
@@ -38,6 +39,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import ir.sourcearena.boursezone.Account.Login;
 import ir.sourcearena.boursezone.tools.GetUser;
 import ir.sourcearena.boursezone.tools.NetworkChecker;
 import ir.sourcearena.boursezone.tools.ToastMaker;
@@ -56,7 +58,7 @@ public class Watchlist extends Fragment {
 
     LoadingView loading;
     View root, fin;
-
+    SharedPreferences e;
     SharedPreferences sp;
     Handler handler;
     String currentList;
@@ -73,12 +75,26 @@ public class Watchlist extends Fragment {
         super.onResume();
         permitted = true;
     }
-
+    String n = "";
+    PullRefreshLayout ref;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+
         root = inflater.inflate(R.layout.watcher, container, false);
         loading = new LoadingView(inflater, root,getActivity());
+
+        ref = (PullRefreshLayout) root.findViewById(R.id.refresher);
+        ref.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
+        ref.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+               refresh();
+            }
+        });
+
+
+
         tl = root.findViewById(R.id.tabLayout);
         emp = root.findViewById(R.id.empty_list);
         SharedPreferences el = getActivity().getSharedPreferences("watchers",Context.MODE_PRIVATE);
@@ -118,7 +134,14 @@ public class Watchlist extends Fragment {
                     buy.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent in = new Intent(getContext(), Purchase.class);
+                            Intent in ;
+                            if(new GetUser(getContext()).isLoged()){
+                                in = new Intent(getContext(), Purchase.class);
+                            }else{
+                                in = new Intent(getContext(), Login.class);
+                            }
+
+
 
                             startActivity(in);
                         }
@@ -127,13 +150,14 @@ public class Watchlist extends Fragment {
             }
         });
 
-        final SharedPreferences e = getActivity().getSharedPreferences("watchers", Context.MODE_PRIVATE);
+        e = getActivity().getSharedPreferences("watchers", Context.MODE_PRIVATE);
         String[] no = e.getString("cat_names", "").split(";");
         for(int i=0; i < no.length; i++){
             if(!no[i].equals("")) {
                 tl.addTab(tl.newTab().setText(no[i]));
             }
         }
+
 
 
         tl.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -154,12 +178,7 @@ public class Watchlist extends Fragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                try {
-                    addToList(wu.get(tl.getSelectedTabPosition()));
 
-                }catch (JSONException s){
-
-                }
             }
 
         });
@@ -197,7 +216,7 @@ public class Watchlist extends Fragment {
             final Runnable r = new Runnable() {
                 public void run() {
                     loadWatchers();
-                    String n = e.getString("cat_names","");
+                    n = e.getString("cat_names","");
 
                     String c = "";
                     int len = 0;
@@ -246,12 +265,58 @@ public class Watchlist extends Fragment {
 
 
 
-
-
             if(c.equals("")){
                 return root;
             }
         return loading.addLoadingBar(false);
+    }
+
+    private void refresh() {
+
+        e = getActivity().getSharedPreferences("watchers", Context.MODE_PRIVATE);
+
+
+        n = e.getString("cat_names","");
+        loadWatchers();
+        String c = "";
+        int len = 0;
+        String[] nA = n.split(";");
+        for(int i = 0; i < nA.length; i++){
+
+            if(!nA[i].equals("")){
+                c += e.getString("d"+nA[i],"");
+
+            }
+        }
+        final String finalC = c;
+
+        newThread(c);
+
+        if(loaded){
+            if(getActivity() != null) {
+                SharedPreferences s = getActivity().getSharedPreferences("per", Context.MODE_PRIVATE);
+
+
+                if (s.getBoolean("permitted",true))
+                {
+
+                    Log.e("per", permitted + "");
+                    if (new NetworkChecker(getContext()).isNetworkAvailable()) {
+                        task = new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_ALL + finalC);
+                    }
+
+                }
+                else {
+                }
+            }
+        }
+        try {
+            Log.e("refresh","ok");
+            addToList(wu.get(tl.getSelectedTabPosition()));
+        } catch (JSONException | IndexOutOfBoundsException jsonException) {
+            jsonException.printStackTrace();
+        }
+        ref.setRefreshing(false);
     }
 
     private void add_title() {
@@ -352,9 +417,23 @@ public class Watchlist extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(getContext()) );
         SharedPreferences e = getActivity().getSharedPreferences("watchers",Context.MODE_PRIVATE);
         String c = e.getString("d" + item.getName(), "");
+
+
+        if(c.equals("")){
+            emp.setVisibility(View.VISIBLE);
+            rv.setVisibility(View.INVISIBLE);
+
+
+        }else{
+            emp.setVisibility(View.INVISIBLE);
+            rv.setVisibility(View.VISIBLE);
+        }
+
+
         JSONArray ja = new JSONArray(result);
+
         for (int i = 0; i < ja.length(); i++) {
-            emp.setVisibility(View.GONE);
+
 
             JSONObject jo = ja.getJSONObject(i);
             String name = jo.getString("name");
@@ -370,11 +449,8 @@ public class Watchlist extends Fragment {
 
             }
         }
-        if(c.equals("")){
-            emp.setVisibility(View.VISIBLE);
 
 
-        }
 
 
 
@@ -422,10 +498,10 @@ public class Watchlist extends Fragment {
                                     e.edit().putString("d"+nA[tl.getSelectedTabPosition()], e.getString("d"+nA[tl.getSelectedTabPosition()],"").replace(items.getName(),"") ).commit();
                                     final SharedPreferences sp = getActivity().getSharedPreferences("favorite", Context.MODE_PRIVATE);
                                     sp.edit().putBoolean(items.getName(), false).apply();
-                                    utils.remove(items);
+
 
                                     ra.notifyItemRemoved(utils.indexOf(items));
-
+                                    utils.remove(items);
 
                                     dialog.dismiss();
 
@@ -470,22 +546,11 @@ public class Watchlist extends Fragment {
     void newThread(final String c) {
 
 
-        HandlerThread handlerThread = new HandlerThread("HandlerNews2" );
-        handlerThread.start();
-        Looper looper = handlerThread.getLooper();
-        Handler handler = new Handler(looper);
-        handler.post(new Runnable() {
-
-
-            @Override
-            public void run() {
 
 
                         task = new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_ALL + c);
 
 
-            }
-        });
 
 
     }

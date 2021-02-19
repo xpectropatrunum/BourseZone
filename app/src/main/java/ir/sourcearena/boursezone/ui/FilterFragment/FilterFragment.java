@@ -28,6 +28,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ir.sourcearena.boursezone.Account.Login;
 import ir.sourcearena.boursezone.tools.GetUser;
 import ir.sourcearena.boursezone.Account.Purchase.Purchase;
 import cz.msebera.android.httpclient.Header;
@@ -44,6 +45,7 @@ public class FilterFragment extends Fragment {
     GridView simpleGrid;
     CustomAdapter customAdapter;
     PullRefreshLayout ref;
+    int max_purchase = 14;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -118,13 +120,14 @@ public class FilterFragment extends Fragment {
             btns = new ArrayList<>();
             methods = new ArrayList<>();
             JSONArray arr = new JSONArray(data);
-            for (int i = 0; i < arr.length(); i++) {
+            max_purchase = arr.getInt(arr.length()-1);
+            for (int i = 0; i < arr.length()-1; i++) {
                 titless.add(arr.getJSONArray(i).getString(1));
                 methods.add(arr.getJSONArray(i).getString(0));
                 btns.add(arr.getJSONArray(i).getString(2));
 
             }
-            customAdapter = new CustomAdapter(getContext(), btns);
+            customAdapter = new CustomAdapter(getContext(), btns, max_purchase);
             newThread(simpleGrid,customAdapter);
 
             simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -132,7 +135,7 @@ public class FilterFragment extends Fragment {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     String appendix = methods.get(i);
                     String title = titless.get(i);
-                    if(i < 14){
+                    if(i < max_purchase){
                         Intent in = new Intent(getContext(), FilterShowActivity.class);
                         in.putExtra("appendix", appendix);
                         in.putExtra("title", title);
@@ -167,7 +170,12 @@ public class FilterFragment extends Fragment {
                             buy.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    Intent in = new Intent(getContext(), Purchase.class);
+                                    Intent in ;
+                                    if(new GetUser(getContext()).isLoged()){
+                                        in = new Intent(getContext(), Purchase.class);
+                                    }else{
+                                        in = new Intent(getContext(), Login.class);
+                                    }
 
                                     startActivity(in);
                                 }

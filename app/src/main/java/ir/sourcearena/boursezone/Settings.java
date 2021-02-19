@@ -17,7 +17,7 @@ public class Settings {
     public static final String JSON_ALL = "https://sourcearena.ir/androidFilterApi/FilterApi.php?token=fpa&dideban=";
     public static final String PRICES = "https://sourcearena.ir/androidFilterApi/app/purchase/prices.php";
     public static final String JSON_TECHNICAL = "https://sourcearena.ir/androidFilterApi/tech/all.php?name=";
-    public static final String JSON_CANDLE = "https://sourcearena.ir/androidFilterApi/api.php?token=fpa&days=60&name=";
+    public static final String JSON_CANDLE = "https://sourcearena.ir/api/api.php?token=fpa&days=60&name=";
     public static final String JSON_CODAL_TITLES = "https://sourcearena.ir/androidFilterApi/api.php?token=fpa&codal=";
     public static final String ALL_FILTERS = "https://sourcearena.ir/androidFilterApi/FilterApi.php?token=fpa&filter_method";
     public static final String JSON_INS_URL =  "https://sourcearena.ir/androidFilterApi/api.php?token=fpa&name=";

@@ -93,7 +93,7 @@ public class stockholder extends Fragment {
         tableView.setColumnModel(columnModel);
 
 
-        Log.e("s",size/4+"");
+        //Log.e("s",size/4+"");
     }
 
     List<StockHolderUtil> list;

@@ -60,7 +60,7 @@ public class Fundamental extends Fragment {
         ViewHelper vh = new ViewHelper();
         int[] vs = vh.views;
         String[] key = vh.keys;
-        Log.e("e", data);
+        //Log.e("e", data);
         JSONObject jo = new JSONArray(data).getJSONObject(0);
         for (int i = 0; i < key.length; i++) {
             String text = jo.getString(key[i]);

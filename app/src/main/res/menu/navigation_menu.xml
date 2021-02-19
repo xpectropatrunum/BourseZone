@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_round_shopping_cart_24"
         android:title="اشتراک"/>
         <item android:id="@+id/login"
-            android:icon="@drawable/ic_round_shopping_cart_24"
+            android:icon="@drawable/enter_24"
             android:title="ورود/خروج"/>
     </group>
     <group android:id="@+id/grp2">
@@ -16,6 +16,11 @@
     <item android:id="@+id/comment"
         android:icon="@drawable/ic_round_mail_24"
         android:title= "انتقادات و پیشنهادات"/>
+
+        <item android:id="@+id/supporting"
+            android:icon="@drawable/headset_24"
+            android:title="پشتیبانی آنلاین"/>
+
     <item android:id="@+id/rateapp"
         android:icon="@drawable/ic_round_star_24"
         android:title="نظردهی به برنامه"/>

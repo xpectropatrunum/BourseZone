@@ -28,6 +28,8 @@ import com.anychart.charts.Stock;
 import com.anychart.core.stock.Plot;
 import com.anychart.data.Table;
 import com.anychart.data.TableMapping;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +47,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import ir.sourcearena.boursezone.tools.NetworkChecker;
+import ir.sourcearena.boursezone.tools.ToastMaker;
 import ir.sourcearena.boursezone.ui.LoadingView;
 import ir.sourcearena.boursezone.ui.TableHelper;
 
@@ -143,6 +146,7 @@ public class NamadActivity extends Fragment {
         pb = root.findViewById(R.id.ins_pg_over);
         loc = root.findViewById(R.id.ins_close_loc);
         loc2 = root.findViewById(R.id.ins_finl_loc);
+
     }
 
     int w, w2 = 0;
@@ -171,7 +175,7 @@ public class NamadActivity extends Fragment {
 
             @Override
             public boolean onPreDraw() {
-                if (v1.getViewTreeObserver().isAlive()) {
+                if (v1.getViewTreeObserver().isAlive() && v4.getViewTreeObserver().isAlive()) {
                     v1.getViewTreeObserver().removeOnPreDrawListener(this);
 
                     if(w2 == 0){
@@ -223,7 +227,27 @@ public class NamadActivity extends Fragment {
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
         params2.setMargins((int) (w * left_c), 0, 0, 0);
+
+        View.OnClickListener e = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()){
+                    case R.id.ins_close_loc:
+                        new ToastMaker(getContext(),"آخرین قیمت");
+                        break;
+                    case R.id.ins_finl_loc:
+                        new ToastMaker(getContext(),"قیمت پایانی");
+                        break;
+
+                }
+
+            }
+        };
+
+
         loc.setLayoutParams(params2);
+        loc.setOnClickListener(e);
+        loc2.setOnClickListener(e);
 
 
 
@@ -263,7 +287,7 @@ public class NamadActivity extends Fragment {
                 final Runnable r = new Runnable() {
                     public void run() {
                         if(permiteed) {
-                            Log.e("per2", permiteed + "");
+                           // Log.e("per2", permiteed + "");
                             if (new NetworkChecker(getContext()).isNetworkAvailable()) {
                               task =   new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_INS_URL + title);
                             }
@@ -450,7 +474,7 @@ public class NamadActivity extends Fragment {
                     @Override
                     public void run() {
                         double a = real_b / (real_b + co_b);
-                        double b = real_s / (real_s + co_b);
+                        double b = real_s / (real_s + co_s);
                         if(real_b == 0 && co_b == 0 && co_s==0 && real_s ==0 ){
                             w2 = 0;
                             v1.setVisibility(View.INVISIBLE);
@@ -465,6 +489,7 @@ public class NamadActivity extends Fragment {
                         v1.setLayoutParams(new ConstraintLayout.LayoutParams((int) (w2 * a), 50));
                         v2.setLayoutParams(new LinearLayout.LayoutParams((int) (w2 * b), 50));
                         v3.setLayoutParams(cl3);
+                        
                         if( (int) (w2 * (1 - a)) == 0){
                             v3.setVisibility(View.INVISIBLE);
                         }

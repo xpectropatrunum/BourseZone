@@ -2,6 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -37,10 +46,11 @@ dependencies {
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.2.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
-
+    implementation 'com.github.Shashank02051997:FancyWalkthrough-Android:2.1'
     dependencies {
         implementation 'com.loopj.android:android-async-http:1.4.9'
     }
+    implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
     dependencies {
         implementation 'com.labo.kaji:fragmentanimations:0.1.1'
     }

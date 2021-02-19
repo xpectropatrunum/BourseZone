@@ -42,6 +42,9 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.material.navigation.NavigationView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
@@ -66,6 +69,7 @@ import java.util.List;
 
 
 import cz.msebera.android.httpclient.Header;
+import ir.sourcearena.boursezone.Account.Purchase.Purchase;
 import ir.sourcearena.boursezone.tools.GetUser;
 import ir.sourcearena.boursezone.tools.ToastMaker;
 import ir.sourcearena.boursezone.ui.FilterFragment.FilterFragment;
@@ -200,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     nv.getMenu().getItem(1).setTitle("ورود");
                 }
-                username.setText(user.getName()+"\n"+user.getUsername()+"\n"+user.getTime()+" روز");
+                username.setText(user.getName()+"\n"+user.getUsername()+"\n"+(user.getTime() > 0 ?user.getTime()+" روز":""));
                 boolean s = dl.isOpen();
                 if (s) {
                     dl.closeDrawers();
@@ -224,6 +228,10 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 dl.closeDrawers();
                 switch (id) {
+                    case R.id.supporting:
+                        Intent telegram = new Intent(Intent.ACTION_VIEW , Uri.parse("https://telegram.me/boursezone_support"));
+                        startActivity(telegram);
+                        break;
                     case R.id.reportproblem:
 
                         dialog = DialogPlus.newDialog(MainActivity.this)
@@ -293,6 +301,17 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.rateapp:
                         putCommnet();
                         break;
+
+                     case R.id.purchase:
+                         Intent in ;
+                         if(new GetUser(getBaseContext()).isLoged()){
+                             in = new Intent(getBaseContext(), Purchase.class);
+                         }else{
+                             in = new Intent(getBaseContext(), Login.class);
+                         }
+                         startActivity(in);
+
+                         break;
                     case R.id.login:
                         if(user.isLoged()){
 

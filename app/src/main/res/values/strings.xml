@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">فیلتر پلاس</string>
+    <string name="app_name">بورس زون</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -8,7 +8,7 @@
     <string name="count">تعداد</string>
     <string name="Open">a</string>
     <string name="Close">b</string>
-    <string name="packagename">ir.sourcearena.filter</string>
-    <string name="bazaar_link">https://cafebazaar.ir/app/ir.sourcearena.filter</string>
+    <string name="packagename">ir.sourcearena.boursezone</string>
+    <string name="bazaar_link">https://cafebazaar.ir/app/ir.sourcearena.boursezone</string>
     <string name="advance_filter_tip">در این بخش شما با استفاده از قوانین فیلترنویسی سایت tsetmc.com می توانید فیلتر های مورد نظر خود را نوشته و خروجی بگیرید. در حال حاضر امکان تابع نویسی وجود ندارد. برای مشاهده فیلد های مجاز روی دکمه زیر تپ کنید.</string>
 </resources>

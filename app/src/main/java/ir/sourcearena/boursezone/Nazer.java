@@ -57,7 +57,7 @@ public class Nazer extends Fragment {
 
         for (int i = 0; i < jA.length(); i++) {
             JSONObject obj = jA.getJSONObject(i);
-            Log.e("d", obj.getString("time"));
+            //Log.e("d", obj.getString("time"));
             utils.add(new FilterUtils("", "",
                     obj.getString("head"), obj.getString("time"), obj.getString("text"), "", "", "", "cfn3"));
         }

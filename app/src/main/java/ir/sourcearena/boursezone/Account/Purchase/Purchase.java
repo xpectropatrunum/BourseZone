@@ -5,20 +5,24 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.daimajia.androidanimations.library.Techniques;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +39,7 @@ public class Purchase extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.purchase_activity);
-
+        ActionBar_();
         gu = new GetUser(this);
 
         connect(Settings.CHECK_TIME+gu.getNumber(),0);
@@ -46,6 +50,20 @@ public class Purchase extends AppCompatActivity {
 
        connect(Settings.PRICES,1);
 
+    }
+    private void ActionBar_() {
+
+        TextView title = findViewById(R.id.app_name);
+        ImageView back = findViewById(R.id.imageView3);
+
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finish();
+            }
+        });
     }
     void newThread(final GridView cv, final CustomAdapter c) {
         new Thread(new Runnable() {
@@ -86,8 +104,14 @@ public class Purchase extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
 
-
-                Uri uri = Uri.parse(Settings.ZARIN_GATE+"?phone="+gu.getNumber()+"&type="+a.get(i)[0]+"&price="+a.get(i)[2]);
+                byte[] data = new byte[0];
+                try {
+                    data = ( a.get(i)[2]+","+gu.getNumber()+","+a.get(i)[0] ).getBytes("UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                String base64 = Base64.encodeToString(data, Base64.DEFAULT);
+                Uri uri = Uri.parse(Settings.ZARIN_GATE+"?cc="+base64);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
 
