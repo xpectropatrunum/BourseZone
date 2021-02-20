@@ -3,16 +3,26 @@ package ir.sourcearena.boursezone.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
 import com.viksaa.sssplash.lib.cnst.Flags;
 import com.viksaa.sssplash.lib.model.ConfigSplash;
 
+import org.json.JSONException;
+
 import id.voela.actrans.AcTrans;
+import ir.sourcearena.boursezone.Settings;
 import ir.sourcearena.boursezone.TourtoApp;
 import ir.sourcearena.boursezone.tools.GetUser;
 import ir.sourcearena.boursezone.tools.NetworkChecker;
@@ -20,42 +30,43 @@ import ir.sourcearena.boursezone.Account.Login;
 import ir.sourcearena.boursezone.Constants;
 import ir.sourcearena.boursezone.MainActivity;
 import ir.sourcearena.boursezone.R;
+import ir.sourcearena.boursezone.ui.watcher.Watchlist;
 
-public class Splash extends AwesomeSplash {
+public class Splash extends AppCompatActivity {
 
     //DO NOT OVERRIDE onCreate()!
     //if you need to start some services do it in initSplash()!
     SharedPreferences sp;
     boolean first;
 
+
     @Override
-    public void initSplash(ConfigSplash configSplash) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.splash);
+
 
         GetUser gu = new GetUser(getApplicationContext());
 
         first = gu.getFirst();
 
+        handler = new Handler();
 
-        configSplash.setBackgroundColor(R.color.primary); //any color you want form colors.xml
-        configSplash.setAnimCircularRevealDuration(500); //int ms
-        configSplash.setRevealFlagX(Flags.REVEAL_RIGHT);  //or Flags.REVEAL_LEFT
-        configSplash.setRevealFlagY(Flags.REVEAL_BOTTOM); //or Flags.REVEAL_TOP
 
-        //Choose LOGO OR PATH; if you don't provide String value for path it's logo by default
-        configSplash.setOriginalHeight(700); //in relation to your svg (path) resource
-        configSplash.setOriginalWidth(1200);
-        //Customize Logo
-        configSplash.setTitleSplash("");
+        final Runnable r = new Runnable() {
+            public void run() {
+                animationsFinished();
 
-        configSplash.setLogoSplash(R.drawable.logo2); //or any other drawable
-        configSplash.setAnimLogoSplashDuration(2000); //int ms
-        configSplash.setAnimLogoSplashTechnique(Techniques.FadeIn); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
+            }
+
+        };
+        handler.postDelayed(r, 2500);
+
 
 
 
     }
 
-    @Override
     public void animationsFinished() {
         NetworkChecker nt = new NetworkChecker(Splash.this);
         if(nt.isNetworkAvailable()) {
@@ -71,6 +82,8 @@ public class Splash extends AwesomeSplash {
         }else{
             refresh();
             Toast.makeText(getApplicationContext(),"خطا در اتصال به سرور لطفا بعدا تلاش کنید",Toast.LENGTH_LONG).show();
+            TextView msg = findViewById(R.id.textView46);
+            msg.setText("در صورت استفاد از vpn آن را خاموش کنید");
 
         }
         }else{
