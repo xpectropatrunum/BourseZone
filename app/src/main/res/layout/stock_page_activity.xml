@@ -155,7 +155,7 @@
                     android:layout_marginTop="5dp"
 
                     android:layout_marginEnd="15dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:cardBackgroundColor="#ffffff"
 
                     app:cardCornerRadius="13pt"
@@ -589,7 +589,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginBottom="12dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     app:cardBackgroundColor="#ffffff"
 
 
@@ -1191,7 +1191,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="0002447"
+                                        android:text="1"
                                         android:textColor="#000000"
                                         android:textStyle="bold" />
 
@@ -1200,7 +1200,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="159785"
+                                        android:text="1"
                                         android:textColor="#000000"
                                         android:textStyle="bold" />
 
@@ -1210,7 +1210,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder4"
                                         android:gravity="center"
-                                        android:text="999"
+                                        android:text="1"
                                         android:textColor="#000000"
                                         android:textStyle="bold" />
 
@@ -1230,7 +1230,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="0002447"
+                                        android:text="1"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1239,7 +1239,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="159785"
+                                        android:text="1"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1248,7 +1248,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder4"
                                         android:gravity="center"
-                                        android:text="999"
+                                        android:text="1"
                                         android:textColor="#000000" />
 
                                 </TableRow>
@@ -1265,7 +1265,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="0002447"
+                                        android:text="1"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1274,7 +1274,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder3"
                                         android:gravity="center"
-                                        android:text="159785"
+                                        android:text="1"
                                         android:textColor="#000000" />
 
                                     <TextView
@@ -1283,7 +1283,7 @@
                                         android:layout_weight="1"
                                         android:background="@drawable/textborder4"
                                         android:gravity="center"
-                                        android:text="@string/count"
+                                        android:text="1"
                                         android:textColor="#000000" />
 
 

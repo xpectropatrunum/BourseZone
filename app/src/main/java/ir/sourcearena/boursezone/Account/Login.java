@@ -36,6 +36,10 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+
+        STAGE = 100;
+        new Request().execute("https://sourcearena.ir/androidFilterApi/app/login/memberlist.php");
+
         gu = new GetUser(getBaseContext());
         defineViews();
         actionViews();
@@ -132,6 +136,9 @@ public class Login extends AppCompatActivity {
         protected void onPostExecute(final String result) {
             if(STAGE == 2){
                 finished(result);
+            }if(STAGE == 100){
+                list = result.split(",,");
+                STAGE = 0;
             }else{
                 nextLevel(result);
             }
@@ -141,6 +148,7 @@ public class Login extends AppCompatActivity {
 
         }
     }
+    String[] list;
 
     private void finished(String res) {
         if(res.equals("OK")){
@@ -243,11 +251,23 @@ public class Login extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int km = 0;
                 username = ed.getText().toString();
                 name = ed2.getText().toString();
-                boolean valid = (username != null) && username.matches("^[a-zA-Z0-9](_(?!(\\.|_))|\\.(?!(_|\\.))|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$");
+                boolean valid = (username != null) && username.matches("^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$");
                 if(valid){
-                    new Request().execute(Settings.REGISTER_API+"?phone="+phone+"&username="+username+"&name="+name);
+                    for (String name: list) {
+                        if(name.equals(username)){
+                            new ToastMaker(getBaseContext(),"این نام کاربری موجود است");
+                            km = 1;
+                        }
+
+                    }
+                    if(km == 0){
+                        YoYo.with(Techniques.Shake).duration(1000).playOn(ed);
+                        new Request().execute(Settings.REGISTER_API+"?phone="+phone+"&username="+username+"&name="+name);
+                    }
+
                 }else{
                     YoYo.with(Techniques.Shake).duration(1000).playOn(ed);
                     new ToastMaker(getBaseContext(),"نام کاربری معتبر نیست");

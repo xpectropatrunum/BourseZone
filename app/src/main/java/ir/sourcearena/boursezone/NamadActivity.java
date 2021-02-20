@@ -28,8 +28,6 @@ import com.anychart.charts.Stock;
 import com.anychart.core.stock.Plot;
 import com.anychart.data.Table;
 import com.anychart.data.TableMapping;
-import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -473,6 +471,7 @@ public class NamadActivity extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        int he_ = co_sell.getHeight()+20;
                         double a = real_b / (real_b + co_b);
                         double b = real_s / (real_s + co_s);
                         if(real_b == 0 && co_b == 0 && co_s==0 && real_s ==0 ){
@@ -481,13 +480,13 @@ public class NamadActivity extends Fragment {
                         }
 
 
-                        LinearLayout.LayoutParams cl4 = new LinearLayout.LayoutParams((int) (w2 * (1 - b)), 50);
+                        LinearLayout.LayoutParams cl4 = new LinearLayout.LayoutParams((int) (w2 * (1 - b)), he_);
 
 
-                        ConstraintLayout.LayoutParams cl3 = new ConstraintLayout.LayoutParams((int) (w2 * (1 - a)) , 50);
+                        ConstraintLayout.LayoutParams cl3 = new ConstraintLayout.LayoutParams((int) (w2 * (1 - a)) , he_);
 
-                        v1.setLayoutParams(new ConstraintLayout.LayoutParams((int) (w2 * a), 50));
-                        v2.setLayoutParams(new LinearLayout.LayoutParams((int) (w2 * b), 50));
+                        v1.setLayoutParams(new ConstraintLayout.LayoutParams((int) (w2 * a), he_));
+                        v2.setLayoutParams(new LinearLayout.LayoutParams((int) (w2 * b), he_));
                         v3.setLayoutParams(cl3);
                         
                         if( (int) (w2 * (1 - a)) == 0){

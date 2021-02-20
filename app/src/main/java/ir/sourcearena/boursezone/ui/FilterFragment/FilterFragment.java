@@ -3,6 +3,7 @@ package ir.sourcearena.boursezone.ui.FilterFragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,10 +26,16 @@ import com.orhanobut.dialogplus.OnClickListener;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import ir.sourcearena.boursezone.Account.Login;
+import ir.sourcearena.boursezone.NamadActivity;
 import ir.sourcearena.boursezone.tools.GetUser;
 import ir.sourcearena.boursezone.Account.Purchase.Purchase;
 import cz.msebera.android.httpclient.Header;
@@ -45,13 +52,14 @@ public class FilterFragment extends Fragment {
     GridView simpleGrid;
     CustomAdapter customAdapter;
     PullRefreshLayout ref;
+    AsyncTask task;
     int max_purchase = 14;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.a_page_appfilter, container, false);
 
-        connect(Settings.ALL_FILTERS);
+        task = new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.ALL_FILTERS);
 
 
         simpleGrid = (GridView) root.findViewById(R.id.simpleGridView);
@@ -63,7 +71,7 @@ public class FilterFragment extends Fragment {
         ref.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                connect(Settings.ALL_FILTERS);
+                task = new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.ALL_FILTERS);
             }
         });
         return root;
@@ -190,38 +198,76 @@ public class FilterFragment extends Fragment {
             ref.setRefreshing(false);
 
         }
-    public void connect(final String url) {
-        try {
+    private class Request extends AsyncTask<String, Void, String> {
 
-            AsyncHttpClient client = new AsyncHttpClient();
+        StringBuffer stringBuffer;
 
-
-            client.post(getContext(), url, null, "application/json;  text/html; charset=utf-8;", new TextHttpResponseHandler() {
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    Log.d("LoginActivity", "Failed");
-                    Log.d("LoginActivity", "body " + responseString);
-                }
-
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, String responseString) {
-
-                    try {
-                        ParseJSon(responseString);
+        @Override
+        protected String doInBackground(String... params) {
+            stringBuffer = null;
+            try {
 
 
-                    } catch (JSONException | NullPointerException d) {
-                        d.printStackTrace();
+                URL url = new URL(params[0]);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("GET");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+                httpURLConnection.setRequestProperty("Accept", "application/json");
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.connect();
+
+
+                DataOutputStream outputStream = new DataOutputStream(httpURLConnection.getOutputStream());
+
+
+                int code = httpURLConnection.getResponseCode();
+                if (code == 200) {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+
+                    stringBuffer = new StringBuffer();
+                    String line;
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuffer.append(line);
                     }
+
+
                 }
-            });
-        } catch (Exception ex) {
-            Log.d("LoginActivity", "Getting Exception " + ex.toString());
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+            }
+            if (stringBuffer == null) {
+                return "";
+            }
+            return stringBuffer.toString();
+
+
         }
 
+        @Override
+        protected void onPostExecute(String result) {
 
+            if (!result.equals("")) {
+                try {
+                   ParseJSon(result);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(task != null){
+            task.cancel(true);
+        }
+    }
 }
