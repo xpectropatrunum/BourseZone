@@ -24,6 +24,9 @@
     <item android:id="@+id/rateapp"
         android:icon="@drawable/ic_round_star_24"
         android:title="نظردهی به برنامه"/>
+        <item android:id="@+id/refrence"
+            android:icon="@drawable/ic_baseline_link_24"
+            android:title="منابع"/>
     </group>
 
 </menu>

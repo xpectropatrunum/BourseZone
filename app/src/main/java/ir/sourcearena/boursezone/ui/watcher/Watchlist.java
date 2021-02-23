@@ -108,44 +108,48 @@ public class Watchlist extends Fragment {
         add_watcher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if( new GetUser(getContext()).isPremium() ){
+                e = getActivity().getSharedPreferences("watchers", Context.MODE_PRIVATE);
+                String n = e.getString("cat_names", "");
+                if (n.split(";").length <= 1) {
                     add_title();
-                }else{
-                    final DialogPlus dialog = DialogPlus.newDialog(getActivity())
-                            .setContentHolder(new adapter(R.layout.dialog_is_not_premium, "", getActivity()))
-                            .setOnClickListener(new OnClickListener() {
-                                @Override
-                                public void onClick(DialogPlus dialog, View view) {
-                                    if(view.getId() == R.id.btn_cancel)
-                                    {
-                                        dialog.dismiss();
+                } else {
+                    if (new GetUser(getContext()).isPremium()) {
+                        add_title();
+                    } else {
+                        final DialogPlus dialog = DialogPlus.newDialog(getActivity())
+                                .setContentHolder(new adapter(R.layout.dialog_is_not_premium, "", getActivity()))
+                                .setOnClickListener(new OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogPlus dialog, View view) {
+                                        if (view.getId() == R.id.btn_cancel) {
+                                            dialog.dismiss();
+                                        }
+
+
                                     }
-
-
+                                })
+                                .setGravity(Gravity.CENTER)
+                                .setExpanded(false)
+                                .create();
+                        dialog.show();
+                        TextView tv = dialog.getHolderView().findViewById(R.id.textView19);
+                        tv.setText("برای دیده بان جدید نیاز به اشتراک دارید");
+                        FancyButton buy = dialog.getHolderView().findViewById(R.id.btn_add_filter);
+                        buy.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent in;
+                                if (new GetUser(getContext()).isLoged()) {
+                                    in = new Intent(getContext(), Purchase.class);
+                                } else {
+                                    in = new Intent(getContext(), Login.class);
                                 }
-                            })
-                            .setGravity(Gravity.CENTER)
-                            .setExpanded(false)
-                            .create();
-                    dialog.show();
-                    TextView tv = dialog.getHolderView().findViewById(R.id.textView19);
-                    tv.setText("برای دیده بان جدید نیاز به اشتراک دارید");
-                    FancyButton buy = dialog.getHolderView().findViewById(R.id.btn_add_filter);
-                    buy.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent in ;
-                            if(new GetUser(getContext()).isLoged()){
-                                in = new Intent(getContext(), Purchase.class);
-                            }else{
-                                in = new Intent(getContext(), Login.class);
+
+
+                                startActivity(in);
                             }
-
-
-
-                            startActivity(in);
-                        }
-                    });
+                        });
+                    }
                 }
             }
         });

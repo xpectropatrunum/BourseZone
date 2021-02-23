@@ -299,7 +299,38 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.rateapp:
                         putCommnet();
                         break;
+                    case R.id.refrence:
+                         dialog = DialogPlus.newDialog(MainActivity.this)
+                                .setContentHolder(new adapter(R.layout.dialog_is_not_premium, "", MainActivity.this))
+                                .setOnClickListener(new OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogPlus dialog, View view) {
+                                        if (view.getId() == R.id.btn_cancel) {
+                                            dialog.dismiss();
+                                        }
 
+
+                                    }
+                                })
+                                .setGravity(Gravity.CENTER)
+                                .setExpanded(false)
+                                .create();
+                        dialog.show();
+                        TextView tv4 = dialog.getHolderView().findViewById(R.id.textView19);
+                        tv4.setText("تمام اطلاعات از وب سرویس سورس آرنا (www.sourcearena.ir) دریافت شده است.");
+                        TextView tt = dialog.getHolderView().findViewById(R.id.textView24);
+                        tt.setText("منابع");
+                        FancyButton dis = dialog.getHolderView().findViewById(R.id.btn_cancel);
+                        FancyButton buy = dialog.getHolderView().findViewById(R.id.btn_add_filter);
+                        buy.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+                            }
+                        });
+                        buy.setText("بستن");
+                        dis.setVisibility(View.GONE);
+                        break;
                      case R.id.purchase:
                          Intent in ;
                          if(new GetUser(getBaseContext()).isLoged()){

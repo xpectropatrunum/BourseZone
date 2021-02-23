@@ -1,16 +1,21 @@
 package ir.sourcearena.boursezone.Account;
 
+import ir.sourcearena.boursezone.Account.Purchase.Purchase;
 import ir.sourcearena.boursezone.MainActivity;
 import ir.sourcearena.boursezone.Settings;
 import ir.sourcearena.boursezone.tools.GetUser;
 import ir.sourcearena.boursezone.tools.ToastMaker;
 import ir.sourcearena.boursezone.R;
+import ir.sourcearena.boursezone.ui.dialog.adapter;
 import mehdi.sakout.fancybuttons.FancyButton;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -20,6 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnClickListener;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -30,7 +37,7 @@ public class Login extends AppCompatActivity {
 
     FancyButton submit, later;
     EditText ed,ed2;
-    TextView tv, label;
+    TextView tv, label, policy;
     GetUser gu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +73,43 @@ public class Login extends AppCompatActivity {
 
             }
         });
+        policy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final DialogPlus dialog = DialogPlus.newDialog(Login.this)
+                        .setContentHolder(new adapter(R.layout.dialog_is_not_premium, "", Login.this))
+                        .setOnClickListener(new OnClickListener() {
+                            @Override
+                            public void onClick(DialogPlus dialog, View view) {
+                                if (view.getId() == R.id.btn_cancel) {
+                                    dialog.dismiss();
+                                }
+
+
+                            }
+                        })
+                        .setGravity(Gravity.CENTER)
+                        .setExpanded(false)
+                        .create();
+                dialog.show();
+                TextView tv = dialog.getHolderView().findViewById(R.id.textView19);
+                tv.setText(R.string.policy);
+                TextView tt = dialog.getHolderView().findViewById(R.id.textView24);
+                tt.setText("توجه");
+                FancyButton dis = dialog.getHolderView().findViewById(R.id.btn_cancel);
+                FancyButton buy = dialog.getHolderView().findViewById(R.id.btn_add_filter);
+                buy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+dialog.dismiss();
+                    }
+                });
+                buy.setText("متوجه شدم");
+                dis.setVisibility(View.GONE);
+
+            }
+        });
     }
 
     private void defineViews() {
@@ -74,6 +118,7 @@ public class Login extends AppCompatActivity {
         ed = findViewById(R.id.phone_number);
         ed2 = findViewById(R.id.username);
         tv = findViewById(R.id.textView30);
+        policy = findViewById(R.id.textView45);
         label = findViewById(R.id.textView4);
     }
 

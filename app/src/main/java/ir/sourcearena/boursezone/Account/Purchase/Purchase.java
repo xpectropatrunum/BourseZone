@@ -16,6 +16,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.daimajia.androidanimations.library.Techniques;
+import com.example.android.trivialdrivesample.util.IabHelper;
+import com.example.android.trivialdrivesample.util.IabResult;
+import com.example.android.trivialdrivesample.util.Inventory;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
 
@@ -30,10 +33,26 @@ import cz.msebera.android.httpclient.Header;
 import ir.sourcearena.boursezone.Settings;
 import ir.sourcearena.boursezone.tools.GetUser;
 import ir.sourcearena.boursezone.R;
+import ir.sourcearena.boursezone.tools.ToastMaker;
 
 public class Purchase extends AppCompatActivity {
     GridView simpleGrid;
     GetUser gu;
+
+    static final String TAG = "sourcearena";
+
+    // SKUs for our products: the premium upgrade (non-consumable)
+    static String SKU_PREMIUM = "";
+
+    // Does the user have the premium upgrade?
+    boolean mIsPremium = false;
+
+    // (arbitrary) request code for the purchase flow
+    static int RC_REQUEST = 100;
+
+    int desc = -1;
+    // The helper object
+    IabHelper mHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +60,24 @@ public class Purchase extends AppCompatActivity {
         setContentView(R.layout.purchase_activity);
         ActionBar_();
         gu = new GetUser(this);
+        mIsPremium = gu.isPremium();
+        String base64EncodedPublicKey = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwDCDVQNRxBx9W2bbsGpE5U3+t//yRz9ZWl+TYbLb8MtFofJ5ZjYAy88XL+MCzC+w1fhxH5mTiWo7yDAxPwInAbGEJb61RI0akj3ogrLbOZxfSWMN7B10WzEOjAVNkDBAve1jITrZJvVkF20/3nBUSiKBWOLXmoays6D5DmliniXzUH2+HAGn6CLenUdFJ5qc6maU6aHBIhkbjz7HWFpq+szRULdmjyuUnuK4X0JDfkCAwEAAQ==";
+
+        mHelper = new IabHelper(this, base64EncodedPublicKey);
+
+        mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+            public void onIabSetupFinished(IabResult result) {
+
+
+                if (!result.isSuccess()) {
+                    // Oh noes, there was a problem.
+
+                }
+                // Hooray, IAB is fully set up!
+
+            }
+        });
+
 
         connect(Settings.CHECK_TIME+gu.getNumber(),0);
         simpleGrid = (GridView) findViewById(R.id.simpleGridView);
@@ -48,9 +85,66 @@ public class Purchase extends AppCompatActivity {
 
         simpleGrid.setSelector(new ColorDrawable(Color.TRANSPARENT));
 
-       connect(Settings.PRICES,1);
+        if(gu.getTime() <=  0){
+            connect(Settings.PRICES,1);
+        }
+
 
     }
+
+    IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
+        public void onQueryInventoryFinished(IabResult result, Inventory inventory) {
+
+            if (result.isFailure()) {
+
+                return;
+            }
+            else {
+
+                // does the user have the premium upgrade?
+                mIsPremium = inventory.hasPurchase(SKU_PREMIUM);
+
+
+                connect("http://sourcearena.ir/androidFilterApi/app/purchase/zarinpalverify.php?OK&phone="+gu.getNumber()+"&desc="+desc,100);
+
+
+            }
+
+
+        }
+    };
+
+    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
+        @Override
+        public void onIabPurchaseFinished(IabResult result, com.example.android.trivialdrivesample.util.Purchase info) {
+            if (result.isFailure()) {
+
+                return;
+            }
+            else if (info.getSku().equals(SKU_PREMIUM)) {
+
+            }
+
+        }
+
+
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+
+        // Pass on the activity result to the helper for handling
+        if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
+            super.onActivityResult(requestCode, resultCode, data);
+        } else {
+            connect("http://sourcearena.ir/androidFilterApi/app/purchase/zarinpalverify.php?OK&phone="+gu.getNumber()+"&desc="+requestCode,100);
+            new ToastMaker(getApplication(),"اکانت شما با موفقیت ارتقا یافت");
+        }
+    }
+
     private void ActionBar_() {
 
         TextView title = findViewById(R.id.app_name);
@@ -104,7 +198,12 @@ public class Purchase extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
 
-                byte[] data = new byte[0];
+                SKU_PREMIUM = "c"+((i+1)>3?5:i+1);
+                RC_REQUEST = i;
+
+                mHelper.launchPurchaseFlow(Purchase.this, SKU_PREMIUM, RC_REQUEST, mPurchaseFinishedListener, "payload-string");
+
+               /* byte[] data = new byte[0];
                 try {
                     data = ( a.get(i)[2]+","+gu.getNumber()+","+a.get(i)[0] ).getBytes("UTF-8");
                 } catch (UnsupportedEncodingException e) {
@@ -113,7 +212,7 @@ public class Purchase extends AppCompatActivity {
                 String base64 = Base64.encodeToString(data, Base64.DEFAULT);
                 Uri uri = Uri.parse(Settings.ZARIN_GATE+"?cc="+base64);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                startActivity(intent);*/
 
 
             }
@@ -131,14 +230,17 @@ public class Purchase extends AppCompatActivity {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                    Log.d("LoginActivity", "Failed");
-                    Log.d("LoginActivity", "body " + responseString);
+
+
                 }
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, String responseString) {
 
-                    if(a==1){
+                    if(a==100){
+                        connect(Settings.CHECK_TIME+gu.getNumber(),0);
+                    }
+                    else if(a==1){
                         try {
                             ParseJSon(responseString);
                         } catch (JSONException e) {
@@ -157,7 +259,8 @@ public class Purchase extends AppCompatActivity {
                 }
             });
         } catch (Exception ex) {
-            Log.d("LoginActivity", "Getting Exception " + ex.toString());
+
+
         }
 
 

@@ -471,7 +471,7 @@ public class NamadActivity extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        int he_ = co_sell.getHeight()+20;
+                        int he_ = co_sell.getHeight()+10;
                         double a = real_b / (real_b + co_b);
                         double b = real_s / (real_s + co_s);
                         if(real_b == 0 && co_b == 0 && co_s==0 && real_s ==0 ){
