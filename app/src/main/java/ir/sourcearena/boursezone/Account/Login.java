@@ -299,7 +299,7 @@ dialog.dismiss();
                 int km = 0;
                 username = ed.getText().toString();
                 name = ed2.getText().toString();
-                boolean valid = (username != null) && username.matches("^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$");
+                boolean valid = (username != null) && username.matches("^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$");
                 if(valid){
                     for (String name: list) {
                         if(name.equals(username)){
@@ -309,7 +309,7 @@ dialog.dismiss();
 
                     }
                     if(km == 0){
-                        YoYo.with(Techniques.Shake).duration(1000).playOn(ed);
+
                         new Request().execute(Settings.REGISTER_API+"?phone="+phone+"&username="+username+"&name="+name);
                     }
 

@@ -114,21 +114,7 @@ public class Purchase extends AppCompatActivity {
         }
     };
 
-    IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener = new IabHelper.OnIabPurchaseFinishedListener() {
-        @Override
-        public void onIabPurchaseFinished(IabResult result, com.example.android.trivialdrivesample.util.Purchase info) {
-            if (result.isFailure()) {
 
-                return;
-            }
-            else if (info.getSku().equals(SKU_PREMIUM)) {
-
-            }
-
-        }
-
-
-    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -140,8 +126,13 @@ public class Purchase extends AppCompatActivity {
         if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
         } else {
-            connect("http://sourcearena.ir/androidFilterApi/app/purchase/zarinpalverify.php?OK&phone="+gu.getNumber()+"&desc="+requestCode,100);
-            new ToastMaker(getApplication(),"اکانت شما با موفقیت ارتقا یافت");
+            if (resultCode == RESULT_OK) {
+                connect("http://sourcearena.ir/androidFilterApi/app/purchase/zarinpalverify.php?OK&phone=" + gu.getNumber() + "&desc=" + requestCode, 100);
+                new ToastMaker(getApplication(), "اکانت شما با موفقیت ارتقا یافت");
+                simpleGrid.setVisibility(View.GONE);
+            }else{
+                new ToastMaker(getApplication(), "خطا در ارتقای اکانت");
+            }
         }
     }
 
@@ -200,8 +191,15 @@ public class Purchase extends AppCompatActivity {
 
                 SKU_PREMIUM = "c"+((i+1)>3?5:i+1);
                 RC_REQUEST = i;
+                try{
 
-                mHelper.launchPurchaseFlow(Purchase.this, SKU_PREMIUM, RC_REQUEST, mPurchaseFinishedListener, "payload-string");
+                    mHelper.launchPurchaseFlow(Purchase.this, SKU_PREMIUM, RC_REQUEST, null, "payload-string");
+                }catch ( java.lang.IllegalStateException c){
+                    new ToastMaker(Purchase.this, "برنامه بازار را نصب کنید");
+
+                }
+
+
 
                /* byte[] data = new byte[0];
                 try {
