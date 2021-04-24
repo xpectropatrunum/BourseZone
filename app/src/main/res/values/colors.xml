@@ -3,7 +3,7 @@
     <color name="colorPrimary">#D23A01</color>
     <color name="colorSecond">#FF5722</color>
     <color name="colorSecondShadow">#D23A01</color>
-    <color name="colorAccent">#7ACFBE</color>
+    <color name="colorAccent">#087e8b</color>
     <color name="green">#30B536</color>
     <color name="red">#FF0000</color>
     <color name="blue">#0081BC</color>
@@ -20,27 +20,38 @@
     <color name="black_semi_transparent">#B2000000</color>
     <color name="fr1">#FBC95C</color>
     <color name="black">#000</color>
-    <color name="lightcard">#f7f8fd</color>
+    <color name="lightcard">#ffffff</color>
     <color name="lightbg">#EEEEEE</color>
 
     <color name="pureWhite">#ffffff</color>
     <color name="colorThird">#52C857</color>
     <color name="colorThirdShadow">#106DB6</color>
 
-
-
-    <!--Pallets-->
-    <color name="primary">#08BDBB</color>
-    <color name="secondary">#FE396B</color>
+    <color name="ed_back">#ffffff</color>
+    <color name="primarydark">#202022</color>
+    <color name="primary">#087e8b</color>
+    <color name="bgdark">#181818</color>
+    <color name="progress">#087e8b</color>
+    <color name="secondary">#89043d</color>
+    <color name="inactive_icon">#ACACAC</color>
     <!--Actions-->
     <color name="text1">#252A34</color>
+    <color name="text1_dark">#ffffff</color>
     <color name="text2">#888888</color>
+    <color name="text2_dark">#7a7a7a</color>
     <!--Neutral-->
-
+    <color name="loader">#087e8b</color>
     <color name="bg">#EEEEEE</color>
-
+    <color name="fab_color">#89043d</color>
     <color name="orangebt">#FF6F00</color>
     <color name="greenbt">#00D107</color>
     <color name="tab_unselected">#C3C3C3</color>
     <color name="tab_selected">#E6E6E6</color>
+    <color name="abar_line">#CACACA</color>
+    <color name="nv_color">#f2f2f2</color>
+    <color name="image_border">#ffffff</color>
+    <color name="tint_codal">#3A3A3A</color>
+    <color name="submit_btn">#087e8b</color>
+    <color name="filter_btn">#89043d</color>
+
 </resources>

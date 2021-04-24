@@ -19,7 +19,6 @@
         android:background="@drawable/shadow"
 
         android:visibility="visible"
-        app:cardBackgroundColor="#ffffff"
         app:cardCornerRadius="13pt"
 
         app:cardElevation="5dp"
@@ -31,7 +30,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/lightcard">
 
             <TextView
                 android:id="@+id/f_aa"
@@ -54,9 +54,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
+                android:fontFamily="@font/iransansmedium"
                 android:text="eps"
                 android:textColor="@color/text2"
-                android:fontFamily="@font/iransansmedium"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -116,9 +116,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
+                android:fontFamily="@font/iransansmedium"
                 android:text="P/E"
                 android:textColor="@color/text2"
-                android:fontFamily="@font/iransansmedium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -147,9 +147,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
+                android:fontFamily="@font/iransansmedium"
                 android:text="TTM"
                 android:textColor="@color/text2"
-                android:fontFamily="@font/iransansmedium"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -196,11 +196,11 @@
                     <TextView
                         android:id="@+id/f_ttm"
                         android:layout_width="match_parent"
-                        android:textColor="@color/text2"
-                        android:fontFamily="@font/iransansmedium"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/iransansmedium"
                         android:gravity="center"
-                        android:text="TTM" />
+                        android:text="TTM"
+                        android:textColor="@color/text2" />
 
                     <TextView
                         android:id="@+id/f_ttm_1"
@@ -220,10 +220,10 @@
                         android:id="@+id/f_pe"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textColor="@color/text2"
                         android:fontFamily="@font/iransansmedium"
-                        android:text="P/E" />
+                        android:gravity="center"
+                        android:text="P/E"
+                        android:textColor="@color/text2" />
 
                     <TextView
                         android:id="@+id/f_pe_1"
@@ -242,12 +242,12 @@
 
                     <TextView
                         android:id="@+id/f_eps"
-                        android:textColor="@color/text2"
-                        android:fontFamily="@font/iransansmedium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/iransansmedium"
                         android:gravity="center"
-                        android:text="eps" />
+                        android:text="eps"
+                        android:textColor="@color/text2" />
 
                     <TextView
                         android:id="@+id/f_eps_1"

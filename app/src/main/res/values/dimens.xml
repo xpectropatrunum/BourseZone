@@ -6,5 +6,7 @@
     <dimen name="badge_corner_radius">13dp</dimen><!-- 15 -->
     <dimen name="badge_width_padding">4dp</dimen><!-- 4 -->
     <dimen name="badge_height_padding">1dp</dimen><!-- 1 -->
-    <dimen name="badge_top_margin">2dp</dimen><!-- 2 -->
+    <dimen name="badge_top_margin">2dp</dimen>
+    <dimen name="app_title">16sp</dimen>
+    <dimen name="card_title">14sp</dimen>
 </resources>

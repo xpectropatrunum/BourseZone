@@ -3,34 +3,20 @@ package ir.sourcearena.boursezone.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.viksaa.sssplash.lib.activity.AwesomeSplash;
-import com.viksaa.sssplash.lib.cnst.Flags;
-import com.viksaa.sssplash.lib.model.ConfigSplash;
-
-import org.json.JSONException;
-
-import id.voela.actrans.AcTrans;
-import ir.sourcearena.boursezone.Settings;
+import ir.sourcearena.boursezone.MainActivity;
+import ir.sourcearena.boursezone.R;
 import ir.sourcearena.boursezone.TourtoApp;
 import ir.sourcearena.boursezone.tools.GetUser;
 import ir.sourcearena.boursezone.tools.NetworkChecker;
-import ir.sourcearena.boursezone.Account.Login;
-import ir.sourcearena.boursezone.Constants;
-import ir.sourcearena.boursezone.MainActivity;
-import ir.sourcearena.boursezone.R;
-import ir.sourcearena.boursezone.ui.watcher.Watchlist;
 
 public class Splash extends AppCompatActivity {
 
@@ -42,8 +28,12 @@ public class Splash extends AppCompatActivity {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        sp = getSharedPreferences("theme",MODE_PRIVATE);
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(sp.getBoolean("night",false)? AppCompatDelegate.MODE_NIGHT_YES:AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.splash);
+
+
 
 
         GetUser gu = new GetUser(getApplicationContext());
@@ -72,11 +62,11 @@ public class Splash extends AppCompatActivity {
         if(nt.isNetworkAvailable()) {
         if(nt.isServerAvailable()) {
             if(!first){
-                startActivity(new Intent(this, TourtoApp.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                startActivity(new Intent(this, TourtoApp.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP ));
             }else{
-                startActivity(new Intent(this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                startActivity(new Intent(this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
-            new AcTrans.Builder(this).performFade();
+
 
 
         }else{
@@ -99,27 +89,32 @@ public class Splash extends AppCompatActivity {
         super.onPause();
     }
 
+
     Context ctx;
+    int stop = 0;
     private void refresh() {
         handler = new Handler();
         ctx = Splash.this;
      
        r = new Runnable() {
             public void run() {
+                if(stop == 0){
                 NetworkChecker nt = new NetworkChecker(Splash.this);
                 if(nt.isNetworkAvailable() && nt.isServerAvailable() && ctx != null) {
-                    handler.removeCallbacks(r);
+                    stop = 1;
                     if(!first){
-                        startActivity(new Intent(ctx, TourtoApp.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        startActivity(new Intent(ctx, TourtoApp.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP ));
                     }else{
-                        startActivity(new Intent(ctx, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+                        startActivity(new Intent(ctx, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     }
-                    new AcTrans.Builder(ctx).performFade();
+
 
                     ctx = null;
                 }
 
-                handler.postDelayed(r, 1000);
+                    handler.postDelayed(r, 1000);
+                }
+
 
             }};
              handler.postDelayed(r, 1000);

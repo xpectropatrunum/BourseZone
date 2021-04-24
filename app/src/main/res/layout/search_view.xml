@@ -11,8 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/lightcard"
         android:orientation="vertical"
-        android:background="@color/pureWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,8 +23,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="2dp"
 
-            android:background="?attr/selectableItemBackgroundBorderless"
-       >
+            android:background="?attr/selectableItemBackgroundBorderless">
 
 
             <TextView

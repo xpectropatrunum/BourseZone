@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BlendMode;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -20,14 +22,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+
+import androidx.appcompat.widget.SwitchCompat;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -93,45 +100,100 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences.Editor ed;
     GetUser gu;
 
-
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sp = getSharedPreferences("theme",MODE_PRIVATE);
+        AppCompatDelegate.setDefaultNightMode(sp.getBoolean("night",false)? AppCompatDelegate.MODE_NIGHT_YES:AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
+
+
+
+
         setContentView(R.layout.activity_main);
 
-        gu = new GetUser(this);
-
-        connect(Settings.CHECK_TIME+gu.getNumber());
-
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        sp = getSharedPreferences("news", Context.MODE_PRIVATE);
-        ed = sp.edit();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-        customSuggestionsAdapter = new CustomSuggestionsAdapter(getLayoutInflater(), MainActivity.this);
 
 
-        drawer = findViewById(R.id.drawer_opener);
-
-        new Request().execute(Settings.JSON_SEARCH);
-        actionbar();
         try {
-            pager_load();
 
-        } catch (NullPointerException d){
+
+            gu = new GetUser(this);
+
+            connect(Settings.CHECK_TIME+gu.getNumber());
+
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+            sp = getSharedPreferences("news", Context.MODE_PRIVATE);
+            ed = sp.edit();
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+            customSuggestionsAdapter = new CustomSuggestionsAdapter(getLayoutInflater(), MainActivity.this);
+
+
+            if((gu.isSecond() == 1 || gu.isSecond() % 4 ==0 && gu.isSecond() != 0) && !gu.isRated()){
+                rateApp();
+            }
+            gu.putSecond();
+
+
+            drawer = findViewById(R.id.drawer_opener);
+            new Request().execute("https://sourcearena.ir/androidFilterApi/fields.php");
+            new Request().execute(Settings.JSON_SEARCH);
+            actionbar();
+            pager_load();
+            animation(appname, 10000, Techniques.Tada,true);
+            drawer();
+
+        } catch (java.lang.IllegalStateException e){
 
         }
 
-        animation(appname, 10000, Techniques.Tada,true);
-        drawer();
+
     }
 
-    @Override
-    protected void onPause() {
+    private void rateApp() {
+        final DialogPlus dialog = DialogPlus.newDialog(this)
+                .setContentHolder(new adapter(R.layout.dialog_is_not_premium, "", getBaseContext()))
+                .setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(DialogPlus dialog, View view) {
+                        if (view.getId() == R.id.btn_cancel) {
+                            dialog.dismiss();
 
-        super.onPause();
-        SharedPreferences s = getSharedPreferences("per", Context.MODE_PRIVATE);
-        s.edit().putBoolean("permitted",false).apply();
+                        }
+
+
+                    }
+                })
+                .setGravity(Gravity.CENTER)
+                .setExpanded(false)
+                .create();
+        dialog.show();
+        TextView tv1 = dialog.getHolderView().findViewById(R.id.textView24);
+        tv1.setText("حمایت از ما");
+        TextView tv = dialog.getHolderView().findViewById(R.id.textView19);
+        tv.setText("لطفا برای بهبود برنامه و حمایت از ما نظر دهید");
+        FancyButton cancel = dialog.getHolderView().findViewById(R.id.btn_cancel);
+        cancel.setText("بعدا");
+        FancyButton buy = dialog.getHolderView().findViewById(R.id.btn_add_filter);
+        buy.setText("حتما");
+        buy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gu.putRated();
+                putCommnet();
+                dialog.dismiss();
+            }
+        });
+
+
+
     }
+
+    private void getFields(String res) {
+       SharedPreferences sp = getSharedPreferences("fields",MODE_PRIVATE);
+       sp.edit().putString("fields",res.replace("m&m","")).apply();
+
+    }
+
 
     @Override
     protected void onResume() {
@@ -209,6 +271,27 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     dl.open();
                 }
+            }
+        });
+
+        sp = getSharedPreferences("theme",MODE_PRIVATE);
+        TextView ind =  headerView.findViewById(R.id.textView48);
+        final SwitchCompat sw =  headerView.findViewById(R.id.switch1);
+        sw.setChecked(sp.getBoolean("night",false));
+        ind.setText("حالت شب");
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+
+                sp = getSharedPreferences("theme",MODE_PRIVATE);
+                        sp.edit().putBoolean("night", isChecked).apply();
+
+
+
+
+
+                MainActivity.this.recreate();
+
             }
         });
 
@@ -499,6 +582,7 @@ public class MainActivity extends AppCompatActivity {
     }
     TextBadgeItem numberBadgeItem;
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     private void pager_load() {
 
         int cc = sp.getInt("cc",20);
@@ -516,18 +600,22 @@ public class MainActivity extends AppCompatActivity {
         final MyPagerAdapter mp = new MyPagerAdapter(getSupportFragmentManager());
         pager.setAdapter(mp);
         pager.setOffscreenPageLimit(5);
-        spaceNavigationView
+        spaceNavigationView.setMode(BottomNavigationBar.MODE_FIXED);
+       // spaceNavigationView.setBackgroundTintBlendMode(BlendMode.OVERLAY);
+        spaceNavigationView.setBackgroundStyle(getDelegate().getLocalNightMode() == AppCompatDelegate.MODE_NIGHT_YES ?
+                BottomNavigationBar.BACKGROUND_STYLE_STATIC:BottomNavigationBar.BACKGROUND_STYLE_RIPPLE);
+
+       spaceNavigationView
                 .addItem(new BottomNavigationItem(R.drawable.eye_50, "دیده بان"))
                 .addItem(new BottomNavigationItem(R.drawable.whatshot_50, "فیلتر داغ"))
                 .addItem(new BottomNavigationItem(R.drawable.analysis_50, "فیلتریاب"))
-                .addItem(new BottomNavigationItem(R.drawable.news_24, "اخبار").setBadgeItem(numberBadgeItem))
+                .addItem(new BottomNavigationItem(R.drawable.news_24, "اخبار"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, "خانه"))
-                .setBarBackgroundColor(R.color.secondary)
+        .setActiveColor(getDelegate().getLocalNightMode() != AppCompatDelegate.MODE_NIGHT_YES ?R.color.primary:R.color.pureWhite).setBarBackgroundColor(getDelegate().getLocalNightMode() == AppCompatDelegate.MODE_NIGHT_YES ?R.color.primary:R.color.pureWhite)
 
+               .setInActiveColor(R.color.inactive_icon)
+      .setFirstSelectedPosition(0).initialise();
 
-
-
-                .setFirstSelectedPosition(0).initialise();
 
 
 
@@ -754,11 +842,9 @@ public class MainActivity extends AppCompatActivity {
         if (doubleBackToExitPressedOnce) {
             Intent startMain = new Intent(Intent.ACTION_MAIN);
             startMain.addCategory(Intent.CATEGORY_HOME);
-            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             startActivity(startMain);
+            finish();
         }
 
         this.doubleBackToExitPressedOnce = true;
@@ -825,19 +911,23 @@ public class MainActivity extends AppCompatActivity {
 
             if (result.equals("OK")) {
                 Toast.makeText(getBaseContext(), "با موفقیت ارسال شد بزودی شاهد تغییرات در اپ باشید :)", Toast.LENGTH_LONG).show();
-            }
+            }else if(result.contains("m&m")){
 
-            try {
-                JSONArray ja = new JSONArray(result);
-                for (int i = 0; i < ja.length(); i++) {
-                    JSONObject jo = ja.getJSONObject(i);
-                    // suggestions.add(new Namad(jo.getString("n"),jo.getString("f"),jo.getString("m")));
-                    //customSuggestionsAdapter.addSuggestion(new Namad(jo.getString("n"),jo.getString("f"),jo.getString("m")));
-                    array.add(new String[]{jo.getString("n"), jo.getString("f"), jo.getString("m")});
+                getFields(result);
+            }else {
 
+                try {
+                    JSONArray ja = new JSONArray(result);
+                    for (int i = 0; i < ja.length(); i++) {
+                        JSONObject jo = ja.getJSONObject(i);
+                        // suggestions.add(new Namad(jo.getString("n"),jo.getString("f"),jo.getString("m")));
+                        //customSuggestionsAdapter.addSuggestion(new Namad(jo.getString("n"),jo.getString("f"),jo.getString("m")));
+                        array.add(new String[]{jo.getString("n"), jo.getString("f"), jo.getString("m")});
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
 
         }

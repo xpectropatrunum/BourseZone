@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "604067132121",
+    "project_id": "boursezone-12be9",
+    "storage_bucket": "boursezone-12be9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604067132121:android:c051f02e805ae810a084c8",
+        "android_client_info": {
+          "package_name": "ir.sourcearena.boursezone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604067132121-trbmsg9156bpe4clidq6pslkej4l2jmt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsIHe-p3MmT7NYLpdpAoOgbGAKeyRyilo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604067132121-trbmsg9156bpe4clidq6pslkej4l2jmt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

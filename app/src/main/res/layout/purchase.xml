@@ -28,123 +28,133 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/lightcard">
 
-            android:background="?android:attr/selectableItemBackground">
-
-            <LinearLayout
-                android:id="@+id/linearLayout10"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="5dp"
+                android:layout_height="wrap_content"
+
+                android:background="?android:attr/selectableItemBackground"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:id="@+id/textView41"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/linearLayout10"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/textView41"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/iransansbold"
+                        android:text="TextView" />
+                </LinearLayout>
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btn_preview"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/iransansbold"
-                    android:text="TextView" />
-            </LinearLayout>
 
-            <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_preview"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.52"
+                    app:layout_constraintStart_toStartOf="parent"
 
-                android:padding="5dp"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.52"
-                app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout9"
+                    fancy:fb_borderColor="@color/green"
+                    fancy:fb_borderWidth="2.5dp"
+                    fancy:fb_defaultColor="@color/green"
+                    fancy:fb_focusColor="#5AF661"
+                    fancy:fb_radius="0dp"
+                    fancy:fb_text="خرید"
 
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout9"
-                fancy:fb_borderColor="@color/green"
-                fancy:fb_borderWidth="2.5dp"
-                fancy:fb_defaultColor="@color/green"
-                fancy:fb_focusColor="#5AF661"
-                fancy:fb_radius="0dp"
-                fancy:fb_text="خرید"
+                    fancy:fb_textColor="@color/pureWhite"
+                    fancy:fb_textFont="iranyekanmedium"
+                    fancy:fb_textSize="14sp" />
 
-                fancy:fb_textColor="@color/pureWhite"
-                fancy:fb_textFont="iranyekanmedium"
-                fancy:fb_textSize="14sp" />
-
-            <LinearLayout
-                android:id="@+id/linearLayout9"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:gravity="right"
-                android:orientation="vertical"
-                android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
-                app:layout_constraintVertical_bias="0.0">
-
-                <TextView
-                    android:id="@+id/textView38"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/linearLayout9"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
                     android:gravity="right"
-                    android:text="✔️ دسترسی به تمام فیلترها"
-                    android:textColor="@color/text1"
-                    android:textSize="12sp" />
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout8"
+                    app:layout_constraintVertical_bias="0.0">
 
-                <TextView
-                    android:id="@+id/textView39"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/textView38"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="✔️ دسترسی به تمام فیلترها"
+                        android:textColor="@color/text1"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/textView39"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="✔️ تعداد دیده بان نامحدود"
+                        android:textColor="@color/text1"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/textView40"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="✔️ فیلترنویسی پیشرفته"
+                        android:textColor="@color/text1"
+
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout8"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:text="✔️ تعداد دیده بان نامحدود"
-                    android:textColor="@color/text1"
-                    android:textSize="12sp" />
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
+                    app:layout_constraintVertical_bias="0.0">
 
-                <TextView
-                    android:id="@+id/textView40"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:text="✔️ فیلترنویسی پیشرفته"
-                    android:textColor="@color/text1"
+                    <TextView
+                        android:id="@+id/textView36"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="14000 تومان" />
 
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/textView37"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10000 تومان" />
+                </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/linearLayout8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
-                app:layout_constraintVertical_bias="0.0">
-
-                <TextView
-                    android:id="@+id/textView36"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="14000 تومان" />
-
-                <TextView
-                    android:id="@+id/textView37"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10000 تومان" />
-            </LinearLayout>
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@color/bg"
+    android:translationZ="100000dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:background="@color/lightbg"
 
-    android:translationZ="100000dp">
+    app:layout_constraintTop_toTopOf="parent">
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/spin_kit"
@@ -18,7 +18,7 @@
         android:layout_height="35dp"
         android:layout_gravity="center"
         android:layout_marginTop="12dp"
-        app:SpinKit_Color="@color/primary"
+        app:SpinKit_Color="@color/loader"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

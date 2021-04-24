@@ -8,7 +8,7 @@
     </item>
     <item android:bottom="1dp" android:left="1dp" android:right="1dp" >
         <shape android:shape="rectangle">
-            <solid android:color="#fff" />
+            <solid android:color="@color/lightcard" />
         </shape>
     </item>
 </layer-list>

@@ -97,13 +97,11 @@
 
 
                         android:padding="2dp"
-                        android:shadowColor="@color/text2"
-                        android:shadowDx="1"
-                        android:shadowDy="1"
-                        android:shadowRadius="10"
+
+
                         android:text="@string/app_name"
-                        android:textColor="@color/bg"
-                        android:textSize="18sp"
+                        android:textColor="@color/pureWhite"
+                        android:textSize="@dimen/app_title"
                         android:translationZ="10000dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageView3"
@@ -182,10 +180,12 @@
         <com.ashokvarma.bottomnavigation.BottomNavigationBar
 
             android:id="@+id/bottom_menu"
-            app:bnbBackgroundColor="@color/primary"
-            app:bnbInactiveColor="@color/pureWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTintMode="src_over"
+            android:foregroundTintMode="src_over"
+            app:bnbBackgroundColor="@color/primary"
+            app:bnbInactiveColor="@color/inactive_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -199,6 +199,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:elevation="10dp"
+        app:itemIconTint="@color/grey_600"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/navigation_menu">
 

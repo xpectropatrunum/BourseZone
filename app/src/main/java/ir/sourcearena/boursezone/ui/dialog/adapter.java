@@ -3,7 +3,9 @@ package ir.sourcearena.boursezone.ui.dialog;
 
 
 import android.content.Context;
+import android.widget.TextView;
 
+import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 
 import ir.sourcearena.boursezone.Settings;

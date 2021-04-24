@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.baoyz.widget.PullRefreshLayout;
@@ -48,11 +49,20 @@ public class News extends Fragment {
     LoadingView loading;
     View root;
     int page = 1;
+    String bg = "";
+    String text = "";
     SharedPreferences sp;
     SharedPreferences.Editor ed;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        sp = getActivity().getSharedPreferences("theme",0);
+        bg = !sp.getBoolean("night",false) ? "ffffff":"222222";
+        text = !sp.getBoolean("night",false) ? "252A34":"888886";
+
+
+
         sp = getActivity().getSharedPreferences("news", Context.MODE_PRIVATE);
         ed = sp.edit();
         utils = new ArrayList<>();
@@ -62,7 +72,7 @@ public class News extends Fragment {
         ref = root.findViewById(R.id.refresher);
         ref.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
         scrollLoading = root.findViewById(R.id.spin_kit__);
-       newThread();
+        new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_NEWS+1+"&bg="+bg+"&text="+text);
 
 
 
@@ -72,7 +82,7 @@ public class News extends Fragment {
             public void onRefresh() {
 
                 utils = new ArrayList<>();
-                new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_NEWS+1);
+                new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_NEWS+1+"&bg="+bg+"&text="+text);
             }
         });
 
@@ -175,8 +185,7 @@ public class News extends Fragment {
                                                                    page++;
                                                                    scrollLoading.setVisibility(View.VISIBLE);
 
-                                                                   new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
-                                                                           Settings.JSON_NEWS +  page);
+                                                                   new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_NEWS+page+"&bg="+bg+"&text="+text);
                                                                }
 
                                                            }
@@ -201,28 +210,6 @@ public class News extends Fragment {
 
         }
 
-    void newThread() {
-
-
-        HandlerThread handlerThread = new HandlerThread("HandlerNews" );
-        handlerThread.start();
-        Looper looper = handlerThread.getLooper();
-        Handler handler = new Handler(looper);
-        handler.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-
-
-                        new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_NEWS+1);
-
-
-            }
-        });
-
-
-    }
 
 
 

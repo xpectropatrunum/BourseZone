@@ -8,22 +8,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.chart.common.listener.Event;
-import com.anychart.chart.common.listener.ListenersInterface;
-import com.anychart.charts.Pie;
-import com.anychart.enums.Align;
-import com.anychart.enums.LegendLayout;
-import com.synnapps.carouselview.CarouselView;
+
 import com.synnapps.carouselview.ViewListener;
 
 import org.json.JSONArray;
@@ -46,23 +39,23 @@ import ir.sourcearena.boursezone.R;
 
 public class stockholder extends Fragment {
     View root;
-    LoadingView loading;
-    CarouselView cv;
+
+
 
     AsyncTask task = null;
+    String title;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.stockholder, container, false);
-        loading = new LoadingView(inflater, root,getActivity());
-        cv = root.findViewById(R.id.carouselView3);
-        cv.setIndicatorVisibility(View.GONE);
+
 
         list = new ArrayList<>();
-        String name = getActivity().getIntent().getExtras().getString("title", "");
-        task = new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, Settings.JSON_STOCKHOLDER + name);
+        title = getActivity().getIntent().getExtras().getString("title", "");
+        setChart();
+        task = new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, Settings.JSON_STOCKHOLDER + title);
         initializeTableView();
-        return loading.addLoadingBar(false);
+        return root;
     }
 
     @Override
@@ -230,46 +223,28 @@ public class stockholder extends Fragment {
             tv2.setVisibility(View.GONE);
             tv3.setVisibility(View.GONE);
             tv4.setVisibility(View.GONE);
-            setChart(customView);
+
 
             return customView;
         }
     };
-    List<DataEntry> datas = new ArrayList<>();
-
-    public void setChart(View cv) {
-        AnyChartView anyChartView = cv.findViewById(R.id.lineChart);
-        Pie pie = AnyChart.pie();
-        pie.minWidth(root.findViewById(R.id.stockholdercard1).getLayoutParams().width);
-        anyChartView.addFont("iransans", "file:///android_asset/iransansmedium.ttf");
-        pie.setOnClickListener(new ListenersInterface.OnClickListener(new String[]{"x", "value"}) {
-            @Override
-            public void onClick(Event event) {
-                Toast.makeText(getContext(), event.getData().get("x") + ":" + event.getData().get("value"), Toast.LENGTH_SHORT).show();
-            }
-        });
 
 
-        pie.data(datas);
+    public void setChart() {
 
-        // pie.title("سهام داران");
 
-        pie.labels().position("outside");
-        pie.labels().fontFamily("iransans");
-        pie.legend().fontFamily("iransans");
-        pie.legend().title().fontFamily("iransans");
-        pie.legend().title().enabled(false);
-        pie.legend().title()
-                .text("")
-                .padding(0d, 0d, 10d, 0d);
+        WebView wv = root.findViewById(R.id.webchart);
+        wv.setBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.lightcard,null));
+        WebSettings settings = wv.getSettings();
+        settings.setDomStorageEnabled(true);
+        settings.setAllowUniversalAccessFromFileURLs(true);
+        settings.setAllowFileAccessFromFileURLs(true);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        wv.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        settings.setJavaScriptEnabled(true);
+        wv.loadUrl("http://sourcearena.ir/charts/sholder.php?bg="+getResources().getString(R.color.lightcard).replace("#","")+"&name="+title);
 
-        pie.legend()
-                .position("center-bottom")
-                .itemsLayout(LegendLayout.HORIZONTAL)
-                .align(Align.CENTER);
 
-        anyChartView.setChart(pie);
-        loading.cancel();
     }
 
     public void ParseJSon(String res) throws JSONException {
@@ -277,7 +252,6 @@ public class stockholder extends Fragment {
 
         JSONArray ja = new JSONArray(res);
         for (int i = 0; i < ja.length(); i++) {
-            datas.add(new ValueDataEntry(ja.getJSONObject(i).getString("name"), ja.getJSONObject(i).getInt("volume")));
             list.add(new StockHolderUtil(
                     ja.getJSONObject(i).getString("name"),
                     ja.getJSONObject(i).getString("volume2"),
@@ -286,8 +260,7 @@ public class stockholder extends Fragment {
 
         }
         initializeTableView();
-        cv.setViewListener(viewListener);
-        cv.setPageCount(1);
+
     }
 
     private class Request extends AsyncTask<String, Void, String> {

@@ -4,7 +4,8 @@
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/lightcard">
 
     <TextView
         android:id="@+id/textView24"
@@ -133,9 +134,9 @@
             android:background="@drawable/ed_selector"
             android:ems="10"
             android:inputType="textPersonName"
-            android:paddingRight="12dp"
-            android:paddingLeft="12dp"
+            android:paddingLeft="18dp"
             android:paddingTop="6dp"
+            android:paddingRight="18dp"
             android:paddingBottom="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

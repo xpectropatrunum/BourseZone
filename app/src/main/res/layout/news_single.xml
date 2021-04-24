@@ -27,68 +27,78 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/lightcard">
 
-            android:background="?android:attr/selectableItemBackground">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
-            <ImageView
-                android:id="@+id/news_thumbmail"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:background="?android:attr/selectableItemBackground"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/bg" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/news_title_"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="13dp"
-                android:layout_marginEnd="10dp"
-                android:fontFamily="@font/iransansbold"
-                android:text="TextView"
-                android:textColor="@color/text1"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/news_thumbmail"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/news_thumbmail"
-                app:layout_constraintVertical_bias="0.0" />
+                <ImageView
+                    android:id="@+id/news_thumbmail"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@drawable/bg" />
 
-            <TextView
-                android:id="@+id/news_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginEnd="10dp"
-                android:fontFamily="@font/iransansmedium"
-                android:text="TextView"
-                android:textColor="@color/text2"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/news_thumbmail"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/news_title_"
-                app:layout_constraintVertical_bias="0.0" />
+                <TextView
+                    android:id="@+id/news_title_"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="13dp"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/iransansbold"
+                    android:text="TextView"
+                    android:textColor="@color/text1"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/news_thumbmail"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/news_thumbmail"
+                    app:layout_constraintVertical_bias="0.0" />
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="@+id/news_thumbmail"
-                app:layout_constraintEnd_toEndOf="@+id/news_thumbmail"
-                app:layout_constraintStart_toStartOf="@+id/news_thumbmail"
-                app:layout_constraintTop_toTopOf="@+id/news_thumbmail"
-                app:srcCompat="@drawable/imageview" />
+                <TextView
+                    android:id="@+id/news_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/iransansmedium"
+                    android:text="TextView"
+                    android:textColor="@color/text2"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/news_thumbmail"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/news_title_"
+                    app:layout_constraintVertical_bias="0.0" />
 
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/news_thumbmail"
+                    app:layout_constraintEnd_toEndOf="@+id/news_thumbmail"
+                    app:layout_constraintStart_toStartOf="@+id/news_thumbmail"
+                    app:layout_constraintTop_toTopOf="@+id/news_thumbmail"
+                    app:srcCompat="@drawable/imageview" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

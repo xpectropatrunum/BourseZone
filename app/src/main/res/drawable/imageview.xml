@@ -8,7 +8,7 @@
                 <shape>
 
 
-                    <stroke android:color="@color/pureWhite" android:width="4dp"></stroke>
+                    <stroke android:color="@color/image_border" android:width="4dp"></stroke>
 
                     <corners
                         android:bottomLeftRadius="8dp"
@@ -24,7 +24,7 @@
 
 
 
-            <stroke android:color="@color/pureWhite" android:width="4dp"></stroke>
+            <stroke android:color="@color/image_border" android:width="4dp"></stroke>
 
 
 

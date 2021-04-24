@@ -9,8 +9,11 @@ public class GetUser {
     SharedPreferences.Editor ed;
     public GetUser(Context ctx){
         this.ctx = ctx;
-        s = ctx.getSharedPreferences("user",Context.MODE_PRIVATE);
-        ed = s.edit();
+        if(ctx != null){
+            s = ctx.getSharedPreferences("user",Context.MODE_PRIVATE);
+            ed = s.edit();
+
+        }
 
     }
     public String getUsername(){
@@ -18,6 +21,12 @@ public class GetUser {
     }
     public boolean isLoged(){
         return !s.getString("username","").equals("");
+    }
+    public int isSecond(){
+        return s.getInt("second",0);
+    }
+    public boolean isRated(){
+        return s.getBoolean("rated",false);
     }
     public boolean isPremium(){
         return s.getBoolean("premium",false);
@@ -49,8 +58,15 @@ public class GetUser {
     public void putFirst() {
         ed.putBoolean("first",true).commit();
     }
+    public void putSecond() {
+        ed.putInt("second",s.getInt("second",0)+1).commit();
+    }
+    public void putRated() {
+        ed.putBoolean("rated",true).commit();
+    }
 
     public boolean getFirst() {
         return s.getBoolean("first",false);
     }
+
 }

@@ -15,6 +15,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,6 +48,7 @@ public class FilterShowActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         View root = getLayoutInflater().inflate(R.layout.filter_lists, null);
         SharedPreferences s = getSharedPreferences("per", Context.MODE_PRIVATE);
         s.edit().putBoolean("permitted",false).apply();
@@ -129,7 +131,7 @@ public class FilterShowActivity extends AppCompatActivity {
     }
 
     private void loadHelpers() {
-        fu = new FieldsUtil();
+        fu = new FieldsUtil(getBaseContext());
 
     }
 
@@ -198,6 +200,11 @@ public class FilterShowActivity extends AppCompatActivity {
                     "", cf1, cf2, cf3, cfn1, cfn2, cfn3));
             share += (i + 1) + ". " + obj.getString("name") + "\n";
 
+
+        }
+        TextView tv = findViewById(R.id.no_user_filter_text2);
+        if(utils.size() == 0){
+            tv.setVisibility(View.VISIBLE);
 
         }
         mAdapter = new RecyclerAdapter(this, utils, new RecyclerAdapter.OnItemClickListener() {

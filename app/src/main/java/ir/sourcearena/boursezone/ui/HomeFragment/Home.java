@@ -8,31 +8,27 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
+
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.charts.Cartesian;
-import com.anychart.core.cartesian.series.Line;
-import com.anychart.data.Mapping;
-import com.anychart.data.Set;
-import com.anychart.enums.Anchor;
-import com.anychart.enums.MarkerType;
-import com.anychart.enums.TooltipPositionMode;
-import com.anychart.graphics.vector.Stroke;
-import com.anychart.palettes.RangeColors;
+
 import com.baoyz.widget.PullRefreshLayout;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ViewListener;
@@ -56,7 +52,7 @@ import ir.sourcearena.boursezone.R;
 import ir.sourcearena.boursezone.ui.firstfilter.RecyclerAdapter;
 import ir.sourcearena.boursezone.Settings;
 import ir.sourcearena.boursezone.ui.LoadingView;
-
+import androidx.appcompat.app.AppCompatDelegate;
 public class Home extends Fragment {
     CarouselView customCarouselView, customCarouselView2;
     View root;
@@ -67,7 +63,7 @@ public class Home extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        fu = new FieldsUtil();
+        fu = new FieldsUtil(getContext());
 
         root = inflater.inflate(R.layout.homestub, container, false);
         ViewStub stub = (ViewStub) root.findViewById(R.id.stub);
@@ -80,9 +76,9 @@ public class Home extends Fragment {
 
         customCarouselView = (CarouselView) root.findViewById(R.id.carouselView);
         customCarouselView2 = (CarouselView) root.findViewById(R.id.carouselView2);
-        customCarouselView.setSlideInterval(6000);
-        //customCarouselView.setIndicatorVisibility(View.GONE);
-        customCarouselView.setIndicatorGravity(Gravity.TOP);
+        customCarouselView.setSlideInterval(15000);
+        customCarouselView.setIndicatorVisibility(View.GONE);
+        //customCarouselView.setIndicatorGravity(Gravity.TOP);
         refresh();
         ref = (PullRefreshLayout) root.findViewById(R.id.refresher);
         ref.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
@@ -222,6 +218,7 @@ public class Home extends Fragment {
 
 
     }
+
 
     private class Request extends AsyncTask<String, Void, String> {
 
@@ -428,9 +425,8 @@ public class Home extends Fragment {
         @Override
         public View setViewForPosition(int position) {
 
-            View customView = getLayoutInflater().inflate(R.layout.carousel_view, null);
-            AnyChartView anyChartView = customView.findViewById(R.id.lineChart);
-            anyChartView.addFont("iransansmedium", "file:///android_asset/iransansmedium.ttf");
+            View customView = getLayoutInflater().inflate(R.layout.carousel_view2, null);
+
             TextView tv1 = customView.findViewById(R.id.market_name);
             TextView tv2 = customView.findViewById(R.id.index_caro);
             TextView tv3 = customView.findViewById(R.id.index_change_caro);
@@ -442,208 +438,110 @@ public class Home extends Fragment {
             root.findViewById(R.id.cd2).setVisibility(View.VISIBLE);
 
 
-            Cartesian cartesian = AnyChart.line();
 
-
-            cartesian.animation(false);
-
-
-            cartesian.crosshair().enabled(true);
-            cartesian.crosshair()
-                    .yLabel(true)
-
-                    .yStroke((Stroke) null, null, null, (String) null, (String) null);
-
-            cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
-            RangeColors palette = RangeColors.instantiate();
-            palette.items("#00ff00", "#ff0000");
-            palette.count(2);
-            cartesian.tooltip().background().corners(50);
-            cartesian.palette(palette);
-            cartesian.tooltip().fontFamily("iransansmedium");
-            cartesian.xAxis(0).labels().fontFamily("iransansmedium");
-            cartesian.yAxis(0).labels().fontFamily("iransansmedium");
-            cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
-
-            cartesian.legend().fontSize(12);
-            cartesian.legend().title().background().corners(58);
-            cartesian.legend().fontFamily("iransansmedium");
-            cartesian.legend().title().fontFamily("iransansmedium");
-
-            Set set = Set.instantiate();
-
-
-            Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
-            Mapping series2Mapping = set.mapAs("{ x: 'x', value: 'value2' }");
-
-
-            Line series1 = cartesian.line(series1Mapping);
-            Line series2 = cartesian.line(series2Mapping);
-            series1.hovered().markers().enabled(true);
-            series1.hovered().markers()
-                    .type(MarkerType.CIRCLE)
-                    .size(4d);
-            series1.tooltip()
-                    .position("right")
-                    .anchor(Anchor.LEFT_CENTER)
-                    .offsetX(5d)
-                    .offsetY(5d);
-
-            series2.hovered().markers().enabled(true);
-            series2.hovered().markers()
-                    .type(MarkerType.CROSS)
-                    .size(4d);
-            series2.tooltip()
-                    .position("right")
-                    .anchor(Anchor.LEFT_CENTER)
-                    .offsetX(5d)
-                    .offsetY(5d);
-            cartesian.title().fontFamily("iransansmedium");
-
-
-            set.data(b4);
-
-            series1.tooltip().title("صف خرید");
-            series2.tooltip().title("صف فروش");
-            series1.tooltip().background().corners(14);
-            series2.name("صف فروش");
-            series1.name("صف خرید");
-            series1.labels().background().corners(14);
-
-
-            cartesian.legend().enabled(true);
-            cartesian.legend().fontSize(12);
-            cartesian.legend().fontFamily("iransansmedium");
-
-            newThread(anyChartView,cartesian);
 
             ref.setRefreshing(false);
 
             preferences.edit().putInt("chart", preferences.getInt("chart", 0) + 1).apply();
-            // loading.cancel();
+
+            WebView wv = customView.findViewById(R.id.webchart);
+            wv.setBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.lightcard,null));
+            WebSettings settings = wv.getSettings();
+            settings.setDomStorageEnabled(true);
+            settings.setAllowUniversalAccessFromFileURLs(true);
+            settings.setAllowFileAccessFromFileURLs(true);
+            settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+            wv.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            settings.setJavaScriptEnabled(true);
+            wv.loadUrl("http://sourcearena.ir/charts/index.php?bg="+getResources().getString(R.color.lightcard));
             return customView;
         }
     };
+
     ViewListener viewListener = new ViewListener() {
 
         @Override
         public View setViewForPosition(int position) {
-            View customView = getLayoutInflater().inflate(R.layout.carousel_view, null);
-            AnyChartView anyChartView = customView.findViewById(R.id.lineChart);
-            anyChartView.addFont("iransansmedium", "file:///android_asset/iransansmedium.ttf");
+            View customView = getLayoutInflater().inflate(R.layout.carousel_view2, null);
 
-            anyChartView.setPadding(5, 5, 15, 5);
             root.findViewById(R.id.cd1).setVisibility(View.VISIBLE);
 
-            Cartesian cartesian = AnyChart.line();
             TextView tv1 = customView.findViewById(R.id.market_name);
             TextView tv2 = customView.findViewById(R.id.index_caro);
             TextView tv3 = customView.findViewById(R.id.index_change_caro);
             TextView tv4 = customView.findViewById(R.id.change_price_caro);
 
 
-            cartesian.animation(false);
-            cartesian.padding(10d, 10d, 10d, 10d);
-
-            cartesian.crosshair().enabled(true);
-            cartesian.crosshair()
-                    .yLabel(true)
-
-                    .yStroke((Stroke) null, null, null, (String) null, (String) null);
-
-            cartesian.tooltip().positionMode(TooltipPositionMode.POINT);
-            cartesian.legend().title().background().corners(8);
-
-            cartesian.tooltip().fontFamily("iransansmedium");
-            cartesian.xAxis(0).labels().fontFamily("iransansmedium");
-            cartesian.yAxis(0).labels().fontFamily("iransansmedium");
-            cartesian.xAxis(0).labels().padding(5d, 5d, 5d, 5d);
-
-
-            Set set = Set.instantiate();
-
-
-            Mapping series1Mapping = set.mapAs("{ x: 'x', value: 'value' }");
-
-
-            Line series1 = cartesian.line(series1Mapping);
-
-            series1.hovered().markers().enabled(true);
-            series1.hovered().markers()
-                    .type(MarkerType.CIRCLE)
-                    .size(4d);
-            series1.tooltip()
-                    .position("right")
-                    .anchor(Anchor.LEFT_CENTER)
-                    .offsetX(5d)
-                    .offsetY(5d);
-            cartesian.title().fontFamily("iransansmedium");
-            RangeColors palette = RangeColors.instantiate();
 
 
             if (position == 0) {
                 tv1.setText("شاخص کل بورس");
                 tv2.setText(c1[0]);
                 if (c1[1].contains("-")) {
-                    palette.items("#ff0000", "#ff0000");
                     tv3.setTextColor(getResources().getColor(R.color.red));
                     tv4.setTextColor(getResources().getColor(R.color.red));
                 } else {
-                    palette.items("#00ff00", "#00ff00");
                     tv3.setTextColor(getResources().getColor(R.color.green));
                     tv4.setTextColor(getResources().getColor(R.color.green));
                 }
                 tv3.setText(c1[1]);
                 tv4.setText(c1[2] + "%");
-                set.data(b1);
-                series1.name("شاخص کل");
+
             }
 
-            if (position == 1) {
+            if (position == 2) {
                 tv1.setText("شاخص کل فرابورس");
                 tv2.setText(c3[0]);
                 if (c3[1].contains("-")) {
-                    palette.items("#ff0000", "#ff0000");
+
                     tv3.setTextColor(getResources().getColor(R.color.red));
                     tv4.setTextColor(getResources().getColor(R.color.red));
                 } else {
-                    palette.items("#00ff00", "#00ff00");
+
                     tv3.setTextColor(getResources().getColor(R.color.green));
                     tv4.setTextColor(getResources().getColor(R.color.green));
                 }
                 tv3.setText(c3[1]);
                 tv4.setText(c3[2] + "%");
-                set.data(b3);
-                series1.name("شاخص کل");
+
+
             }
-            if (position == 2) {
+            if (position == 1) {
                 tv1.setText("شاخص هم وزن");
                 tv2.setText(c2[0]);
                 tv3.setText(c2[1]);
                 tv4.setText(c2[2] + "%");
-                set.data(b2);
-                series1.name("شاخص هم وزن");
+
+
                 if (c2[1].contains("-")) {
-                    palette.items("#ff0000", "#ff0000");
+
                     tv3.setTextColor(getResources().getColor(R.color.red));
                     tv4.setTextColor(getResources().getColor(R.color.red));
                 } else {
-                    palette.items("#00ff00", "#00ff00");
+
                     tv3.setTextColor(getResources().getColor(R.color.green));
                     tv4.setTextColor(getResources().getColor(R.color.green));
                 }
             }
-            palette.count(2);
-
-            cartesian.palette(palette);
-            cartesian.legend().enabled(false);
-            cartesian.legend().fontSize(17d);
-            cartesian.legend().fontFamily("iransans");
 
 
-            newThread(anyChartView,cartesian);
+
+
 
             preferences.edit().putInt("chart", preferences.getInt("chart", 0) + 1).commit();
+
+            int color = ResourcesCompat.getColor(getResources(),R.color.lightcard,null);
+            WebView wv = customView.findViewById(R.id.webchart);
+            wv.setBackgroundColor(color);
+            WebSettings settings = wv.getSettings();
+            settings.setDomStorageEnabled(true);
+            settings.setAllowFileAccess(true);
+            settings.setAllowUniversalAccessFromFileURLs(true);
+            settings.setAllowFileAccessFromFileURLs(true);
+            settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+            wv.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            settings.setJavaScriptEnabled(true);
+            wv.loadUrl("http://sourcearena.ir/charts/sh.php?mode="+position+"&bg="+getResources().getString(R.color.lightcard).replace("#",""));
             return customView;
         }
     };
@@ -739,40 +637,6 @@ public class Home extends Fragment {
 
 
     int po = 0;
-    void newThread(final  AnyChartView cv,final Cartesian c) {
-        po++;
-
-        HandlerThread handlerThread = new HandlerThread("TesHandlerThread" + po);
-        handlerThread.start();
-        Looper looper = handlerThread.getLooper();
-        Handler handler = new Handler(looper);
-        handler.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                try{
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            cv.setChart(c);
-
-                        }
-                    });
-                } catch ( NullPointerException d) {
-                }
-
-
-            }
-        });
-
-
-    }
 
 
 }

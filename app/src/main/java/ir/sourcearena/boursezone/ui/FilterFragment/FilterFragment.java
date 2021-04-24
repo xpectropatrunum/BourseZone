@@ -33,6 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import ir.sourcearena.boursezone.Account.Login;
 import ir.sourcearena.boursezone.NamadActivity;
@@ -79,21 +80,9 @@ public class FilterFragment extends Fragment {
 
     }
     void newThread(final GridView cv, final CustomAdapter c) {
-        new Thread(new Runnable() {
 
-
-            @Override
-            public void run() {
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
                         cv.setAdapter(c);
-                    }
-                });
-            }
 
-        }).start();
     }
     public static FilterFragment newInstance(String text) {
 

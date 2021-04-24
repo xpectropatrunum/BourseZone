@@ -29,7 +29,10 @@ public class CustomAdapter extends BaseAdapter {
         this.context = context;
 
         this.titles = titles;
-        inflter = (LayoutInflater.from(context));
+        if(context != null){
+            inflter = (LayoutInflater.from(context));
+
+        }
         this.gu = new GetUser(context);
         this.max_ = max_;
     }

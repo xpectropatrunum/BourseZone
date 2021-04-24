@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#D23A01</color>
+    <color name="colorSecond">#FF5722</color>
+    <color name="colorSecondShadow">#D23A01</color>
+
+    <color name="green">#30B536</color>
+    <color name="red">#FF0000</color>
+    <color name="blue">#0081BC</color>
+    <color name="grey">#919191</color>
+    <color name="lightgrey">#F4F4F4</color>
+    <color name="progressRed">#FF6D6D</color>
+    <color name="progressBlue">#6FD0FB</color>
+    <color name="progressRedDark">#FF3838</color>
+    <color name="progressBlueDark">#2CB7F6</color>
+    <color name="bgcolor">#3A2E2E</color>
+    <color name="tert">#55A5FF</color>
+    <color name="white">#80ffffff</color>
+    <color name="cardcolor">#62CEB8</color>
+    <color name="black_semi_transparent">#B2000000</color>
+    <color name="fr1">#FBC95C</color>
+    <color name="black">#000</color>
+
+    <color name="lightbg">#181818</color>
+
+    <color name="pureWhite">#ffffff</color>
+    <color name="colorThird">#52C857</color>
+    <color name="colorThirdShadow">#106DB6</color>
+
+
+    <color name="primary">#222222</color>
+
+    <color name="image_border">#222222</color>
+
+    <color name="secondary">#89043d</color>
+    <color name="inactive_icon">#878787</color>
+
+    <color name="text1">#ffffff</color>
+
+    <color name="text2">#888886</color>
+    <color name="fab_color">#3982b5</color>
+    <color name="filter_btn">#3982b5</color>
+    <color name="ed_back">#222222</color>
+    <color name="colorAccent">#1a1a1a</color>
+    <color name="bg">#0e0e0e</color>
+    <color name="lightcard">#222222</color>
+    <color name="loader">#ffffff</color>
+    <color name="submit_btn">#3982b5</color>
+    <color name="orangebt">#FF6F00</color>
+    <color name="greenbt">#00D107</color>
+    <color name="tab_unselected">#C3C3C3</color>
+    <color name="tab_selected">#E6E6E6</color>
+    <color name="abar_line">#222222</color>
+    <color name="nv_color">#000000</color>
+    <color name="tint_codal">#888886</color>
+</resources>

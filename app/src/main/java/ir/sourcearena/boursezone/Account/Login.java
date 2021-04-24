@@ -57,6 +57,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!ed.getText().toString().equals("")){
+                    submit.setEnabled(false);
                     new Request().execute(Settings.LOGIN_API+"?phone="+ed.getText().toString());
                 }else{
                     YoYo.with(Techniques.Shake).duration(1000).playOn(ed);
@@ -181,7 +182,7 @@ dialog.dismiss();
         protected void onPostExecute(final String result) {
             if(STAGE == 2){
                 finished(result);
-            }if(STAGE == 100){
+            }else if(STAGE == 100){
                 list = result.split(",,");
                 STAGE = 0;
             }else{
@@ -216,6 +217,7 @@ dialog.dismiss();
 
     String phone;
     private void nextLevel(String result) {
+        submit.setEnabled(true);
 
         final String[] m = result.split(",");
 
@@ -234,8 +236,9 @@ dialog.dismiss();
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(!ed.getText().toString().equals("")){
 
+                        if(!ed.getText().toString().equals("")){
+                            submit.setEnabled(false);
                             if(ed.getText().toString().equals(m[1])){
                                 if(m[3].equals("1")){
                                     GetUser gu = new GetUser(getBaseContext());
@@ -272,8 +275,10 @@ dialog.dismiss();
 
 
         }catch (NumberFormatException e){
-            tv.setVisibility(View.VISIBLE);
-            tv.setText("خطا در ارسال کد لطفا دوباره تلاش کنید");
+
+                tv.setVisibility(View.VISIBLE);
+                tv.setText("خطا در ارسال کد لطفا دوباره تلاش کنید");
+
         }
 
 
@@ -281,6 +286,7 @@ dialog.dismiss();
     String username, name ;
     int STAGE = 0;
     private void finishRegister() {
+        submit.setEnabled(true);
         STAGE = 2;
         label.setText("نام کاربری");
         tv.setVisibility(View.INVISIBLE);
@@ -301,6 +307,8 @@ dialog.dismiss();
                 name = ed2.getText().toString();
                 boolean valid = (username != null) && username.matches("^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$");
                 if(valid){
+
+                    submit.setEnabled(false);
                     for (String name: list) {
                         if(name.equals(username)){
                             new ToastMaker(getBaseContext(),"این نام کاربری موجود است");
@@ -309,7 +317,7 @@ dialog.dismiss();
 
                     }
                     if(km == 0){
-
+                       STAGE = 2;
                         new Request().execute(Settings.REGISTER_API+"?phone="+phone+"&username="+username+"&name="+name);
                     }
 

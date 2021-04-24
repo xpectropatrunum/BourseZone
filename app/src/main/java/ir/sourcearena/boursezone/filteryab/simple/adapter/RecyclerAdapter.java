@@ -164,7 +164,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         holder.value.setText(pu.getVal() + "");
         holder.row.setText((position + 1) + "");
         last_pos = position;
-        holder.remove.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
+       // holder.remove.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
 
 
         holder.condition.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

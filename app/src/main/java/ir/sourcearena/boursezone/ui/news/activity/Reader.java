@@ -105,6 +105,7 @@ public class Reader extends AppCompatActivity {
         new setImage().execute(getIntent().getExtras().getString("news_pic"));
 
         final String responseString = getIntent().getExtras().getString("news_text");
+
         web.getSettings().setJavaScriptEnabled(true);
         title.setText(getIntent().getExtras().getString("news_title"));
         date.setText(getIntent().getExtras().getString("news_date"));

@@ -14,22 +14,22 @@
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="2dp"
         android:padding="5dp"
-        fancy:fb_textFont="iranyekanmedium"
+        fancy:fb_textFont="iranyekanbold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.52"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        fancy:fb_borderColor="@color/secondary"
+        fancy:fb_borderColor="@color/filter_btn"
         fancy:fb_borderWidth="2.5dp"
-        fancy:fb_defaultColor="#00F84704"
-        fancy:fb_focusColor="#FF8DAA"
+        fancy:fb_defaultColor="@color/filter_btn"
+        fancy:fb_focusColor="#EAEAEA"
         fancy:fb_radius="8dp"
         fancy:fb_textSize="14sp"
 
         fancy:fb_text="بیشترین حجم"
-        fancy:fb_textColor="@color/secondary" />
+        fancy:fb_textColor="@color/pureWhite" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

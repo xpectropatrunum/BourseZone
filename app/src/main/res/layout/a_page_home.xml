@@ -36,7 +36,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout8"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,6 @@
                             android:layout_marginEnd="15dp"
 
                             android:layout_marginBottom="10dp"
-                            app:cardBackgroundColor="#ffffff"
                             app:cardCornerRadius="13pt"
                             app:cardElevation="5dp"
 
@@ -64,6 +63,7 @@
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@color/lightcard"
                                 android:padding="10dp">
 
 
@@ -71,7 +71,7 @@
                                     android:id="@+id/view5"
                                     android:layout_width="wrap_content"
                                     android:layout_height="17dp"
-                                    android:background="#ffffff"
+                                    android:background="@color/lightcard"
                                     android:translationZ="1000dp"
                                     app:layout_constraintBottom_toBottomOf="@+id/carouselView"
                                     app:layout_constraintEnd_toEndOf="parent"
@@ -83,13 +83,11 @@
                                     android:id="@+id/carouselView"
                                     android:layout_width="match_parent"
                                     android:layout_height="300dp"
-                                    android:background="#ffffff"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintVertical_bias="0.0"
-                                    app:pageColor="#ffffff"
                                     app:slideInterval="3000" />
                             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -156,7 +154,6 @@
                             android:layout_marginEnd="15dp"
 
                             android:layout_marginBottom="10dp"
-                            app:cardBackgroundColor="#ffffff"
                             app:cardCornerRadius="13pt"
                             app:cardElevation="5dp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -167,6 +164,7 @@
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@color/lightcard"
                                 android:padding="10dp">
 
 
@@ -174,20 +172,18 @@
                                     android:id="@+id/carouselView2"
                                     android:layout_width="match_parent"
                                     android:layout_height="300dp"
-                                    android:background="#ffffff"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
                                     app:layout_constraintVertical_bias="0.0"
-                                    app:pageColor="#ffffff"
                                     app:slideInterval="3000" />
 
                                 <View
                                     android:id="@+id/view6"
                                     android:layout_width="wrap_content"
                                     android:layout_height="17dp"
-                                    android:background="#ffffff"
+                                    android:background="@color/lightcard"
                                     android:translationZ="1000dp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintEnd_toEndOf="parent"

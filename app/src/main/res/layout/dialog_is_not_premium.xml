@@ -4,7 +4,8 @@
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/lightcard">
 
     <TextView
         android:id="@+id/textView24"
@@ -93,7 +94,7 @@
                 fancy:fb_borderWidth="1dp"
                 fancy:fb_defaultColor="#00FF1100"
                 fancy:fb_focusColor="#2A5E2C"
-               
+
                 fancy:fb_textColor="#4CAF50">
 
             </mehdi.sakout.fancybuttons.FancyButton>

@@ -22,7 +22,7 @@
                 android:right="0dp"
                 android:top="0dp" />
 
-            <solid android:color="#ffffff" />
+            <solid android:color="@color/lightcard" />
             <corners android:radius="7dp" />
         </shape>
     </item>

@@ -1,6 +1,7 @@
 package ir.sourcearena.boursezone;
 
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -18,16 +21,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.charts.Stock;
-import com.anychart.core.stock.Plot;
-import com.anychart.data.Table;
-import com.anychart.data.TableMapping;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,20 +65,6 @@ public class NamadActivity extends Fragment {
         return f;
     }
 
-    private class CustomDataEntry extends ValueDataEntry {
-
-        CustomDataEntry(String x, Number value, Number value1, Number value2, Number value3) {
-            super(x, value);
-            setValue("x", x);
-            setValue("high", value);
-            setValue("low", value1);
-            setValue("open", value2);
-            setValue("close", value3);
-
-
-        }
-
-    }
 
     LoadingView loading;
 
@@ -169,6 +151,7 @@ public class NamadActivity extends Fragment {
                 return true;
             }
         });
+
         v1.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 
             @Override
@@ -255,7 +238,7 @@ public class NamadActivity extends Fragment {
 
 
     private void loadHelpers() {
-        fu = new FieldsUtil();
+        fu = new FieldsUtil(getContext());
         setting = new Settings();
     }
 
@@ -272,31 +255,13 @@ public class NamadActivity extends Fragment {
 
         title = getActivity().getIntent().getExtras().getString(Settings.TITLE_EXTRA, "");
         if (task == null) {
-           task = new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_CANDLE + title);
+           setCandle();
             task2 =new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_INS_URL + title);
 
 
-            Calendar cal = Calendar.getInstance();
-            if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY || cal.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
 
-            } else {
-                final Handler handler = new Handler();
 
-                final Runnable r = new Runnable() {
-                    public void run() {
-                        if(permiteed) {
-                           // Log.e("per2", permiteed + "");
-                            if (new NetworkChecker(getContext()).isNetworkAvailable()) {
-                              task =   new Request().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,Settings.JSON_INS_URL + title);
-                            }
-                            handler.postDelayed(this, 5000);
 
-                        }
-                    }
-                };
-
-                handler.postDelayed(r, 15000);
-            }
         }
 
 
@@ -321,57 +286,19 @@ public class NamadActivity extends Fragment {
     int po = 0;
 
 
-    public void setCandle(String result) throws JSONException {
+    public void setCandle() {
 
-        List<DataEntry> b = new ArrayList<>();
+        WebView wv = root.findViewById(R.id.webchart);
+        wv.setBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.lightcard,null));
+        WebSettings settings = wv.getSettings();
+        settings.setDomStorageEnabled(true);
+        settings.setAllowUniversalAccessFromFileURLs(true);
+        settings.setAllowFileAccessFromFileURLs(true);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        wv.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        settings.setJavaScriptEnabled(true);
+        wv.loadUrl("http://sourcearena.ir/charts/namad.php?bg="+getResources().getString(R.color.lightcard).replace("#","")+"&name="+title);
 
-
-        JSONArray jA = new JSONArray(result);
-        for (int i = 0; i < jA.length(); i++) {
-            JSONObject jo = jA.getJSONObject(i);
-            b.add(new CustomDataEntry(jo.get("date") + "", Float.parseFloat(jo.get("highest_price") + ""),
-                    Float.parseFloat(jo.get("lowest_price") + ""),
-                    Float.parseFloat(jo.get("first_price") + ""),
-                    Float.parseFloat(jo.get("close_price") + "")));
-
-        }
-        AnyChartView anyChartView = root.findViewById(R.id.candle);
-        anyChartView.setPadding(15, 15, 15, 15);
-        anyChartView.addFont("iransansmedium", "file:///android_asset/iransansmedium.ttf");
-        Table table = Table.instantiate("x");
-
-        table.addData(b);
-
-
-        TableMapping mapping = table.mapAs("{x: 'x',open: 'open', high: 'high', low: 'low', close: 'close'}");
-
-        Stock stock = AnyChart.stock();
-        stock.startSelectMarquee(false);
-
-
-        Plot plot = stock.plot(0);
-
-
-        stock.tooltip().separator().enabled(false);
-        stock.tooltip().title().fontFamily("iransansmedium");
-        stock.tooltip().title().fontSize(14);
-        stock.tooltip().fontSize(14);
-
-        stock.tooltip().fontFamily("iransansmedium");
-        stock.tooltip().titleFormat("{%tickValue}{dateTimeFormat:yy/MM/dd}");
-        plot.xAxis().minorLabels().fontFamily("iransansmedium");
-        plot.xAxis().minorLabels().fontSize(14);
-        plot.xAxis().labels().fontSize(14);
-
-        plot.xAxis().labels().fontFamily("iransansmedium");
-        plot.yAxis(0).labels().fontFamily("iransansmedium");
-        plot.legend().enabled(false);
-
-        plot.xAxis().labels().format("{%tickValue}{dateTimeFormat:yy/MM/dd}");
-        plot.xAxis().minorLabels().format("{%tickValue}{dateTimeFormat:yy/MM/dd}");
-        plot.defaultSeriesType("candlestick");
-        plot.addSeries(mapping);
-        newThread(anyChartView, stock);
 
 
     }
@@ -441,25 +368,7 @@ public class NamadActivity extends Fragment {
 
     }
 
-    void newThread(final AnyChartView c, final Stock p) {
-        new Thread(new Runnable() {
 
-
-            @Override
-            public void run() {
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            c.setChart(p);
-                        }
-
-                    });
-                }
-            }
-        }).start();
-
-    }
 
     private void viewSize() {
         new Thread(new Runnable() {
@@ -679,8 +588,8 @@ public class NamadActivity extends Fragment {
 
             if (!result.equals("")) {
                 try {
-                    if (result.contains("[{")) {
-                        setCandle(result);
+                    if (result.contains("[")) {
+
 
                     } else {
                         ParseJSon(result);

@@ -635,11 +635,7 @@ public class Watchlist extends Fragment {
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        permitted = false;
-    }
+
 
     private class Request extends AsyncTask<String, Void, String> {
 

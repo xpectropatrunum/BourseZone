@@ -6,7 +6,7 @@
         <layer-list>
             <item>
                 <shape>
-                    <solid android:color="@color/pureWhite" />
+                    <solid android:color="@color/ed_back" />
                     <stroke android:color="@color/secondary" android:width="2dp" />
 
 
