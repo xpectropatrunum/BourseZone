@@ -62,7 +62,7 @@ public class Purchase extends AppCompatActivity {
         gu = new GetUser(this);
 
 
-       /* String base64EncodedPublicKey = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwDCDVQNRxBx9W2bbsGpE5U3+t//yRz9ZWl+TYbLb8MtFofJ5ZjYAy88XL+MCzC+w1fhxH5mTiWo7yDAxPwInAbGEJb61RI0akj3ogrLbOZxfSWMN7B10WzEOjAVNkDBAve1jITrZJvVkF20/3nBUSiKBWOLXmoays6D5DmliniXzUH2+HAGn6CLenUdFJ5qc6maU6aHBIhkbjz7HWFpq+szRULdmjyuUnuK4X0JDfkCAwEAAQ==";
+        String base64EncodedPublicKey = "MIHNMA0GCSqGSIb3DQEBAQUAA4G7ADCBtwKBrwDCDVQNRxBx9W2bbsGpE5U3+t//yRz9ZWl+TYbLb8MtFofJ5ZjYAy88XL+MCzC+w1fhxH5mTiWo7yDAxPwInAbGEJb61RI0akj3ogrLbOZxfSWMN7B10WzEOjAVNkDBAve1jITrZJvVkF20/3nBUSiKBWOLXmoays6D5DmliniXzUH2+HAGn6CLenUdFJ5qc6maU6aHBIhkbjz7HWFpq+szRULdmjyuUnuK4X0JDfkCAwEAAQ==";
 
         mHelper = new IabHelper(this, base64EncodedPublicKey);
 
@@ -78,7 +78,7 @@ public class Purchase extends AppCompatActivity {
 
             }
         });
-*/
+
 
         connect(Settings.CHECK_TIME+gu.getNumber(),0);
         simpleGrid = (GridView) findViewById(R.id.simpleGridView);
@@ -118,7 +118,7 @@ public class Purchase extends AppCompatActivity {
 
 
 
-   /* @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -137,7 +137,7 @@ public class Purchase extends AppCompatActivity {
             }
         }
     }
-*/
+
     private void ActionBar_() {
 
         TextView title = findViewById(R.id.app_name);
@@ -193,17 +193,17 @@ public class Purchase extends AppCompatActivity {
 
                 SKU_PREMIUM = "c"+((i+1)>3?5:i+1);
                 RC_REQUEST = i;
-              /*  try{
+               try{
 
                     mHelper.launchPurchaseFlow(Purchase.this, SKU_PREMIUM, RC_REQUEST, null, "payload-string");
                 }catch ( java.lang.IllegalStateException c){
                     new ToastMaker(Purchase.this, "برنامه بازار را نصب کنید");
 
-                }*/
+                }
 
 
 
-               byte[] data = new byte[0];
+              /* byte[] data = new byte[0];
                 try {
                     data = ( a.get(i)[2]+","+gu.getNumber()+","+a.get(i)[0] ).getBytes("UTF-8");
                 } catch (UnsupportedEncodingException e) {
@@ -213,6 +213,8 @@ public class Purchase extends AppCompatActivity {
                 Uri uri = Uri.parse(Settings.ZARIN_GATE+"?cc="+base64);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
+
+               */
 
 
             }

@@ -6,7 +6,7 @@ public class Settings {
     public static final String JSON_NEWS = "https://sourcearena.ir/androidFilterApi/news/newsReader.php?p=";
 
 
-    public static final String SERVER = "https://sourcearena.ir/";
+    public static final String SERVER = "https://sourcearena.ir";
     public static final String CHECK_TIME= "https://sourcearena.ir/androidFilterApi/app/login/check.php?phone=";
     public static final String ZARIN_GATE = "https://sourcearena.ir/androidFilterApi/app/purchase/gate.php";
     public static final String REPORT_BUG = "https://sourcearena.ir/androidFilterApi/comments/reportBug.php";

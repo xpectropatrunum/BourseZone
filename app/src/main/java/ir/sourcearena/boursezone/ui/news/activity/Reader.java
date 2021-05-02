@@ -93,7 +93,7 @@ public class Reader extends AppCompatActivity {
     }
     public void share_new(String text) {
         Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-        String shareBody = text+ "\n" + "اپلیکیشن " + getResources().getString(R.string.app_name) + " " + getResources().getString(R.string.bazaar_link);
+        String shareBody = text+ "\n" + "اپلیکیشن " + "بورس زون" + " https://cafebazaar.ir/app/ir.sourcearena.boursezone";
         intent.setType("text/plain");
         intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "خبر");
         intent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
